@@ -5,6 +5,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import br.com.ruifpi.models.Usuario;
 
+/*
+ * Usuários Alunos e Servidores em escopo de sessão
+ * 
+ */
 @SessionScoped
 @Named("usuarioSessao")
 public class UsuarioSession implements Serializable {

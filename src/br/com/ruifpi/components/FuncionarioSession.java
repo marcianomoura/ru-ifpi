@@ -7,6 +7,13 @@ import javax.inject.Named;
 
 import br.com.ruifpi.models.Funcionario;
 
+/*
+ * 
+ * 	Funcionário em escopo de sessão.
+ * 
+ * 
+ */
+
 @SessionScoped
 @Named("funcionarioSessao")
 public class FuncionarioSession implements Serializable {
