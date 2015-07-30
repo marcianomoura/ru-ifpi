@@ -8,6 +8,12 @@ import br.com.caelum.vraptor.Convert;
 import br.com.caelum.vraptor.converter.*;
 import br.com.ruifpi.dao.DaoException;
 
+/*
+ * 
+ * 	Converters personalizados para melhor adequação da aplicação.
+ * 
+ */
+
 @Convert(Date.class)
 public class MyDateConverter implements Converter<Date> {
 	

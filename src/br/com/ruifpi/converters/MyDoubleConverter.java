@@ -4,6 +4,12 @@ import br.com.caelum.iogi.exceptions.ConversionException;
 import br.com.caelum.vraptor.Convert;
 import br.com.caelum.vraptor.converter.*;
 
+/*
+ * 
+ * 	Converters personalizados para melhor adequação da aplicação.
+ * 
+ */
+
 @Convert(double.class)
 public class MyDoubleConverter  implements Converter<Double>{
 

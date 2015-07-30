@@ -1,10 +1,15 @@
 package br.com.ruifpi.converters;
 
+import br.com.caelum.vraptor.Convert;
+import br.com.caelum.vraptor.converter.Converter;
 
 import com.thoughtworks.xstream.converters.ConversionException;
-import br.com.caelum.vraptor.Convert;
-import br.com.caelum.vraptor.converter.*;
 
+/*
+ * 
+ * 	Converters personalizados para melhor adequação da aplicação.
+ * 
+ */
 
 @Convert(Long.class)
 public class MyConverterLong implements Converter<Long>  {
