@@ -14,6 +14,11 @@ import br.com.ruifpi.util.RestricaoAcesso;
 import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
 import br.com.ruifpi.util.RestricaoAcesso.AcessoUsuario;
 
+/*
+ *	Interceptor utilizado no controle de acesso as uri do sistema... 
+ * 
+ */
+
 @Intercepts
 @RequestScoped
 public class Interceptor{
