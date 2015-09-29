@@ -72,7 +72,7 @@ public class ItemController {
 	
 	
 	public Item validaDados(Item item) {
-		if(item.getDescricao() == null){
+		if(item.getDescricao().length() < 5){
 			validator.add(new I18nMessage("descricao", "item.descricao.invalido"));
 			return null;
 		}
@@ -84,11 +84,11 @@ public class ItemController {
 			validator.add(new I18nMessage("informacaoNutricional", "item.informacaoNutricional.invalido"));
 			return null;
 		}
-		if(item.getBeneficios() == null){
+		if(item.getBeneficios().length() < 5){
 			validator.add(new I18nMessage("beneficios", "item.beneficios.invalido"));
 			return null;
 		}
-		if(item.getMaleficios() == null){
+		if(item.getMaleficios().length() < 5){
 			validator.add(new I18nMessage("maleficios", "item.maleficios.invalido"));
 			return null;
 		}
@@ -111,10 +111,10 @@ public class ItemController {
 	
 	@SuppressWarnings("unchecked")
 	public void listaItensAlimentaresCategorizados() {
-		List<Item> proteinas = new ArrayList<>();
-		List<Item> lipidios = new ArrayList<>();
-		List<Item> vitaminas = new ArrayList<>();
-		List<Item> carboidratos = new ArrayList<>();
+		List<Item> proteinas = new ArrayList<>();	// 3
+		List<Item> lipidios = new ArrayList<>();	// 2
+		List<Item> vitaminas = new ArrayList<>();	// 4
+		List<Item> carboidratos = new ArrayList<>();	// 1
 		try {
 			itemsGeral = daoImplementacao.find(Item.class);
 		 	for (Item item : itemsGeral) {

@@ -1,6 +1,5 @@
 /* 
 	Marciano Lopes de Moura 
-	Análise e Desenvolviemnto de Sistemas 
 	RU-IFPI 
 */
 
@@ -142,7 +141,7 @@ section.success{
   position: relative;
   font-size: 16px;
   height: auto;
-  padding: 10px;
+  padding: 6px;
 }
 
 input[type="text"] {

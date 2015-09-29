@@ -30,8 +30,7 @@
 				  <label class="control-label" for="nomeItem">* Nome do Item</label>
 				  <small style="color: red" >${errors.from('descricao')}</small>
 				  <div class="controls">
-				    <input  name="item.descricao" value="${item.descricao}"  type="text" placeholder="Descreva o nome do item do cardápio" 
-				    class="form-control" required="">
+				    <input  name="item.descricao" value="${item.descricao}"  type="text"   class="form-control" required="">
 				    <p class="help-block">Ex: Arroz a grega, Frango Assado</p>
 				  </div>
 				</div>
@@ -41,8 +40,8 @@
 				  <label class="control-label" for="valorCalorico">* Valor Calórico</label>
 				  <small style="color: red" >${errors.from('valorCalorico')}</small>
 				  <div class="controls">				    
-				    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  value="${item.valorCalorico}"></fmt:formatNumber>" 
-				    type="text"   placeholder="Valor Calórico do item"    class="form-control" required="">
+				    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  
+				    value="${item.valorCalorico}"></fmt:formatNumber>" type="text"  class="form-control" required="">
 				    <p class="help-block">Ex: 200 Kcal</p>
 				  </div>
 				</div>
@@ -52,7 +51,7 @@
 				  <label class="control-label" for="informacoesNutricionais">* Informações Nutricionais</label>
 				  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
 				  <div class="controls">
-				    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text" placeholder="Informações nutricionais do item" 
+				    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
 				    class="form-control" required="">
 				    <p class="help-block">Ex: Fonte de Vitamina A e C</p>
 				  </div>
@@ -63,8 +62,7 @@
 				  <label class="control-label" for="beneficios">Benefícios </label>
 				  <small style="color: red" >${errors.from('beneficios')}</small>
 				  <div class="controls">
-				    <input name="item.beneficios" value="${item.beneficios}" type="text" placeholder="Informe quais nutrientes o item contém" 
-				    class="form-control">
+				    <input name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">
 				    <p class="help-block">ex: Recomendado para diabéticos</p>
 				  </div>
 				</div>
@@ -75,8 +73,7 @@
 				  <small style="color: red" >${errors.from('maleficios')}</small>
 				  <div class="controls">
 				    
-				    <input name="item.maleficios" value="${item.maleficios}" type="text" placeholder="informe as contraindicações do item" 
-				    class="form-control">
+				    <input name="item.maleficios" value="${item.maleficios}" type="text" class="form-control">
 				    <p class="help-block">Ex: Não recomendado para diabéticos</p>
 				  </div>
 				</div>

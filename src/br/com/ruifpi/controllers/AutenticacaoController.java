@@ -38,30 +38,31 @@ public class AutenticacaoController {
 		// Area tem que tá logado e ser Funcionário...
 	}
 	
+	public boolean verificaAutenticacaoFuncionario(Funcionario funcionario) {
+		List<Funcionario> funcionariosValidos = implementacaoMetodos.buscaFuncionariosAtivos();
+		for (Funcionario funcionarioBanco : funcionariosValidos) {
+			if(funcionarioBanco.getLogin().equalsIgnoreCase(funcionario.getLogin()) && 
+					funcionarioBanco.getSenha().equalsIgnoreCase(funcionario.getSenha())){
+				this.funcionario = funcionarioBanco;
+				break;
+			}
+		}			
+		if(this.funcionario != null){
+			this.funcionarioSession.login(this.funcionario);
+			return true;
+		}else{
+			validator.add(new I18nMessage("funcionario", "credenciais.nao.conferem"));
+			return false;
+		}
+	}
+	
 	@Path("/autenticacao/administracao")
 	public void autenticacao(Funcionario funcionario) {
-		try {
-			List<Funcionario> funcionariosValidos = implementacaoMetodos.buscaFuncionariosAtivos();
-			for (Funcionario funcionarioBanco : funcionariosValidos) {
-				if(funcionarioBanco.getLogin().equalsIgnoreCase(funcionario.getLogin()) && 
-						funcionarioBanco.getSenha().equalsIgnoreCase(funcionario.getSenha())){
-					this.funcionario = funcionarioBanco;
-					break;
-				}
-			}
-				
-			if(this.funcionario != null){
-				this.funcionarioSession.login(this.funcionario);
-				result.redirectTo(this).index();
-			}else{
-				validator.add(new I18nMessage("funcionario", "credenciais.nao.conferem"));
-				validator.onErrorRedirectTo(this).home();
-			}
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro na autenticação...");
-			result.redirectTo(this).home();
+		if (!verificaAutenticacaoFuncionario(funcionario)) {
+			validator.onErrorRedirectTo(this).home();
+		}else{
+			result.redirectTo(this).index();
 		}
-		
 	}
 	
 	@Path("/logout/funcionario")
@@ -76,28 +77,29 @@ public class AutenticacaoController {
 		result.redirectTo(this).home();
 	}
 	
+	public boolean verificaAutenticacaoUsuario(Usuario usuario) {		
+		List<Usuario> usuariosValidos = implementacaoMetodos.buscaUsuariosAtivos();	// Apenas Usuários com matriculas válidas
+		for (Usuario usuarioBanco : usuariosValidos) {
+			if(usuarioBanco.getLogin().equalsIgnoreCase(usuario.getLogin()) && 	usuarioBanco.getSenha().equalsIgnoreCase(usuario.getSenha())){
+				this.usuario = usuarioBanco;
+				break;
+			}
+		}
+		if(this.usuario != null){
+			this.usuarioSession.login(this.usuario);
+			return true;
+		}else{
+			validator.add(new I18nMessage("usuario", "credenciais.nao.conferem"));
+			return false;
+		}		
+	}
+
 	@Path("/autenticacao/usuario")
 	public void autenticao(Usuario usuario) {
-		try {
-			List<Usuario> usuariosValidos = implementacaoMetodos.buscaUsuariosAtivos();	// Apenas Usuários com matriculas válidas
-			for (Usuario usuarioBanco : usuariosValidos) {
-				if(usuarioBanco.getLogin().equalsIgnoreCase(usuario.getLogin()) && 	usuarioBanco.getSenha().equalsIgnoreCase(usuario.getSenha())){
-					this.usuario = usuarioBanco;
-					break;
-				}
-			}
-				
-			if(this.usuario != null){
-				this.usuarioSession.login(this.usuario);
-				result.redirectTo(this).index();
-			}else{
-				validator.add(new I18nMessage("usuario", "credenciais.nao.conferem"));
-				validator.onErrorRedirectTo(this).home();
-			}
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro na autenticação do Usuário...");
+		if(!verificaAutenticacaoUsuario(usuario)){
+			validator.onErrorRedirectTo(this).home();
+		}else{
 			result.redirectTo(this).home();
 		}
-		
 	}
 }
