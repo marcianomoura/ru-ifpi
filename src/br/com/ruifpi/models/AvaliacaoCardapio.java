@@ -18,21 +18,32 @@ public class AvaliacaoCardapio{
 	private Long id;
 	@ManyToOne
 	private Usuario usuario;
-	
-	@Temporal(TemporalType.DATE)
-	private Date dataCardapio;
-	
+	@ManyToOne
+	private Cardapio cardapio;
+		
 	private int notaAvaliativa;
 
-	public AvaliacaoCardapio(Long id, Usuario usuario, Date dataCardapio,
+	public AvaliacaoCardapio() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public AvaliacaoCardapio(Long id, Usuario usuario, Date dataCardapio, Cardapio cardapio,
 			int notaAvaliativa) {
 		super();
+		this.cardapio = cardapio;
 		this.id = id;
 		this.usuario = usuario;
-		this.dataCardapio = dataCardapio;
 		this.notaAvaliativa = notaAvaliativa;
 	}
-
+	
+	public Cardapio getCardapio() {
+		return cardapio;
+	}
+	
+	public void setCardapio(Cardapio cardapio) {
+		this.cardapio = cardapio;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,14 +60,6 @@ public class AvaliacaoCardapio{
 		this.usuario = usuario;
 	}
 
-	public Date getDataCardapio() {
-		return dataCardapio;
-	}
-
-	public void setDataCardapio(Date dataCardapio) {
-		this.dataCardapio = dataCardapio;
-	}
-
 	public int getNotaAvaliativa() {
 		return notaAvaliativa;
 	}
@@ -67,8 +70,9 @@ public class AvaliacaoCardapio{
 
 	@Override
 	public String toString() {
-		return "AvaliacaoPrato [id=" + id + ", usuario=" + usuario
-				+ ", dataCardapio=" + dataCardapio + ", notaAvaliativa="
+		return "AvaliacaoCardapio [id=" + id + ", usuario=" + usuario
+				+ ", cardapio=" + cardapio + ", notaAvaliativa="
 				+ notaAvaliativa + "]";
 	}
+	
 }

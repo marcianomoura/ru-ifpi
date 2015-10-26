@@ -22,7 +22,6 @@ public class DaoImplementacao implements Dao, Serializable{
 		entityManager = JpaUtil.getSessionAtual();
 		try {
 			Object object = entityManager.merge(parametro);
-			System.out.println("Inserção com sucesso");
 			return object;
 		} catch (Exception e) {
 			e.getStackTrace();

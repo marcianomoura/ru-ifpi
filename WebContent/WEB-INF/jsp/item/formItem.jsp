@@ -23,84 +23,78 @@
 			<label class="small" style="color: red" > * Campos Obrigatórios</label><br>
 			<form class="form-horizontal" action='<c:url value="/item/save"></c:url>' method="post">
 				<fieldset>				
-				<input type="hidden" name="item.id" value="${item.id}" >
+					<input type="hidden" name="item.id" value="${item.id}" >	
 				
+					<div class="control-group col-md-7">
+					  <label class="control-label small" for="nomeItem">* Nome do Item</label>
+					  <small style="color: red" >${errors.from('descricao')}</small>
+					  <div class="controls">
+					    <input  name="item.descricao" value="${item.descricao}"  type="text"   class="form-control" required="">
+					    <p class="help-block">Ex: Arroz a grega, Frango Assado</p>
+					  </div>
+					</div>			
 				
-				<div class="control-group col-md-7">
-				  <label class="control-label" for="nomeItem">* Nome do Item</label>
-				  <small style="color: red" >${errors.from('descricao')}</small>
-				  <div class="controls">
-				    <input  name="item.descricao" value="${item.descricao}"  type="text"   class="form-control" required="">
-				    <p class="help-block">Ex: Arroz a grega, Frango Assado</p>
-				  </div>
-				</div>
+					<div class="control-group col-md-5">
+					  <label class="control-label small" for="valorCalorico">* Valor Calórico</label>
+					  <small style="color: red" >${errors.from('valorCalorico')}</small>
+					  <div class="controls">				    
+					    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  
+					    value="${item.valorCalorico}"></fmt:formatNumber>" type="text"  class="form-control" required="">
+					    <p class="help-block">Ex: 200 Kcal</p>
+					  </div>
+					</div>				
 				
+					<div class="control-group col-md-8">
+					  <label class="control-label small" for="informacoesNutricionais">* Informações Nutricionais</label>
+					  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
+					  <div class="controls">
+					    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
+					    class="form-control" required="">
+					    <p class="help-block">Ex: Fonte de Vitamina A e C</p>
+					  </div>
+					</div>				
 				
-				<div class="control-group col-md-5">
-				  <label class="control-label" for="valorCalorico">* Valor Calórico</label>
-				  <small style="color: red" >${errors.from('valorCalorico')}</small>
-				  <div class="controls">				    
-				    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  
-				    value="${item.valorCalorico}"></fmt:formatNumber>" type="text"  class="form-control" required="">
-				    <p class="help-block">Ex: 200 Kcal</p>
-				  </div>
-				</div>
+					<div class="control-group col-md-5">
+					  <label class="control-label small" for="beneficios">Benefícios </label>
+					  <small style="color: red" >${errors.from('beneficios')}</small>
+					  <div class="controls">
+					    <input name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">
+					    <p class="help-block">ex: Recomendado para diabéticos</p>
+					  </div>
+					</div>
 				
+					<div class="control-group col-md-5">
+					  <label class="control-label small" for="contraIndicacoes">Contra Indicação</label>
+					  <small style="color: red" >${errors.from('maleficios')}</small>
+					  <div class="controls">
+					    
+					    <input name="item.maleficios" value="${item.maleficios}" type="text" class="form-control">
+					    <p class="help-block">Ex: Não recomendado para diabéticos</p>
+					  </div>
+					</div>					
+					
+					<div class="control-group col-md-4">
+					  <label class="control-label small" for="classeNutricional">Classe Nutricional</label>
+					  <small style="color: red" >${errors.from('classeNutricional')}</small>
+					  <div class="controls">
+					    <select  name="item.classeNutricional.id" class="form-control" required>
+					      
+					      <option value="${item.classeNutricional.id}">${item.classeNutricional.descricao}</option>
+					      
+					      <c:forEach items="${classes}" var="item">
+					      		<option value="${item.id}">${item.descricao}</option>
+					      </c:forEach>
+					    </select>
+					  </div>
+					</div>
 				
-				<div class="control-group col-md-8">
-				  <label class="control-label" for="informacoesNutricionais">* Informações Nutricionais</label>
-				  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
-				  <div class="controls">
-				    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
-				    class="form-control" required="">
-				    <p class="help-block">Ex: Fonte de Vitamina A e C</p>
-				  </div>
-				</div>
-				
-				
-				<div class="control-group col-md-5">
-				  <label class="control-label" for="beneficios">Benefícios </label>
-				  <small style="color: red" >${errors.from('beneficios')}</small>
-				  <div class="controls">
-				    <input name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">
-				    <p class="help-block">ex: Recomendado para diabéticos</p>
-				  </div>
-				</div>
-				
-				
-				<div class="control-group col-md-5">
-				  <label class="control-label" for="contraIndicacoes">Contraindicado</label>
-				  <small style="color: red" >${errors.from('maleficios')}</small>
-				  <div class="controls">
-				    
-				    <input name="item.maleficios" value="${item.maleficios}" type="text" class="form-control">
-				    <p class="help-block">Ex: Não recomendado para diabéticos</p>
-				  </div>
-				</div>
-				
-				
-				<div class="control-group col-md-4">
-				  <label class="control-label" for="classeNutricional">Classe Nutricional</label>
-				  <small style="color: red" >${errors.from('classeNutricional')}</small>
-				  <div class="controls">
-				    <select  name="item.classeNutricional.id" class="form-control" required>
-				      
-				      <option value="${item.classeNutricional.id}">${item.classeNutricional.descricao}</option>
-				      
-				      <c:forEach items="${classes}" var="item">
-				      		<option value="${item.id}">${item.descricao}</option>
-				      </c:forEach>
-				    </select>
-				  </div>
-				</div>
-				
-				<div class="control-group col-md-12">
-				  <label class="control-label" for="button1id"></label>
-				  <div class="controls">
-				    <button type="submit" class="btn btn-primary">Salvar Dados</button>
-				    <button type="reset" class="btn btn-warning">Limpar Campos</button>
-				  </div>
-				</div>
+					<div class="control-group col-md-12">
+					  <label class="control-label" for="button1id"></label>
+					  <div class="controls">
+					    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+					    <button type="reset" class="btn btn-warning">Limpar Campos</button>
+					  </div>
+					</div>
 				
 				</fieldset>
 			</form>		

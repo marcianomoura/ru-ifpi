@@ -26,10 +26,12 @@ public class AutenticacaoController {
 			private Usuario usuario = null;
 	@Inject private FuncionarioSession funcionarioSession;
 	@Inject private UsuarioSession usuarioSession;
+	@Inject private AvaliacaoController avaliacaoController; 
 	
 	@Path("/")
 	public void home() {
-		// Area livre	
+		avaliacaoController.mostraCardapioDia();
+		avaliacaoController.listAvaliacoesCardapioDia();
 	}
 	
 	@RestricaoAcesso

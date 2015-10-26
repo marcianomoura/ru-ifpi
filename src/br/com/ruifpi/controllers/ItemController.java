@@ -12,6 +12,7 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Item;
+import br.com.ruifpi.util.RestricaoAcesso;
 
 @Controller
 public class ItemController {
@@ -22,32 +23,35 @@ public class ItemController {
 	@Inject private ClassesNutricionaisController nutricionaisController;
 			private List<Item> itemsGeral = new ArrayList<>();
 	
+	@RestricaoAcesso
 	@Path("/item")
 	public void formItem() {
 	nutricionaisController.listClassesNutricionais();
 	}
 	
+	@RestricaoAcesso
 	@Path("/items")
 	public void listItem() {
 		listaItensAlimentares();
 	}
 	
+	@RestricaoAcesso
 	@Path("/item/save")
 	public void save(Item item) {
-		try {
-			if(validaDados(item) == null){
-				validator.onErrorRedirectTo(this).formItem();
-			}else{
-				daoImplementacao.save(item);
-				result.include("sucesso", "Dados inserido com sucesso");
-				result.redirectTo(this).formItem();
-			}
+		if(validaDados(item) == null){
+			validator.onErrorRedirectTo(this).formItem();
+		}
+		try {			
+			daoImplementacao.save(item);
+			result.include("sucesso", "Dados inserido com sucesso");
+			result.redirectTo(this).formItem();
 		} catch (Exception e) {
 			result.include("erro", "Dados não inseridos. Verifique os dados informados e tente novamente.");
 			result.redirectTo(this).formItem();
 		}
 	}
 	
+	@RestricaoAcesso
 	@Path("/item/alteracao")
 	public void alteraItem(Item item) {
 		try {
@@ -70,7 +74,7 @@ public class ItemController {
 		return daoImplementacao.find(Item.class);
 	}
 	
-	
+	@RestricaoAcesso
 	public Item validaDados(Item item) {
 		if(item.getDescricao().length() < 5){
 			validator.add(new I18nMessage("descricao", "item.descricao.invalido"));
@@ -109,6 +113,7 @@ public class ItemController {
 		result.include("items",	 itemsGeral);
 	}
 	
+	@RestricaoAcesso
 	@SuppressWarnings("unchecked")
 	public void listaItensAlimentaresCategorizados() {
 		List<Item> proteinas = new ArrayList<>();	// 3
@@ -135,9 +140,7 @@ public class ItemController {
 		} catch (Exception e) {
 			result.include("erro", "Erro na listagem de itens");
 			result.redirectTo(this).listItem();
-		}
-		
-	 	
+		}	 	
 	}
 }
 

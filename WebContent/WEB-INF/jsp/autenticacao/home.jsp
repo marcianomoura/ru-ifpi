@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,7 +42,14 @@
                 </li>
                 
                 <li class="page-scroll">
-                    <a href="#" data-toggle="modal"  data-target="#modalAutenticacao"><span class="glyphicon glyphicon-info"></span>Entrar</a>
+                	<c:if test="${usuarioSessao.usuario == null}">
+                		<a href="#" data-toggle="modal"  data-target="#modalAutenticacao"><span class="glyphicon glyphicon-info"></span>Entrar</a>	
+                	</c:if>
+                	<c:if test="${usuarioSessao.usuario != null}">
+                		<a href='<c:url value="/logout/usuario"></c:url>'> Sair :  ${usuarioSessao.usuario.perfil} (a) 
+                		${usuarioSessao.usuario.nome}</a>	
+                	</c:if>
+                    
                 </li>
             </ul>
         </div>
@@ -61,74 +69,60 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-						<div class="panel-heading">Cardápio</div>
+                <div class="col-sm-12">
+                    <div class="panel panel-default" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
+						<div class="panel-heading">Itens do Cardápio</div>
 						<div class="panel-body">
-							<div class="col-md-12">
+							<div class="col-md-4">
 							    <div class="thumbnail">
 							      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 							    </div>
 							</div>
 							
-							<div class="col-md-12">
-								<ul class="list-group">
-								  <li class="list-group-item">Arroz Integral<span class="badge">70</span></li>
-								  <li class="list-group-item">Bisteca suina assada<span class="badge">90</span></li>
-								  <li class="list-group-item">Macarrão<span class="badge">50</span></li>
-								  <li class="list-group-item">Suco de Abacaxi<span class="badge">20</span></li>
-								</ul>
+							<div class="col-md-8">
+								<table class="table table-condensed">
+									<tr>
+										<td>Item</td>
+										<td>Beneficios</td>
+										<td>Não recomendado</td>
+										<td>Inf. Nutricionais</td>
+										<td>Calorias</td>
+									</tr>
+									<c:forEach items="${cardapioDia.itemCardapio}" var="item">
+										<tr>
+											<td>${item.item.descricao}</td>
+											<td>
+												<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+									  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+									  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+									  				aria-hidden="true"></span> info
+									  			</a>
+											</td>
+											
+											<td>${item.item.maleficios}</td>
+											
+											<td>
+												<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" 
+									  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
+									  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
+									  				aria-hidden="true"></span> info
+									  			</a>
+											</td>
+											<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>
+											
+										</tr>
+										
+									</c:forEach>
+								</table>
+								<code>Total de Calorias : ${cardapioDia.totalCaloria} Kcal</code>								
 							</div>
 						</div>
 					</div> 
-                </div>
-                
-                <div class="col-sm-4">
-                    <div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-						<div class="panel-heading">Informações Nutricionais do cardápio</div>
-						<div class="panel-body">
-							<div class="col-md-12">
-							    <div class="thumbnail">
-							      <img class="img-responsive" src="img/almoco.jpg" width="100%">
-							    </div>
-							</div>
-							
-							<div class="col-md-12">
-								<ul class="list-group">
-								  <li class="list-group-item">Total de Calorias<span class="badge">760 Kcal</span></li>
-								  <li class="list-group-item">Fonte de Vitaminas A e D</li>
-								  <li class="list-group-item">Macarrão<span class="badge">50</span></li>
-								  <li class="list-group-item">Suco de Abacaxi<span class="badge">20</span></li>
-								</ul>
-							</div>
-						</div>
-					</div>    
-                </div>
-                
-                <div class="col-sm-4">
-                    <div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-						<div class="panel-heading">Contra Indicações</div>
-						<div class="panel-body">
-							<div class="col-md-12">
-							    <div class="thumbnail">
-							      <img class="img-responsive" src="img/almoco.jpg" width="100%">
-							    </div>
-							</div>
-							
-							<div class="col-md-12">
-								<ul class="list-group">
-								  <li class="list-group-item">Total de Calorias<span class="badge">760 Kcal</span></li>
-								  <li class="list-group-item">Contra indicado para alergicos a camarão</li>
-								  <li class="list-group-item">Colesterol alto</li>
-								</ul>
-							</div>
-						</div>
-					</div>    
-                </div>
-                
+                </div> 		                
             </div>
         </div>
     </section>
+    
     <section class="primary" id="avaliacao">
         <div class="container">
             <div class="row">
@@ -138,23 +132,57 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-					<div class="panel-heading">Resultado da avaliação do cardápio de hoje</div>
-					<div class="panel-body">
-						<div class="col-md-6">
+                <div class="panel panel-default" >
+					<div class="panel-heading">Avaliação do Cardápio de Hoje 
+						<label class="pull-right">
+					    	<code>Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
+					    </label>
+					</div>
+					<div class="panel-body" >
+						
+						<c:forEach var="error" items="${errors}">
+							<div class="alert alert-danger">${error.category} -  ${error.message}</div>
+						</c:forEach>
+						
+						<div class="col-md-5">
 						    <div class="thumbnail">
 						      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 						    </div>
+						    <c:if test="${usuarioSessao.usuario != null }">
+						    	<a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${10}"></c:url>' 
+							    	class="btn btn-primary btn-sm">Excelente
+							    </a>
+							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${8}"></c:url>' 
+							    	class="btn btn-primary btn-sm">Bom
+							    </a>
+							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${6}"></c:url>' 
+							    	class="btn btn-warning btn-sm">Regular
+							    </a>
+							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${4}"></c:url>' 
+							    	class="btn btn-danger btn-sm">Ruim
+							    </a>
+							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${2}"></c:url>' 
+							    	class="btn btn-danger btn-sm">Muito Ruim
+							    </a>
+						    </c:if>
+						    
 						</div>
 						
-						<div class="col-md-6">
-							<ul class="list-group">
-							  <li class="list-group-item">Excelente<span class="badge">70</span></li>
-							  <li class="list-group-item">Bom<span class="badge">90</span></li>
-							  <li class="list-group-item">Razoável<span class="badge">50</span></li>
-							  <li class="list-group-item">Ruim<span class="badge">20</span></li>
-							  <li class="list-group-item">Muito Ruim<span class="badge">10</span></li>
-							</ul>
+						<div class="col-md-7" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
+							<table class="table table-condensed">
+								<tr>
+									<td>Nome</td>
+									<td>Matricula</td>
+									<td>Nota</td>								
+								</tr>
+								<c:forEach items="${listaAvaliacoes}" var="avaliacao">								
+									<tr>
+										<td>${avaliacao.usuario.nome}</td>
+										<td>${avaliacao.usuario.matricula}</td>
+										<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+									</tr>
+								</c:forEach>
+							</table>
 						</div>
 					</div>
 				</div>
