@@ -85,6 +85,9 @@
 					
 					<div class="form-group col-md-12">
 						<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
+						<a data-toggle="tooltip" data-placement="top" title="Cancelar operação" class="btn btn-danger btn-lg" 
+						href="cardapio/clear" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</a>
 					</div>
 				</fieldset>
 			</form>		

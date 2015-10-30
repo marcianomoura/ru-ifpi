@@ -21,7 +21,7 @@
 	<div class="panel-heading">Listagem de Cardápio</div>
 	<div class="panel-body">
 		<table class="table table-hover table-bordered table-condensed">
-			<tr class="active" style="font-size: 16px;">
+			<tr class="active" style="font-size: 16px;" align="center">
 		  		<td class="col-md-2">Código</td>
 		  		<td class="col-md-2">Data do Cardápio</td>
 		  		<td class="col-md-2">Total de Calorias</td>
@@ -29,16 +29,16 @@
 		  		<td class="col-md-2">Alteração</td>
 		  	</tr>
 		  <c:forEach items="${cardapios}" var="cardapio">
-		  	<tr>
+		  	<tr align="center">
 		  		<td>${cardapio.id}</td>
 		  		<td><fmt:formatDate value="${cardapio.dataCardapio}" pattern="dd/MM/yyyy"/></td>
 		  		<td>${cardapio.totalCaloria}</td>
-		  		<td align="center">
+		  		<td>
 		  			<a target="blank" href='<c:url value="/cardapio/itens?cardapio.id=${cardapio.id}"></c:url>' >
 		  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> detalhes
 		  			</a>
 		  		</td>
-		  		<td align="center"> 
+		  		<td> 
 					<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este cardapio" 
 						href='<c:url value="/carpapio/alteracao?cardapio.id=${cardapio.id}"></c:url>'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</a>

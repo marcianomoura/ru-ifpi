@@ -1,6 +1,8 @@
 package br.com.ruifpi.models;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Cardapio implements Serializable {
+public class Cardapio implements Serializable, Comparable<Cardapio> {
 	
 	/**
 	 * 
@@ -123,5 +125,31 @@ public class Cardapio implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(Cardapio arg0) {
+		return 0;
+	}
+	
+	public void ordenaCardapioByData(List<Cardapio> cardapios) {
+		Collections.sort(cardapios, new Comparator<Cardapio>() {
+		
+			@Override
+			public int compare(Cardapio cardapio1, Cardapio cardapio2) {
+				return cardapio1.getDataCardapio().compareTo(cardapio2.getDataCardapio());
+			}
+		});
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
