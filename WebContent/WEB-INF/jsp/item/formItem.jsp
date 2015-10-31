@@ -34,7 +34,7 @@
 					  </div>
 					</div>			
 				
-					<div class="control-group col-md-5">
+					<div class="control-group col-md-4">
 					  <label class="control-label small" for="valorCalorico">* Valor Calórico</label>
 					  <small style="color: red" >${errors.from('valorCalorico')}</small>
 					  <div class="controls">				    
@@ -45,7 +45,7 @@
 					</div>				
 				
 					<div class="control-group col-md-8">
-					  <label class="control-label small" for="informacoesNutricionais">* Informações Nutricionais</label>
+					  <label class="control-label small" for="informacoesNutricionais">* Informações Nutricionais importantes</label>
 					  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
 					  <div class="controls">
 					    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
@@ -55,7 +55,7 @@
 					</div>				
 				
 					<div class="control-group col-md-5">
-					  <label class="control-label small" for="beneficios">Benefícios </label>
+					  <label class="control-label small" for="beneficios">Benefícios à saude </label>
 					  <small style="color: red" >${errors.from('beneficios')}</small>
 					  <div class="controls">
 					    <input name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">

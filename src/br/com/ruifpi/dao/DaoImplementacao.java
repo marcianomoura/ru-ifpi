@@ -19,7 +19,7 @@ public class DaoImplementacao implements Dao, Serializable{
 
 	@Override
 	public Object save(Object parametro) {
-		entityManager = JpaUtil.getSessionAtual();
+		entityManager = JpaUtil.getEntityAtual();
 		try {
 			Object object = entityManager.merge(parametro);
 			return object;
@@ -46,7 +46,7 @@ public class DaoImplementacao implements Dao, Serializable{
 	@Override
 	public List findByIntervalo(Class classe, int primeiroResultado, int maximoResultado) {
 		List objects = null;
-		entityManager = JpaUtil.getSessionAtual();
+		entityManager = JpaUtil.getEntityAtual();
 		try {
 			Query query = entityManager.createQuery("select objeto from "+ classe.getSimpleName() +" objeto");
 			if((primeiroResultado >=0) && (maximoResultado >= 0)){
@@ -63,7 +63,7 @@ public class DaoImplementacao implements Dao, Serializable{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Object findById(Class classe, Object parametro) {
-		entityManager = JpaUtil.getSessionAtual();
+		entityManager = JpaUtil.getEntityAtual();
 		try {
 			Object object = entityManager.find(classe, parametro);
 			return object;
@@ -75,7 +75,7 @@ public class DaoImplementacao implements Dao, Serializable{
 
 	@Override
 	public void remove(Object parametro) {
-		entityManager = JpaUtil.getSessionAtual();
+		entityManager = JpaUtil.getEntityAtual();
 		try {
 			entityManager.remove(entityManager.merge(parametro));
 		} catch (Exception e) {

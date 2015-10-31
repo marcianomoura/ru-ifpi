@@ -97,6 +97,7 @@ public class CardapioController {
 	}
 	
 	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/cardapio/clear")
 	public void limpaDadosCardapio() {
 		cardapioAlteracao = new Cardapio();

@@ -9,7 +9,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.ImplementacaoMetodos;
+import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.models.Funcionario;
@@ -21,7 +21,7 @@ public class AutenticacaoController {
 
 	@Inject private Result result;
 	@Inject private Validator validator;
-	@Inject private ImplementacaoMetodos implementacaoMetodos;
+	@Inject private MetodosUtilImplementacao implementacaoMetodos;
 			private Funcionario funcionario = null;
 			private Usuario usuario = null;
 	@Inject private FuncionarioSession funcionarioSession;
@@ -101,7 +101,7 @@ public class AutenticacaoController {
 		if(!verificaAutenticacaoUsuario(usuario)){
 			validator.onErrorRedirectTo(this).home();
 		}else{
-			result.redirectTo(this).home();
+			result.redirectTo(this).index();;
 		}
 	}
 }

@@ -11,7 +11,7 @@ public class JpaUtil {
 	private static ThreadLocal<EntityManager> threadLocal = new ThreadLocal<>();
 	
 	
-	public static EntityManager getSessionAtual() {
+	public static EntityManager getEntityAtual() {
 		EntityManager entity = (EntityManager) threadLocal.get();
 		if(entity==null){
 			entity = factory.createEntityManager();

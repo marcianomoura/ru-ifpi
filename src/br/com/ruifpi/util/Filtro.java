@@ -19,13 +19,13 @@ public class Filtro implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain filtro) throws IOException, ServletException {
 		try {
-			EntityManager entityManager = JpaUtil.getSessionAtual();
+			EntityManager entityManager = JpaUtil.getEntityAtual();
 			entityManager.getTransaction().begin();
 			filtro.doFilter(request, response);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println("Transação não finalizada ...");
-			JpaUtil.getSessionAtual().getTransaction().rollback();
+			JpaUtil.getEntityAtual().getTransaction().rollback();
 			new ServletException(e);
 		}finally{
 			JpaUtil.closeEntity();

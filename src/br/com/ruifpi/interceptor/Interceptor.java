@@ -45,8 +45,7 @@ public class Interceptor{
 			result.include("erro", AUTORIZACAO);
 			System.out.println("Interceptando autorização apenas para Alunos/Servidor...");
 			result.redirectTo(AutenticacaoController.class).index();
-		} else{
-			stack.next();
 		}
+		stack.next();
 	}
 }

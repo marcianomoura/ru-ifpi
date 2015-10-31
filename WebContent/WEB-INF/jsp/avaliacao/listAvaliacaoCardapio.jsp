@@ -17,11 +17,86 @@
 </div>
 
 <div class="col-md-12">
-<div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-	<div class="panel-heading">Avaliações de Cardápio</div>
-	<div class="panel-body">
-		
+	<c:if test="${cardapioSolicitado.id > 0}">
+		<div class="custom_well">
+			<label><strong>Dados sobre o cardápio</strong></label>
+			<table class="table table-responsive table-condensed">
+				<thead>
+					<tr style="background-color: #D6CECE;">
+						<td>Cod. Cardapio</td>
+						<td>Data</td>
+						<td>Total de Calorias</td>
+						<td>Ver Itens</td>
+						<td>Fechar</td>				
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>${cardapioSolicitado.id}</td>				
+						<td><fmt:formatDate value="${cardapioSolicitado.dataCardapio}" pattern="dd/MM/yyyy"/></td>
+						<td>${cardapioSolicitado.totalCaloria} kcal</td>
+						<td>
+							<a target="_blank" class="btn btn-default btn-sm" href='<c:url value="/cardapio/itens?cardapio.id=${cardapioSolicitado.id}"/>'>
+							 Ver itens
+							 </a>
+						</td>
+						<td>
+							<a  class="btn btn-danger btn-sm" href='<c:url value="/avaliacoes"/>'>
+							 Fechar
+							 </a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
+	</c:if>
+<div class="panel panel-default">
+	<div class="panel-heading"><label><strong>Avaliações de Cardápio</strong></label> 
+		<label class="pull-right">
+	    	<code>Total de avaliações : ${listaAvaliacoes.size()} - Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
+	    </label>
 	</div>
+	
+	<div class="panel-body">
+		<form action='<c:url value="/avaliacao/cardapio_data" />' method="get">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="small">Escolha a data do cardápio para ver as avaliações</label>
+					<input id="dataCardapio" class="form-control" name="dataCardapio" required onfocus autocomplete="off" >
+				</div>
+			</div>
+			<div class="col-md-1">
+				<br>
+				<button class="btn btn-primary btn-lg"  type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>	
+			</div>
+			
+		</form>
+		
+		<div class="col-md-12" style="max-height: 300px; overflow-y: scroll; overflow-x: hidden; ">
+			<table class="table table-responsive">
+				<thead>
+					<tr>
+						<td><strong>Aluno</strong></td>
+						<td><strong>Matricula</strong></td>
+						<td align="center"><strong>Nota Avaliativa</strong></td>								
+					</tr>
+				</thead>
+				<c:forEach items="${listaAvaliacoes}" var="avaliacao">
+				<tbody>
+					<tr class="text-capitalize">
+						<td>${avaliacao.usuario.nome}</td>
+						<td>${avaliacao.usuario.matricula}</td>
+						<td align="center"><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+					</tr>
+				</tbody>								
+					
+				</c:forEach>
+			</table>	
+		</div>
+	</div>
+	
+	
 </div>
 </div>
 </body>

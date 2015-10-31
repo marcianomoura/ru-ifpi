@@ -1,10 +1,53 @@
-/* 
-	Marciano Lopes de Moura 
-	RU-IFPI 
-*/
+@media (max-width: 456px) {
+	
+.table-responsive {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
 
+.table-responsive thead,
+  .table-responsive tbody,
+  .table-responsive th,
+  .table-responsive td,
+  .table-responsive tr {
+    display: block;
+  }
+  
+.table-responsive td,
+  .table-responsive th {
+    height: 35px;
+  }
+  
+.table-responsive thead {
+   float: left;
+ }
+ 
+ .table-responsive tbody {
+   width: auto;
+   position: relative;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   white-space: nowrap;
+ }
 
-/*  Alteração do Padding do li do dropdown */
+.table-responsive tbody tr {
+    display: inline-block;
+  }
+ 
+}
+   
+.custom_well{
+    min-height: 20px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
 .dropdown-menu > li > a {			
   display: block;
   padding: 7px 20px;
@@ -24,46 +67,6 @@
     display:none;
 }
 
-#custom-bootstrap-menu.navbar-default .navbar-brand {
-    color: rgba(109, 109, 122, 1);
-}
-#custom-bootstrap-menu.navbar-default {
-    font-size: 14px;
-    background-color: rgba(248, 248, 248, 1);
-    border-bottom-width: 0px;
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
-    color: rgba(109, 109, 122, 1);
-    background-color: rgba(248, 248, 248, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
-    color: rgba(82, 77, 77, 1);
-    background-color: rgba(201, 201, 201, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
-    color: rgba(109, 109, 122, 1);
-    background-color: rgba(196, 192, 192, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle {
-    border-color: #c4c0c0;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
-#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
-    background-color: #c4c0c0;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
-    background-color: #c4c0c0;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
-#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
-    background-color: #f8f8f8;
-}
-
-@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
-
 .content-wrapper{
     background-color: #DFDCDC;
     min-height: 12%;
@@ -82,8 +85,7 @@ section h2 {
     font-size: 3em;
 }
 
-hr.star-light,
-hr.star-primary {
+hr.star-light, hr.star-primary {
     margin: 25px auto 30px;
     padding: 0;
     max-width: 98%;
@@ -135,13 +137,6 @@ section.success{
 .form-signin-heading {
   text-align:center;
   margin-bottom: 30px;
-}
-
-.form-control {
-  position: relative;
-  font-size: 13px;
-  height: auto;
-  padding: 6px;
 }
 
 input[type="text"] {

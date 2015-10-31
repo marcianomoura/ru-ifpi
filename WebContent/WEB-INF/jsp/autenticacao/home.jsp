@@ -34,7 +34,7 @@
                 </li>
                 
                 <li class="page-scroll">
-                    <a href="#avaliacao">Avaliação do cardápio</a>
+                    <a href="#avaliacao">Avaliações</a>
                 </li>
                 
                 <li class="page-scroll">
@@ -56,11 +56,13 @@
     </div>
 </nav>
 
-<c:import url="/mensagens.jsp"></c:import>
-
-<div class="content-wrapper">
+<div class="content-wrapper">		
     <section class="primary" id="cardapio">
-    
+ 		<div class="col-md-12">
+			<c:forEach var="error" items="${errors}">
+				<div class="alert alert-danger">${error.category} -  ${error.message}</div>
+			</c:forEach>
+		</div>   
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -80,38 +82,40 @@
 							</div>
 							
 							<div class="col-md-8">
-								<table class="table table-condensed">
-									<tr>
-										<td>Item</td>
-										<td>Beneficios</td>
-										<td>Não recomendado</td>
-										<td>Inf. Nutricionais</td>
-										<td>Calorias</td>
-									</tr>
-									<c:forEach items="${cardapioDia.itemCardapio}" var="item">
+								<table class="table table-responsive">
+									<thead>
 										<tr>
-											<td>${item.item.descricao}</td>
-											<td>
-												<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
-									  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-									  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-									  				aria-hidden="true"></span> info
-									  			</a>
-											</td>
-											
-											<td>${item.item.maleficios}</td>
-											
-											<td>
-												<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" 
-									  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-									  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
-									  				aria-hidden="true"></span> info
-									  			</a>
-											</td>
-											<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>
-											
+											<th>Item</th>
+											<th>Beneficios</th>
+											<th>Não recomendado</th>
+											<th>Inf. Nutricionais</th>
+											<th>Calorias</th>
 										</tr>
-										
+									</thead>
+									<c:forEach items="${cardapioDia.itemCardapio}" var="item">
+										<tbody>
+											<tr>
+												<td>${item.item.descricao}</td>
+												<td>
+													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+										  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+										  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+										  				aria-hidden="true"></span> info
+										  			</a>
+												</td>
+												
+												<td>${item.item.maleficios}</td>
+												
+												<td>
+													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" 
+										  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
+										  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
+										  				aria-hidden="true"></span> info
+										  			</a>
+												</td>
+												<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>											
+											</tr>
+										</tbody>
 									</c:forEach>
 								</table>
 								<code>Total de Calorias : ${cardapioDia.totalCaloria} Kcal</code>								
@@ -138,49 +142,31 @@
 					    	<code>Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
 					    </label>
 					</div>
-					<div class="panel-body" >
-						
-						<c:forEach var="error" items="${errors}">
-							<div class="alert alert-danger">${error.category} -  ${error.message}</div>
-						</c:forEach>
-						
+					<div class="panel-body" >						
+												
 						<div class="col-md-5">
 						    <div class="thumbnail">
 						      <img class="img-responsive" src="img/almoco.jpg" width="100%">
-						    </div>
-						    <c:if test="${usuarioSessao.usuario != null }">
-						    	<a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${10}"></c:url>' 
-							    	class="btn btn-primary btn-sm">Excelente
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${8}"></c:url>' 
-							    	class="btn btn-primary btn-sm">Bom
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${6}"></c:url>' 
-							    	class="btn btn-warning btn-sm">Regular
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${4}"></c:url>' 
-							    	class="btn btn-danger btn-sm">Ruim
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${2}"></c:url>' 
-							    	class="btn btn-danger btn-sm">Muito Ruim
-							    </a>
-						    </c:if>
-						    
+						    </div>						    
 						</div>
 						
 						<div class="col-md-7" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
-							<table class="table table-condensed">
-								<tr>
-									<td>Nome</td>
-									<td>Matricula</td>
-									<td>Nota</td>								
-								</tr>
-								<c:forEach items="${listaAvaliacoes}" var="avaliacao">								
+							<table class="table table-responsive">
+								<thead>
 									<tr>
-										<td>${avaliacao.usuario.nome}</td>
-										<td>${avaliacao.usuario.matricula}</td>
-										<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+										<td>Nome</td>
+										<td>Matricula</td>
+										<td>Nota</td>								
 									</tr>
+								</thead>
+								<c:forEach items="${listaAvaliacoes}" var="avaliacao">
+									<tbody>								
+										<tr>
+											<td>${avaliacao.usuario.nome}</td>
+											<td>${avaliacao.usuario.matricula}</td>
+											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+										</tr>
+									</tbody>
 								</c:forEach>
 							</table>
 						</div>
@@ -228,7 +214,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- inicio Modal de Autenticação-->
 <div class="modal fade" id="modalAutenticacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -289,7 +275,7 @@
     </div>
   </div>
 </div>
-
+<!-- Fim Modal de Autenticação -->
 
 </body>
 </html>

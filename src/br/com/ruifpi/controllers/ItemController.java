@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Item;
 import br.com.ruifpi.util.RestricaoAcesso;
+import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
 
 @Controller
 public class ItemController {
@@ -24,6 +25,7 @@ public class ItemController {
 			private List<Item> itemsGeral = new ArrayList<>();
 	
 	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/item")
 	public void formItem() {
 	nutricionaisController.listClassesNutricionais();
@@ -36,6 +38,7 @@ public class ItemController {
 	}
 	
 	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/item/save")
 	public void save(Item item) {
 		if(validaDados(item) == null){
@@ -52,6 +55,7 @@ public class ItemController {
 	}
 	
 	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/item/alteracao")
 	public void alteraItem(Item item) {
 		try {
@@ -143,16 +147,3 @@ public class ItemController {
 		}	 	
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -10,7 +10,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.ImplementacaoMetodos;
+import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.util.RestricaoAcesso;
@@ -23,7 +23,7 @@ public class FuncionarioController {
 	@Inject	private DaoImplementacao daoImplementacao;
 	@Inject private Result result;
 	@Inject private Validator validator;
-	@Inject private ImplementacaoMetodos implementacaoMetodos;
+	@Inject private MetodosUtilImplementacao implementacaoMetodos;
 	
 	@Path("/funcionario")
 	public void formFuncionario() {

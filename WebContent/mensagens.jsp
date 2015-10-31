@@ -28,5 +28,11 @@
 			${sucesso}
 		</div>
 	</c:if>
+	
+	<div class="">
+		<c:forEach var="error" items="${errors}">
+			<div class="alert alert-danger">${error.category} -  ${error.message}</div>
+		</c:forEach>
+	</div>
 </body>
 </html>

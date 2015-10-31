@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -15,11 +17,13 @@ import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.AvaliacaoCardapio;
 import br.com.ruifpi.models.Cardapio;
 import br.com.ruifpi.util.RestricaoAcesso;
+import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.RestricaoAcesso.AcessoUsuario;
 
 @Controller
 public class AvaliacaoController {
 
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat formatSimpleDateFormatUtil = new SimpleDateFormat();
 	@ Inject private Result result;
 	@ Inject private DaoImplementacao daoImplementacao;
 	@ Inject private UsuarioSession usuarioSession;
@@ -27,14 +31,18 @@ public class AvaliacaoController {
 	private List<AvaliacaoCardapio> avaliacaoCardapiosUtil = new ArrayList<>();;
 			
 	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/avaliacoes")
 	public void listAvaliacaoCardapio() {
-		listAvaliacoesCardapioDia();  
+	  
 	}
 	
 	@RestricaoAcesso
+	@AcessoUsuario
+	@Path("/avaliacao")
 	public void formAvaliacao() {
 		mostraCardapioDia();
+		listAvaliacoesCardapioDia();
 	}
 	
 	
@@ -42,8 +50,9 @@ public class AvaliacaoController {
 	public Cardapio mostraCardapioDia() {
 		Cardapio cardapioEncontrado = null;
 		try {
-			String dataFormatada = format.format(new Date());	// Formatando a data de hoje para formato sql do banco de dados ...
-			java.sql.Date dataFormatoSql = new java.sql.Date(format.parse(dataFormatada).getTime());
+			formatSimpleDateFormatUtil.applyPattern("yyyy-MM-dd");
+			String dataFormatada = formatSimpleDateFormatUtil.format(new Date());	// Formatando a data de hoje para formato sql do banco de dados ...
+			java.sql.Date dataFormatoSql = new java.sql.Date(formatSimpleDateFormatUtil.parse(dataFormatada).getTime());
 			List<Cardapio> cardapios = daoImplementacao.find(Cardapio.class);
 			for (Cardapio cardapio : cardapios) {
 				if(cardapio.getDataCardapio().equals(dataFormatoSql)){
@@ -79,6 +88,38 @@ public class AvaliacaoController {
 		return avaliCardapioEncontradas;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Path("/avaliacao/cardapio_data")
+	public void listaAvaliacoesCardapioByData(Date dataCardapio) {
+				Cardapio cardapioEncontrado = null;
+				try {
+					List<AvaliacaoCardapio> avaliacoesCardapioSolicitado = new ArrayList<AvaliacaoCardapio>();
+					formatSimpleDateFormatUtil.applyPattern("yyyy-MM-dd");
+					String dataFormatoSql = formatSimpleDateFormatUtil.format(dataCardapio);
+					java.sql.Date dataSql = new java.sql.Date(formatSimpleDateFormatUtil.parse(dataFormatoSql).getTime());
+					avaliacaoCardapiosUtil = daoImplementacao.find(AvaliacaoCardapio.class);
+					for (AvaliacaoCardapio avaliacaoCardapio : avaliacaoCardapiosUtil) {
+						if(avaliacaoCardapio.getCardapio().getDataCardapio().equals(dataSql)){
+							cardapioEncontrado = avaliacaoCardapio.getCardapio();
+							avaliacoesCardapioSolicitado.add(avaliacaoCardapio);
+						}
+					}
+					if(!avaliacoesCardapioSolicitado.isEmpty()){
+						result.include("listaAvaliacoes", avaliacoesCardapioSolicitado);
+						result.include("cardapioSolicitado", cardapioEncontrado);
+						result.include("mediaAvaliacao", calculaMediaAvaliacao(avaliacoesCardapioSolicitado));
+					}else{
+						result.include("erro", "Cardapio ainda não foi avaliado ou publicado.");
+					}
+					result.redirectTo(this).listAvaliacaoCardapio();
+					
+				} catch (Exception e) {
+					result.include("erro", "Ocorreu um erro ao tentar ver as avaliações. Verifique se a data foi informado corretamente.");
+					result.redirectTo(this).listAvaliacaoCardapio();
+				}	
+					
+	}
+	
 	
 	public double calculaMediaAvaliacao(List<AvaliacaoCardapio> avaliacaoCardapios) {
 		double soma = 0, quantidade = 0;
@@ -111,7 +152,7 @@ public class AvaliacaoController {
 	@Path("/avaliacao/cardapio")	
 	public void saveAvaliacao(int notaAvaliativa) {
 		if(!validaAvaliacaoCardapio(notaAvaliativa)){
-			validator.onErrorRedirectTo(AutenticacaoController.class).home();
+			validator.onErrorRedirectTo(this).formAvaliacao();
 		}
 		try {
 			AvaliacaoCardapio avaliacaoCardapio = new AvaliacaoCardapio();
@@ -121,10 +162,10 @@ public class AvaliacaoController {
 			avaliacaoCardapio.setNotaAvaliativa(notaAvaliativa);
 			daoImplementacao.save(avaliacaoCardapio);
 			result.include("sucesso", "Avaliação de cardápio registrada.");
-			result.redirectTo(AutenticacaoController.class).home();
+			result.redirectTo(this).formAvaliacao();
 		} catch (Exception e) {
 			result.include("erro", "Ocorreu um erro na avaliação. Tente novamente mais tarde.");
-			result.redirectTo(AutenticacaoController.class).home();
+			result.redirectTo(this).formAvaliacao();
 		}	
 	}
 	
@@ -142,14 +183,11 @@ public class AvaliacaoController {
 						break;
 					}
 				}
-				result.include("erro", "Usuário já avaliou este cardápio.");
 			}
 			return avaliacaoJaSubmetida;
 		} catch (Exception e) {
 			return avaliacaoJaSubmetida;
-		}
-		
+		}	
 	}
-	
 }
 
