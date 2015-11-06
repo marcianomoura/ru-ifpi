@@ -8,10 +8,7 @@ import javax.inject.Named;
 import br.com.ruifpi.models.Funcionario;
 
 /*
- * 
- * 	Funcionário em escopo de sessão.
- * 
- * 
+ * 	Funcionários da Cordenação do Refeitório em escopo de sessão.
  */
 
 @SessionScoped

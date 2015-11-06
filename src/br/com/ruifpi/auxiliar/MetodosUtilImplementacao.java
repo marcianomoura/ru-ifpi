@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import br.com.ruifpi.dao.DaoException;
 import br.com.ruifpi.models.Cardapio;
+import br.com.ruifpi.models.Disponibilidade;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.util.JpaUtil;
@@ -66,6 +67,20 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 				throw new DaoException("Erro na pesquisa do cardapio");
 			}	
 		return cardapioEncontrado;
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Disponibilidade> buscaDatasDisponiveisSugestaoCardapio() {
+		entityManager = JpaUtil.getEntityAtual();
+		try {
+			Query query = entityManager.createQuery("select disponibilidade from Disponibilidade disponibilidade WHERE disponibilidade.disponivel=false");
+			List<Disponibilidade> disponibilidades = query.getResultList();
+			return disponibilidades;
+		} catch (Exception e) {
+			System.out.println("Erro na pesquisa de  usuarios ...");
+			throw new DaoException("Erro na pesquisa de usuario...");
+		}
 	}
 	
 }

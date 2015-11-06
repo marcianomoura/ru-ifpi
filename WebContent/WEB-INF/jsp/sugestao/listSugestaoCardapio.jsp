@@ -16,12 +16,49 @@
 	<c:import url="/header.jsp"></c:import>
 </div>
 
-<div class="col-md-12">
-<div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-	<div class="panel-heading">Sugestões de Cardápio</div>
-	<div class="panel-body">
-		
+<div class="col-md-12" style="margin-top: 20px;">
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">Visualize as sugestões de cardápio</div>
+			<div class="panel-body">
+				<form action='<c:url value="/sugestao/totalizasugestoes" ></c:url>' method="get">
+					<div class="form-group">
+						<label class="small" for="">Selecione a data desejada</label>
+						<div class="controls">
+							<div class="row">
+								<div class="col-md-9">
+							    	<select  name="disponibilidade.id" class="form-control" required>
+								    	<option></option>
+								    	
+										<c:forEach var="disponibilidade" items="${disponibilidades}"> 
+											<option value="${disponibilidade.id}"> <fmt:formatDate value="${disponibilidade.dataDisponibilidade}"/></option>			
+										</c:forEach>
+								    </select>						    
+							    </div>
+							    
+							    <div class="col-md-3">
+							  		<button type="submit" class="btn btn-primary"> Ver resultado</button>
+							  	</div>
+							</div>					  									  					    				    
+					 	</div>
+					</div>								
+				</form>	
+			</div>
+		</div>	
 	</div>
+
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">Resultado da Votação</div>
+		<div class="panel-body">
+			
+				<c:forEach items="${itensSugeridosCardapio}" var="itemsugerido">	
+					<li class="list-group-item"><span class="badge">${itemsugerido.value}</span>${itemsugerido.key}</li>
+				</c:forEach>						
+		</div>	
+	</div>	
+</div>
 </div>
 </div>
 </body>

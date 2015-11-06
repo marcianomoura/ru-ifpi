@@ -1,5 +1,6 @@
 package br.com.ruifpi.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,8 +12,10 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.components.FuncionarioSession;
+import br.com.ruifpi.components.ListItemSugerido;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.models.Funcionario;
+import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.util.RestricaoAcesso;
 
@@ -23,22 +26,25 @@ public class AutenticacaoController {
 	@Inject private Validator validator;
 	@Inject private MetodosUtilImplementacao implementacaoMetodos;
 			private Funcionario funcionario = null;
+	@Inject	private ListItemSugerido listItemSugerido;
+			private List<ItemSugestaoCardapio> itemSugestaoCardapios = new ArrayList<ItemSugestaoCardapio>();
 			private Usuario usuario = null;
 	@Inject private FuncionarioSession funcionarioSession;
 	@Inject private UsuarioSession usuarioSession;
-	@Inject private AvaliacaoController avaliacaoController; 
+	@Inject private AvaliacaoController avaliacaoController;
+	@Inject private DisponibilidadeController disponibilidadeController;
+			
 	
 	@Path("/")
 	public void home() {
 		avaliacaoController.mostraCardapioDia();
 		avaliacaoController.listAvaliacoesCardapioDia();
+		disponibilidadeController.mostraResultadoSugestoesHome(disponibilidadeController.dataDisponivel());
 	}
 	
 	@RestricaoAcesso
 	@Path("/index")
-	public void index() {
-		// Area tem que tá logado e ser Funcionário...
-	}
+	public void index() { }
 	
 	public boolean verificaAutenticacaoFuncionario(Funcionario funcionario) {
 		List<Funcionario> funcionariosValidos = implementacaoMetodos.buscaFuncionariosAtivos();
@@ -80,7 +86,7 @@ public class AutenticacaoController {
 	}
 	
 	public boolean verificaAutenticacaoUsuario(Usuario usuario) {		
-		List<Usuario> usuariosValidos = implementacaoMetodos.buscaUsuariosAtivos();	// Apenas Usuários com matriculas válidas
+		List<Usuario> usuariosValidos = implementacaoMetodos.buscaUsuariosAtivos();
 		for (Usuario usuarioBanco : usuariosValidos) {
 			if(usuarioBanco.getLogin().equalsIgnoreCase(usuario.getLogin()) && 	usuarioBanco.getSenha().equalsIgnoreCase(usuario.getSenha())){
 				this.usuario = usuarioBanco;
@@ -88,6 +94,7 @@ public class AutenticacaoController {
 			}
 		}
 		if(this.usuario != null){
+			this.listItemSugerido.setItemSugestaoCardapios(itemSugestaoCardapios);
 			this.usuarioSession.login(this.usuario);
 			return true;
 		}else{

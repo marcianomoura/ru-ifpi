@@ -19,19 +19,23 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Listagem de Items Alimentares</div>
 	<div class="panel-body">
-		<table class="table table-hover table-bordered table-condensed">
-			<tr class="active" style="font-size: 16px;">
-		  		<td>Código</td>
-		  		<td class="col-md-3">Descrição</td>
-		  		<td>Benefícios</td>
-		  		<td class="col-md-2">Contraindicações</td>
-		  		<td>Inf. Nutricionais</td>
-		  		<td>Valor Calórico</td>
-		  		<td>Classe Nutricional</td>
-		  		<td>Alteração</td>
-		  	</tr>
+		<table class="table table-responsive table-bordered table-condensed">
+			<thead>
+				<tr class="active" style="font-size: 13px;">
+			  		<th>Código</th>
+			  		<th class="col-md-3">Descrição</th>
+			  		<th>Benefícios</th>
+			  		<th class="col-md-2">Contraindicações</th>
+			  		<th>Inf. Nutricionais</th>
+			  		<th>Valor Calórico</th>
+			  		<th>Classe Nutricional</th>
+			  		<th>Alteração</th>
+			  	</tr>
+			</thead>
+			
 		  <c:forEach items="${items}" var="item">
-		  	<tr>
+		  <tbody>
+		  	<tr class="text-capitalize">
 		  		<td>${item.id}</td>
 		  		<td>${item.descricao}</td>
 		  		<td align="center">
@@ -55,6 +59,8 @@
 				</td>
 		  		
 		  	</tr>
+		  </tbody>
+		  	
 		  </c:forEach>	  
 		</table>
 	</div>

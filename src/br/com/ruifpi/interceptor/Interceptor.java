@@ -14,16 +14,10 @@ import br.com.ruifpi.util.RestricaoAcesso;
 import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
 import br.com.ruifpi.util.RestricaoAcesso.AcessoUsuario;
 
-/*
- *	Interceptor utilizado no controle de acesso as uri do sistema... 
- * 
- */
 
 @Intercepts
 @RequestScoped
 public class Interceptor{
-	private final String AUTENTICACAO = "Usuário não logado. Informe seu login e senha para acessar o sistema.";
-	private final String AUTORIZACAO = "Usuário sem permissão.";
 	
 	@Inject private Result result;
 	@Inject	private FuncionarioSession funcionarioSession;
@@ -34,15 +28,15 @@ public class Interceptor{
 	public void interceptUsuario(SimpleInterceptorStack stack, ControllerMethod metodo) {
 		
 		if((!usuarioSession.logado() && !funcionarioSession.logado()) && metodo.containsAnnotation(RestricaoAcesso.class)){
-			result.include("erro", AUTENTICACAO);
+			
 			System.out.println("Interceptando autenticação nao realizada...");
 			result.redirectTo(AutenticacaoController.class).home();
 		}else if(usuarioSession.logado() && metodo.containsAnnotation(AcessoAdministrativo.class)){
-			result.include("erro", AUTORIZACAO);
+			
 			System.out.println("Interceptando autorização apenas para funcionario...");
 			result.redirectTo(AutenticacaoController.class).index();
 		}else if(funcionarioSession.logado() && metodo.containsAnnotation(AcessoUsuario.class)){
-			result.include("erro", AUTORIZACAO);
+			
 			System.out.println("Interceptando autorização apenas para Alunos/Servidor...");
 			result.redirectTo(AutenticacaoController.class).index();
 		}

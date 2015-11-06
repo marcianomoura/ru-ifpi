@@ -49,6 +49,7 @@ $(function () {
     $( "#datepicker" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#datepicker2" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataCardapio" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#dataDisponibilizada" ).datepicker({dateFormat: "dd/mm/yy"});
   });
 </script>
 

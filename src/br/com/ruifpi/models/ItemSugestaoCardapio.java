@@ -10,12 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ItemSugerido implements Serializable{
+public class ItemSugestaoCardapio implements Serializable{
 	
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,8 +26,12 @@ public class ItemSugerido implements Serializable{
 	private SugestaoCardapio itemSugerido;
 	
 	private double totalCaloria;
-
-	public ItemSugerido(Long id, Item item, SugestaoCardapio itemSugerido,
+	
+	public ItemSugestaoCardapio() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ItemSugestaoCardapio(Long id, Item item, SugestaoCardapio itemSugerido,
 			double totalCaloria) {
 		super();
 		this.id = id;
@@ -90,7 +91,7 @@ public class ItemSugerido implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemSugerido other = (ItemSugerido) obj;
+		ItemSugestaoCardapio other = (ItemSugestaoCardapio) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

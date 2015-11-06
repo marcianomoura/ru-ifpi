@@ -24,14 +24,14 @@
 		<c:if test="${usuarioSessao.usuario != null}">
 			<div class="container" align="center">
 				<h1>Olá, <small> ${usuarioSessao.usuario.perfil}(a) ${usuarioSessao.usuario.nome}</small></h1>
-			  <p><small>Seja Bem vindo(a) ao sistema de avaliação e sugestão de refeição do IFPI</small> </p>	
+			  <p><small>Seja Bem vindo(a) ao sistema de avaliação e sugestão de cardápio do IFPI</small> </p>	
 			</div>
 		</c:if>
 		
 		<c:if test="${funcionarioSessao.funcionario != null}">
 			<div class="container" align="center">
 				<h1>Olá, <small> ${funcionarioSessao.funcionario.perfil} (a) ${funcionarioSessao.funcionario.nome}</small></h1>
-			  <p><small>Seja Bem vindo(a) ao sistema de gerenciamento e avaliação e sugestão de refeição do IFPI</small> </p>	
+			  <p><small>Seja Bem vindo(a) ao sistema de gerenciamento, avaliação e sugestão de cardápio do IFPI</small> </p>	
 			</div>
 		</c:if>	
 		

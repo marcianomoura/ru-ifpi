@@ -1,9 +1,7 @@
 package br.com.ruifpi.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class SugestaoCardapio implements Serializable {
@@ -27,20 +23,43 @@ public class SugestaoCardapio implements Serializable {
 	private Long id;
 	@ManyToOne
 	private Usuario usuario;
-	
-	@Temporal(TemporalType.DATE)
-	private Date dataSugestao;
-	
+		
 	@OneToMany(mappedBy="itemSugerido", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<ItemSugerido> itemSugerido ;
-
-	public SugestaoCardapio(Long id, Usuario usuario, Date dataSugestao,
-			List<ItemSugerido> itemSugerido) {
+	private List<ItemSugestaoCardapio> itemSugerido ;
+	
+	@ManyToOne
+	private Disponibilidade disponibilidade;
+	
+	private double totalCaloria;
+	
+	public SugestaoCardapio() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public SugestaoCardapio(Long id, Usuario usuario, List<ItemSugestaoCardapio> itemSugerido, 
+			Disponibilidade disponibilidade, double totalCaloria) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
-		this.dataSugestao = dataSugestao;
 		this.itemSugerido = itemSugerido;
+		this.disponibilidade = disponibilidade;
+		this.totalCaloria = totalCaloria;
+	}
+	
+	public double getTotalCaloria() {
+		return totalCaloria;
+	}
+	
+	public void setTotalCaloria(double totalCaloria) {
+		this.totalCaloria = totalCaloria;
+	}
+	
+	public Disponibilidade getDisponibilidade() {
+		return disponibilidade;
+	}
+	
+	public void setDisponibilidade(Disponibilidade disponibilidade) {
+		this.disponibilidade = disponibilidade;
 	}
 
 	public Long getId() {
@@ -59,19 +78,11 @@ public class SugestaoCardapio implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Date getDataSugestao() {
-		return dataSugestao;
-	}
-
-	public void setDataSugestao(Date dataSugestao) {
-		this.dataSugestao = dataSugestao;
-	}
-
-	public List<ItemSugerido> getItemSugerido() {
+	public List<ItemSugestaoCardapio> getItemSugerido() {
 		return itemSugerido;
 	}
 
-	public void setItemSugerido(List<ItemSugerido> itemSugerido) {
+	public void setItemSugerido(List<ItemSugestaoCardapio> itemSugerido) {
 		this.itemSugerido = itemSugerido;
 	}
 

@@ -79,7 +79,7 @@
 			 					<span class="glyphicon glyphicon-list-alt"></span> Ver Avaliações </a>
 			 				</li>
 			 				
-			 				<li role="presentation"><a role="menuitem" tabindex="-1" href="cardapios">
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestoes"/>'>
 			 					<span class="glyphicon glyphicon-list-alt"></span> Ver Sugestões </a>
 			 				</li>
 	                	</ul>
@@ -97,7 +97,10 @@
 	                	</ul>
 	                </li>  
 	                
-	                <li><a href="funcionario"> Funcionários </a></li>
+	                <li><a href='<c:url value="disponibilidade"/>'> Data para Sugestoes </a></li>
+	                
+	                <li><a href='<c:url value="funcionario" />'> Funcionários </a></li>
+	                
 	                <li><a href='<c:url value="/logout/funcionario"></c:url>'> Sair :
 	                <span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.perfil} (a) ${funcionarioSessao.funcionario.nome}</a>
 	                </li>

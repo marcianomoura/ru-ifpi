@@ -117,33 +117,4 @@ public class ItemController {
 		result.include("items",	 itemsGeral);
 	}
 	
-	@RestricaoAcesso
-	@SuppressWarnings("unchecked")
-	public void listaItensAlimentaresCategorizados() {
-		List<Item> proteinas = new ArrayList<>();	// 3
-		List<Item> lipidios = new ArrayList<>();	// 2
-		List<Item> vitaminas = new ArrayList<>();	// 4
-		List<Item> carboidratos = new ArrayList<>();	// 1
-		try {
-			itemsGeral = daoImplementacao.find(Item.class);
-		 	for (Item item : itemsGeral) {
-				if(item.getClasseNutricional().getId() == 1L){
-					carboidratos.add(item);
-				}else if(item.getClasseNutricional().getId() == 2L){
-					lipidios.add(item);
-				}else if(item.getClasseNutricional().getId() == 3L){
-					proteinas.add(item);
-				}else if(item.getClasseNutricional().getId() == 4L){
-					vitaminas.add(item);
-				}
-			}
-			result.include("proteinas", proteinas);
-			result.include("lipidios", lipidios);
-			result.include("carboidratos", carboidratos);
-			result.include("vitaminas", vitaminas);
-		} catch (Exception e) {
-			result.include("erro", "Erro na listagem de itens");
-			result.redirectTo(this).listItem();
-		}	 	
-	}
 }

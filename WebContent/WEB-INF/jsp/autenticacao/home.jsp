@@ -72,8 +72,14 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="panel panel-default" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
-						<div class="panel-heading">Itens do Cardápio</div>
+                    <div class="panel panel-default">
+						<div class="panel-heading">Itens do Cardápio 
+							<label class="pull-right">
+						    	<code>Total de Calorias : ${cardapioDia.totalCaloria} Kcal</code>
+						   	 </label> 	
+					    </div>
+					   
+						
 						<div class="panel-body">
 							<div class="col-md-4">
 							    <div class="thumbnail">
@@ -84,7 +90,7 @@
 							<div class="col-md-8">
 								<table class="table table-responsive">
 									<thead>
-										<tr>
+										<tr class="small">
 											<th>Item</th>
 											<th>Beneficios</th>
 											<th>Não recomendado</th>
@@ -118,7 +124,7 @@
 										</tbody>
 									</c:forEach>
 								</table>
-								<code>Total de Calorias : ${cardapioDia.totalCaloria} Kcal</code>								
+																
 							</div>
 						</div>
 					</div> 
@@ -151,12 +157,12 @@
 						</div>
 						
 						<div class="col-md-7" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
-							<table class="table table-responsive">
+							<table class="table table-responsive table-condensed">
 								<thead>
-									<tr>
-										<td>Nome</td>
-										<td>Matricula</td>
-										<td>Nota</td>								
+									<tr class="small">
+										<th>Nome</th>
+										<th>Matricula</th>
+										<th>Nota</th>								
 									</tr>
 								</thead>
 								<c:forEach items="${listaAvaliacoes}" var="avaliacao">
@@ -186,8 +192,14 @@
             </div>
             
             <div class="col-md-12">
-                <div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
-					<div class="panel-heading">Cardápio mais sugerido</div>
+                <div class="panel panel-default">
+                	
+					<div class="panel-heading">Itens mais sugeridos para o Cardápio do dia <b>
+						<fmt:formatDate value="${dataCrdapio}" pattern="dd/MM/yyyy"/></b>
+						<label class="pull-right">
+					    	<code>Total de sugestões : <fmt:formatNumber value="${totalSugestoes}" maxFractionDigits="2"/></code>
+					    </label>	
+					</div>
 					<div class="panel-body">
 						<div class="col-md-6">
 						    <div class="thumbnail">
@@ -195,14 +207,25 @@
 						    </div>
 						</div>
 						
-						<div class="col-md-6">
-							<ul class="list-group">
-							  <li class="list-group-item">Arroz Maria Izabel<span class="badge">60 sugestões</span></li>
-							  <li class="list-group-item">Salada Verde<span class="badge">66 sugestões</span></li>
-							  <li class="list-group-item">Suco de Abacaxi<span class="badge">30 sugestões</span></li>
-							  <li class="list-group-item">Frango a Milanesa<span class="badge">20 sugestões</span></li>
-							  <li class="list-group-item">Creme de Galinha<span class="badge">50 sugestões</span></li>
-							</ul>
+						<div class="col-md-6" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
+							<table class="table table-responsive table-condensed">
+								<thead>
+									<tr class="small">
+										<th>Descrição</th>
+										<th>Quantidade</th>
+																	
+									</tr>
+								</thead>
+								<c:forEach items="${itensSugeridosCardapio}" var="itemsugerido">
+									<tbody>								
+										<tr>
+											<td>${itemsugerido.key}</td>									
+											<td><span class="badge">${itemsugerido.value}</span></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+							
 						</div>
 						<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Topo da Página" 
 						data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
