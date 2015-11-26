@@ -7,9 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -21,9 +19,8 @@ import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Disponibilidade;
 import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.SugestaoCardapio;
-import br.com.ruifpi.util.RestricaoAcesso;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoUsuario;
+import br.com.ruifpi.util.ControleAcesso;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class DisponibilidadeController {
@@ -38,7 +35,6 @@ public class DisponibilidadeController {
 	@Inject MetodosUtilImplementacao metodosUtil;
 	private List<Disponibilidade> disponibilidadeUtil = new ArrayList<Disponibilidade>();
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/disponibilidade")
 	public void formDisponibilidade() {
@@ -46,7 +42,6 @@ public class DisponibilidadeController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	public List<Disponibilidade> listDatasDisponibilizadas() {
 		
@@ -61,7 +56,6 @@ public class DisponibilidadeController {
 		}		
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/disponibilidade/save")
 	public void save(Disponibilidade disponibilidade) {
@@ -79,12 +73,18 @@ public class DisponibilidadeController {
 		
 	}	
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public boolean validaDisponibilidade(Disponibilidade disponibilidade) {				
 		if(disponibilidade.getDataDisponibilidade().before(validaFormatData()) || disponibilidade.getDataDisponibilidade() == null){
 			validator.add(new I18nMessage("Data disponibilizada", "data.disponibilizada.invalida"));
 			return false;
 		}
+		
+		if(disponibilidade.getDataDisponibilidade().equals(validaFormatData()) || disponibilidade.getDataDisponibilidade() == null){
+			validator.add(new I18nMessage("Data disponibilizada", "data.disponibilizada.igual"));
+			return false;
+		}
+		
 		if(verificaDataDisponibilizada(disponibilidade) && disponibilidade.getId() == null){
 			validator.add(new I18nMessage("Data disponibilizada", "data.disponibilizada.existente"));
 			return false;
@@ -92,11 +92,9 @@ public class DisponibilidadeController {
 		return true;
 	}
 	
-	@SuppressWarnings("unchecked")
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public boolean verificaDataDisponibilizada(Disponibilidade disponibilidade) {
-		boolean validador = false;
-		
+		boolean validador = false;		
 		try {
 			formatDateUtil.applyPattern("yyyy-MM-dd");
 			String dataFormatada = formatDateUtil.format(disponibilidade.getDataDisponibilidade());
@@ -118,7 +116,7 @@ public class DisponibilidadeController {
 		return validador;
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public Date validaFormatData() {
 		Date dataFormatada = new Date();
 		try {
@@ -131,7 +129,6 @@ public class DisponibilidadeController {
 		return dataFormatada;
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/disponibilidade/alteracao")
 	public void alteraDataDisponivel(Long id) {
@@ -146,7 +143,6 @@ public class DisponibilidadeController {
 		
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/disponibilidade/remocao")
 	public void indisponibilzarSugestoes(Long id) {
@@ -163,8 +159,6 @@ public class DisponibilidadeController {
 		
 	}
 	
-	@RestricaoAcesso
-	@AcessoUsuario
 	@Path("/disponibilidade/validas")
 	public void listDisponibilidadesValidas() {
 		List<Disponibilidade> disponibilidades = metodosUtil.buscaDatasDisponiveisSugestaoCardapio();
@@ -177,7 +171,7 @@ public class DisponibilidadeController {
 					disponibilidadeUtil.add(disponibilidade);
 				}
 			}
-			if(disponibilidades.isEmpty()){
+			if(disponibilidadeUtil.isEmpty()){
 				result.include("erro", "Ainda não foi disponibilizada data para sugestões de cardápio.");
 			}else{
 				result.include("disponibilidadesValidas", disponibilidadeUtil);
@@ -192,17 +186,26 @@ public class DisponibilidadeController {
 		
 	}
 	
-	@RestricaoAcesso
 	public Disponibilidade dataDisponivel() {
 		Disponibilidade disponibilidadeEncontrada = null;
-		List<Disponibilidade> disponibilidades = metodosUtil.buscaDatasDisponiveisSugestaoCardapio();
-		for (Disponibilidade disponibilidade : disponibilidades) {
-			disponibilidadeEncontrada = disponibilidade;
+		try {
+			formatDateUtil.applyPattern("yyyy-MM-dd");
+			String dataFormatada = formatDateUtil.format(new Date());
+			java.sql.Date dataSql = new java.sql.Date(formatDateUtil.parse(dataFormatada).getTime());
+			List<Disponibilidade> disponibilidades = metodosUtil.buscaDatasDisponiveisSugestaoCardapio();
+			for (Disponibilidade disponibilidade : disponibilidades) {
+				if(disponibilidade.getDataDisponibilidade().after(dataSql)){
+					disponibilidadeEncontrada = disponibilidade;
+				}
+			}
+			return disponibilidadeEncontrada;
+		} catch (Exception e) {
+			return disponibilidadeEncontrada;
 		}
-		return disponibilidadeEncontrada;
+		
 	}
 	
-	@RestricaoAcesso
+	@SuppressWarnings("unchecked")
 	public void mostraResultadoSugestoesHome(Disponibilidade disponibilidade) {
 		List<SugestaoCardapio> sugestoesEncontradas = new ArrayList<SugestaoCardapio>();
 		List<ItemSugestaoCardapio> todosItensSugeridos = new ArrayList<ItemSugestaoCardapio>();
@@ -233,6 +236,7 @@ public class DisponibilidadeController {
 					result.include("itensSugeridosCardapio", hashMap);
 					result.include("dataCrdapio", disponibilidade.getDataDisponibilidade());
 					result.include("totalSugestoes", sugestoesEncontradas.size());
+					result.include("quantidadeTotalItens", todosItensSugeridos.size());
 								
 				}else{
 					result.include("sucesso", "Não foram encontradas sugestões para o cardapio disponibilidade nesta data.");
@@ -244,19 +248,3 @@ public class DisponibilidadeController {
 		}		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -30,8 +30,8 @@
 				<div class="col-md-4">
 				<h5>Cadastro de Funcionários - <span class="small">Usuários do Sistema</span></h5>
 				<hr>
-				<label class="small" style="color: red" > * Campos Obrigatórios</label><br>
-				<form action='<c:url value="/funcionario/save"></c:url>'>
+					<label class="small" style="color: red" > * Campos Obrigatórios</label><br>
+					<form action='<c:url value="/funcionario/save"></c:url>'>
 						<input  type="hidden" name="funcionario.id" value="${funcionario.id}" >
 						
 					    <label class="small">* Nome</label>
@@ -57,53 +57,52 @@
 					    <label class="small">Senha</label>
 					    <small style="color: red">${errors.from('senha')}</small>
 					      <input required class="form-control" type="password" name="funcionario.senha" value="${funcionario.senha}" placeholder="Informe sua senha de acesso">
-					   	<button type="submit" class="btn btn-primary">Salvar </button>
-					   	<button type="reset" class="btn btn-warning">Limpar </button>
-					
-				</form>
-			</div>
+					   	
+					   	<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
+					    <button type="reset" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>					
+					</form>
+				</div>
 			
 			
 			<div class="col-md-8">
 				<h5 align="center">Lista de Funcionários cadastrados</h5>
 				<hr>
-					<table class="table table-striped table-hover">
-						<tr class="">
-							<td class="col-md-5">Nome</td>
-							<td class="col-md-2">Matricula</td>
-							<td class="col-md-3">Funcão</td>
-							<td class="col-md-1">Alteração</td>
-							<td class="col-md-1">Remoção</td>
-						</tr>
+					<table class="table table-responsive">
+						<thead>
+							<tr class="small">
+								<th>Nome</th>
+								<th>Matricula</th>
+								<th>Funcão</th>
+								<th>Alteração</th>
+								<th>Remoção</th>
+							</tr>
+						</thead>
 						<c:forEach items="${funcionarios}" var="funcionario">
-						<tr>
-							<td>${funcionario.nome}</td>
-							<td>${funcionario.matricula}</td>
-							<td>${funcionario.funcao}</td>
-							<td> 
-								<a class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar os dados deste funcionário"
-								href='<c:url value="/funcionario/alteracao?id=${funcionario.id}"></c:url>'>
-									 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-								</a>
-							</td>
-							<td> 
-								<a onclick="return confirmaRemocaoFuncionario();" data-toggle="tooltip" data-placement="top" title="Remover este funcionário"
-								class="btn btn-danger btn-sm" href='<c:url value="/funcionario/remocao?id=${funcionario.id}"></c:url>'>
-									 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</a>
-							</td>
-						</tr>
+							<tbody>
+								<tr>
+									<td>${funcionario.nome}</td>
+									<td>${funcionario.matricula}</td>
+									<td>${funcionario.funcao}</td>
+									<td> 
+										<a class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar os dados deste funcionário"
+										href='<c:url value="/funcionario/alteracao?id=${funcionario.id}"></c:url>'>
+											 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+										</a>
+									</td>
+									<td> 
+										<a onclick="return confirmaRemocaoFuncionario();" data-toggle="tooltip" data-placement="top" title="Remover este funcionário"
+										class="btn btn-danger btn-sm" href='<c:url value="/funcionario/remocao?id=${funcionario.id}"></c:url>'>
+											 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						
 						</c:forEach>
 					</table>
-				
+				</div>
 			</div>
-			
-			
-			</div>
-
 		</div>
-		
-			
 </div>
 </body>
 </html>

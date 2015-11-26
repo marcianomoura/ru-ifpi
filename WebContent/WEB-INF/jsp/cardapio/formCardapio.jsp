@@ -48,15 +48,18 @@
 			
 			<hr>
 			<small style="color: red" >${errors.from('itemsDoCardapio')}</small>
-			<table class="table table-hover">
-				<tr class="active">
-					<td>Descricao</td>
-					<td>Quantidade de Calorias</td>
-					<td>Classe Nutricional</td>
-					<td>Remoção</td>
-				</tr>
+			<table class="table table-responsive table table-hover">
+				<thead>
+					<tr class="active">
+						<th>Descricao</th>
+						<th>Total de Calorias</th>
+						<th>Classe Nutricional</th>
+						<th>Remoção</th>
+					</tr>
+				</thead>
 				<c:forEach var="itemlista" items="${itemsLista}">
-					<tr>
+					<tbody>
+						<tr>
 						<td>${itemlista.item.descricao}</td>
 						<td>${itemlista.item.valorCalorico}</td>
 						<td>${itemlista.item.classeNutricional.descricao}</td>
@@ -66,6 +69,8 @@
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 						</td>
 					</tr>
+					</tbody>
+					
 				</c:forEach>
 			</table>
 				

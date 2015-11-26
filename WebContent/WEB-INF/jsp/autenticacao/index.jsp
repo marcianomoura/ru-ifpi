@@ -18,7 +18,7 @@
 <div class="">
 	<div class="jumbotron">
 		<div class="container" align="center">
-			<img class="img-responsive" src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/profile.png" alt="">
+			<img class="img-responsive img-circle" src='<c:url value="img/almoco.jpg"></c:url>' alt="">
 		</div>
 	
 		<c:if test="${usuarioSessao.usuario != null}">

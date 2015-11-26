@@ -21,25 +21,47 @@ import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Cardapio;
 import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemCardapio;
-import br.com.ruifpi.util.RestricaoAcesso;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.ControleAcesso;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class CardapioController {
+			
+	private DaoImplementacao daoImplementacao;
+	private Validator validator;
+	private Result result;
+	@Inject 
+	private FuncionarioSession usuarioSession;
+	@Inject 
+	private ItemController itemController;
+	private static List<ItemCardapio> itemsCardapio = new ArrayList<>();
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	private static Cardapio cardapioAlteracao = new Cardapio();
+	private SimpleDateFormat formatadorDataUtil = new SimpleDateFormat();
+	private static double valorTotalCaloriaCardapio = 0;
+	private List<Cardapio> cardapioUtil = new ArrayList<Cardapio>();
 	
-	@Inject private DaoImplementacao daoImplementacao;
-	@Inject private Validator validator;
-	@Inject private Result result;
-	@Inject private FuncionarioSession usuarioSession;
-	@Inject private ItemController itemController;
-			private static List<ItemCardapio> itemsCardapio = new ArrayList<>();
-			private DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			private static Cardapio cardapioAlteracao = new Cardapio();
-			private SimpleDateFormat formatadorDataUtil = new SimpleDateFormat();
-			private static double valorTotalCaloriaCardapio = 0;
-			private List<Cardapio> cardapioUtil = new ArrayList<Cardapio>();
+	public CardapioController() {
+		this(null, null, null);
+	}
 	
-	@RestricaoAcesso
+	@Inject
+	public CardapioController(DaoImplementacao daoImplementacao, Validator validator, Result result) {
+		this.validator = validator;
+		this.daoImplementacao = daoImplementacao;
+		this.result = result;
+	}
+	
+	@AcessoAdministrativo
+	public void setListItens(List<ItemCardapio> listaItens) {
+		itemsCardapio = listaItens;
+	}
+	
+	@AcessoAdministrativo
+	public List<ItemCardapio> getListaItens() {
+		return itemsCardapio;
+	}
+			
 	@AcessoAdministrativo				
 	@Path("/cardapio")
 	public void formCardapio() {			
@@ -48,29 +70,25 @@ public class CardapioController {
 		mostraItensCardapioLista();
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/cardapio/itens")
 	public void itensCardapio(Cardapio cardapio) {
 		detalhesItensCardapios(cardapio);
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/cardapios")	
 	public void listCardapio() {
 		listCardapios();
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/cardapio/save")
 	public void save(Cardapio cardapio) {
-		if (!validaDadosCardapio(cardapio)) {
+		if (!validaDadosCardapio(cardapio) || !verificaListaItensVazia() || !verificaCardapioPublicadoNaoAlteracao(cardapio)) {
 			validator.onErrorRedirectTo(this).formCardapio();
 		}
-		try {
-			
+		try {			
 			if (cardapioAlteracao.getId() == null) { // Não é alteração de cardápio ...
 				cardapio.setFuncionario(this.usuarioSession.getFuncionario());
 				insereIdCardapio(cardapio);
@@ -96,7 +114,6 @@ public class CardapioController {
 		}
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/cardapio/clear")
 	public void limpaDadosCardapio() {
@@ -107,7 +124,6 @@ public class CardapioController {
 	}
 	
 	// Função que remove do banco de dados os itens do cardápio que irá ser alterado para que sejam substituidos pelos novos itens.
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	public void removeItensCardapioDoBanco(Cardapio cardapio) {
 		try {
@@ -121,19 +137,28 @@ public class CardapioController {
 		
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public void mostraItensCardapioLista() {
 		result.include("itemsLista", itemsCardapio);
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public void insereIdCardapio(Cardapio cardapio) {
 		for (ItemCardapio itemCardapio : itemsCardapio) {
 			itemCardapio.setCardapio(cardapio);
 		}
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
+	public double somaCaloriaCardapio(ItemCardapio itemCardapio) {
+		return valorTotalCaloriaCardapio += itemCardapio.getTotalCaloria();
+	}
+	
+	@AcessoAdministrativo
+	public double subtraiCaloriaCardapio(ItemCardapio itemCardapio) {
+		return valorTotalCaloriaCardapio -= itemCardapio.getTotalCaloria();
+	}
+	
 	@AcessoAdministrativo
 	@Path("/cardapio/addItem")
 	public void addItemCardapio(Item item) {
@@ -142,7 +167,7 @@ public class CardapioController {
 			ItemCardapio itemCardapio = new ItemCardapio();
 			itemCardapio.setItem(itemBanco);
 			itemCardapio.setTotalCaloria(itemBanco.getValorCalorico());
-			valorTotalCaloriaCardapio += itemCardapio.getTotalCaloria();
+			somaCaloriaCardapio(itemCardapio);
 			itemsCardapio.add(itemCardapio);
 			result.redirectTo(this).formCardapio();
 		} catch (Exception e) {
@@ -152,14 +177,13 @@ public class CardapioController {
 		
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/cardapio/removeItem")
 	public void removeItem(Long id) {	// Id do Produto
 		try {
 			for (ItemCardapio itemCardapio : itemsCardapio) {
 				if(itemCardapio.getItem().getId() == id){
-					valorTotalCaloriaCardapio -= itemCardapio.getTotalCaloria();
+					subtraiCaloriaCardapio(itemCardapio);
 					itemsCardapio.remove(itemCardapio);
 					break;
 				}
@@ -171,7 +195,6 @@ public class CardapioController {
 		}
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/carpapio/alteracao")
 	public void alteracaoCardapio(Cardapio cardapio) {
@@ -184,7 +207,7 @@ public class CardapioController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public boolean verificaCardapioDia(Cardapio cardapio) {
 		boolean cardapioEncontrado = false;
 		try {
@@ -199,18 +222,13 @@ public class CardapioController {
 				}
 			}
 		} catch (Exception e) {
-			throw new DaoException("Erro na conversao das datas");
-		}
-		
+			cardapioEncontrado = false;
+			result.include("erro", "Erro na operação de verificação do cardapio");
+		}		
 		return cardapioEncontrado;
 	}
-	
-	@RestricaoAcesso
-	public void cardapioSemana() {
 		
-	}
-	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public Date formataData() {
 		Date dataFormatada = new Date();
 		try {
@@ -222,32 +240,50 @@ public class CardapioController {
 		}
 		return dataFormatada;
 	}
-	
-	@RestricaoAcesso
+
 	@AcessoAdministrativo
-	public boolean validaDadosCardapio(Cardapio cardapio) {
-		
-		if(cardapio.getDataCardapio().before(formataData()) || cardapio.getDataCardapio() == null){
+	public boolean validaDadosCardapio(Cardapio cardapio){	
+		try {
+			if(cardapio.getDataCardapio().before(formataData())){
+				validator.add(new I18nMessage("dataCardapio", "cardapio.datacardapio.invalida"));
+				return false;
+			}
+		} catch (Exception e) {
+			result.include("erro", "Erro na comparação de datas...");
+			return false;
+		}
+				
+		if(cardapio.getDataCardapio() == null){
 			validator.add(new I18nMessage("dataCardapio", "cardapio.datacardapio.invalida"));
-			return false;
-		}
-		
-		if ((verificaCardapioDia(cardapio)) && (cardapioAlteracao.getId() == null)) {	// Se nao for alteração ...
-			validator.add(new I18nMessage("dataCardapio", "cardapio.existente"));
-			return false;
-		}
+			return false;			
+		}		
 		if(cardapio.getTotalCaloria() <= 0.0 ){
 			validator.add(new I18nMessage("totalCaloria", "cardapio.totalcaloria.invalido"));
-			return false;
-		}
-		if(itemsCardapio.isEmpty() || itemsCardapio.size() <= 0){
-			validator.add(new I18nMessage("itemsDoCardapio", "cardapio.items.vazio"));
 			return false;
 		}
 		return true;
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
+	public boolean verificaCardapioPublicadoNaoAlteracao(Cardapio cardapio) {
+		if ((verificaCardapioDia(cardapio)) && (cardapioAlteracao.getId() == null)) {	// Se nao for alteração ...
+			validator.add(new I18nMessage("dataCardapio", "cardapio.existente"));
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	@AcessoAdministrativo
+	public boolean verificaListaItensVazia() {
+		if(itemsCardapio.isEmpty() || itemsCardapio.size() <= 0){
+			validator.add(new I18nMessage("itemsDoCardapio", "cardapio.items.vazio"));
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public List<Cardapio> listCardapios() {
@@ -258,7 +294,7 @@ public class CardapioController {
 		return cardapios;
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public List<ItemCardapio> detalhesItensCardapios(Cardapio cardapio) {
 		List<ItemCardapio> itemCardapios  =  new ArrayList<>();
 		try {
@@ -273,5 +309,4 @@ public class CardapioController {
 			return null;
 		}
 	}
-	
 }

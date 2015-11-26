@@ -73,10 +73,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default">
-						<div class="panel-heading">Itens do Cardápio 
-							<label class="pull-right">
-						    	<code>Total de Calorias : ${cardapioDia.totalCaloria} Kcal</code>
-						   	 </label> 	
+						<div class="panel-heading">Itens do Cardápio de hoje - 
+							Total de Calorias : <kbd>${cardapioDia.totalCaloria} Kcal</kbd>
 					    </div>
 					   
 						
@@ -143,10 +141,8 @@
             </div>
             <div class="col-md-12">
                 <div class="panel panel-default" >
-					<div class="panel-heading">Avaliação do Cardápio de Hoje 
-						<label class="pull-right">
-					    	<code>Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
-					    </label>
+					<div class="panel-heading">Avaliações do Cardápio de Hoje - 		
+							Media das avaliações :<kbd> <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></kbd>		    
 					</div>
 					<div class="panel-body" >						
 												
@@ -194,11 +190,9 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                 	
-					<div class="panel-heading">Itens mais sugeridos para o Cardápio do dia <b>
-						<fmt:formatDate value="${dataCrdapio}" pattern="dd/MM/yyyy"/></b>
-						<label class="pull-right">
-					    	<code>Total de sugestões : <fmt:formatNumber value="${totalSugestoes}" maxFractionDigits="2"/></code>
-					    </label>	
+					<div class="panel-heading">Itens mais sugeridos para o Cardápio do dia : 
+						<label class="small"><fmt:formatDate value="${dataCrdapio}" pattern="dd/MM/yyyy"/></label> - 						
+							<kbd><fmt:formatNumber value="${totalSugestoes}" maxFractionDigits="2"/> sugestões</kbd>		    	
 					</div>
 					<div class="panel-body">
 						<div class="col-md-6">
@@ -213,6 +207,7 @@
 									<tr class="small">
 										<th>Descrição</th>
 										<th>Quantidade</th>
+										<th>%</th>
 																	
 									</tr>
 								</thead>
@@ -220,7 +215,13 @@
 									<tbody>								
 										<tr>
 											<td>${itemsugerido.key}</td>									
-											<td><span class="badge">${itemsugerido.value}</span></td>
+											
+											<td><span class="badge">${itemsugerido.value}</span> sugestões</td>
+											
+											<td><span class="badge">
+													<fmt:formatNumber maxFractionDigits="2" value="${(itemsugerido.value * 100) / quantidadeTotalItens}" />
+												% </span>
+											</td>
 										</tr>
 									</tbody>
 								</c:forEach>

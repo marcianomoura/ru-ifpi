@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value=ElementType.METHOD)
-public @interface RestricaoAcesso {
+public @interface ControleAcesso {
 	
 	@Target(value=ElementType.METHOD)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -16,10 +16,10 @@ public @interface RestricaoAcesso {
 		
 	}
 	
-	@Retention(RetentionPolicy.RUNTIME)
 	@Target(value=ElementType.METHOD)
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface AcessoUsuario{
-
+		
 	}
 	
 }

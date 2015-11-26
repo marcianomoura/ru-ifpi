@@ -2,17 +2,9 @@ package br.com.ruifpi.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
-import com.sun.crypto.provider.DESCipher;
-
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -25,8 +17,8 @@ import br.com.ruifpi.models.Disponibilidade;
 import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.SugestaoCardapio;
-import br.com.ruifpi.util.RestricaoAcesso;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoUsuario;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.ControleAcesso.AcessoUsuario;
 
 @Controller
 public class SugestaoController {
@@ -42,11 +34,9 @@ public class SugestaoController {
 	@Inject
 	private UsuarioSession usuarioSession;
 	private List<SugestaoCardapio> sugestaoCardapioUil = new ArrayList<SugestaoCardapio>();
-	@Inject DisponibilidadeController disponibilidadeController;
+	@Inject 
+	private DisponibilidadeController disponibilidadeController;
 	
-	@Inject HttpServletRequest resquest;
-
-	@RestricaoAcesso
 	@AcessoUsuario
 	@Path("/sugestao")
 	public void formSugestao() {
@@ -55,13 +45,14 @@ public class SugestaoController {
 		result.include("itemsLista", listItemSugerido.getItemSugestaoCardapios());
 	}
 	
-	@RestricaoAcesso		
+	@AcessoAdministrativo		
 	@Path("/sugestoes")		
 	public void listSugestaoCardapio() {
 		result.include("disponibilidades", disponibilidadeController.listDatasDisponibilizadas());
 	}
 	
-	@RestricaoAcesso
+	@SuppressWarnings("unchecked")
+	@AcessoUsuario
 	public List<Item> listItensDisponiveis() {
 		List<Item> items = daoImplementacao.find(Item.class);
 		new Item().ordenaItemPorNome(items);
@@ -69,7 +60,7 @@ public class SugestaoController {
 		return items;
 	}
 	
-	@RestricaoAcesso
+	@AcessoUsuario
 	public double calculaValorTotalCaloria() {
 		double somaTotalCaloria = 0;
 		for (ItemSugestaoCardapio itemSugestaoCardapio : listItemSugerido.getItemSugestaoCardapios()) {
@@ -78,7 +69,15 @@ public class SugestaoController {
 		return somaTotalCaloria;
 	}
 	
-	@RestricaoAcesso
+	@AcessoUsuario
+	public boolean validaTamanhoList() {
+		if(listItemSugerido.getItemSugestaoCardapios().size() > 5){
+			return false;
+		}
+		return true;
+	}
+	
+	@AcessoUsuario
 	public boolean validaItensLista(Item item) {
 		if(!validaTamanhoList()){
 			validator.add(new I18nMessage("Tamanho da Lista", "numero.itens.nao.permitido"));
@@ -92,7 +91,6 @@ public class SugestaoController {
 		return true;
 	}
 	
-	@RestricaoAcesso
 	@AcessoUsuario
 	@Path("/sugestao/add")
 	public void add(Item item) {
@@ -113,7 +111,7 @@ public class SugestaoController {
 		}		
 	}
 	
-	@RestricaoAcesso
+	@AcessoUsuario
 	public boolean validaDadosSugestao(SugestaoCardapio sugestaoCardapio) {
 		if(listItemSugerido.getItemSugestaoCardapios().isEmpty()){
 			validator.add(new I18nMessage("Lista de itens", "lista.itens.sugeridos.invalida"));
@@ -122,7 +120,7 @@ public class SugestaoController {
 		return true;
 	}
 	
-	@RestricaoAcesso
+	@AcessoUsuario
 	public void inseriIdsugestao(SugestaoCardapio sugestaoCardapio) {
 		for (ItemSugestaoCardapio itemSugestaoCardapio : listItemSugerido.getItemSugestaoCardapios()) {
 			itemSugestaoCardapio.setItemSugerido(sugestaoCardapio);
@@ -130,7 +128,7 @@ public class SugestaoController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RestricaoAcesso
+	@AcessoUsuario
 	public boolean verificaSugestaoRealizada(Long idDisponibilidade) {
 		boolean encontrou = false;
 		List<SugestaoCardapio> sugestaoCardapios = daoImplementacao.find(SugestaoCardapio.class);
@@ -144,7 +142,7 @@ public class SugestaoController {
 		return encontrou;
 	}
 	
-	@RestricaoAcesso
+	@AcessoUsuario
 	@Path("/sugestao/save")
 	public void saveSugestao(SugestaoCardapio sugestaoCardapio) {
 		if (!validaDadosSugestao(sugestaoCardapio)) {
@@ -170,7 +168,6 @@ public class SugestaoController {
 		}
 	}
 	
-	@RestricaoAcesso
 	@AcessoUsuario
 	@Path("/sugestao/remocaoitem")
 	public void removeItem(Long id) {
@@ -184,7 +181,6 @@ public class SugestaoController {
 		result.redirectTo(this).formSugestao();
 	}
 		
-	@RestricaoAcesso
 	@AcessoUsuario
 	@Path("/sugestao/clear")
 	public void limpaLista() {
@@ -192,15 +188,8 @@ public class SugestaoController {
 		result.redirectTo(this).formSugestao();
 	}
 	
-	@RestricaoAcesso
-	public boolean validaTamanhoList() {
-		if(listItemSugerido.getItemSugestaoCardapios().size() > 5){
-			return false;
-		}
-		return true;
-	}
-	
-	@RestricaoAcesso
+	@SuppressWarnings("unchecked")
+	@AcessoAdministrativo
 	@Path("/sugestao/totalizasugestoes")
 	public void totalizasSugestoesCardapio(Disponibilidade disponibilidade) {
 		List<SugestaoCardapio> sugestoesEncontradas = new ArrayList<SugestaoCardapio>();

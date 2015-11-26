@@ -12,8 +12,7 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Item;
-import br.com.ruifpi.util.RestricaoAcesso;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class ItemController {
@@ -24,20 +23,18 @@ public class ItemController {
 	@Inject private ClassesNutricionaisController nutricionaisController;
 			private List<Item> itemsGeral = new ArrayList<>();
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/item")
 	public void formItem() {
 	nutricionaisController.listClassesNutricionais();
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	@Path("/items")
 	public void listItem() {
 		listaItensAlimentares();
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/item/save")
 	public void save(Item item) {
@@ -54,7 +51,6 @@ public class ItemController {
 		}
 	}
 	
-	@RestricaoAcesso
 	@AcessoAdministrativo
 	@Path("/item/alteracao")
 	public void alteraItem(Item item) {
@@ -68,17 +64,19 @@ public class ItemController {
 		}
 	}
 	
+	@AcessoAdministrativo
 	@Path("/item/remocao/{id}")
 	public void removeItem(Long id) {
 		
 	}
 	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public List<Item> listItens() {
 		return daoImplementacao.find(Item.class);
 	}
 	
-	@RestricaoAcesso
+	@AcessoAdministrativo
 	public Item validaDados(Item item) {
 		if(item.getDescricao().length() < 5){
 			validator.add(new I18nMessage("descricao", "item.descricao.invalido"));

@@ -13,8 +13,8 @@ import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Funcionario;
-import br.com.ruifpi.util.RestricaoAcesso;
-import br.com.ruifpi.util.RestricaoAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.ControleAcesso;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 
 @Controller
@@ -30,7 +30,7 @@ public class FuncionarioController {
 		result.include("funcionarios", listaFuncionarios());
 	}
 		
-	@RestricaoAcesso
+	@ControleAcesso
 	@Path("/funcionario/save")
 	public void save(Funcionario funcionario) {
 		try {
@@ -59,7 +59,7 @@ public class FuncionarioController {
 	}
 	
 	@AcessoAdministrativo
-	@RestricaoAcesso
+	@ControleAcesso
 	@Get("/funcionario/alteracao")
 	public void alteracaoDados(Long id) {
 		try {
@@ -72,7 +72,7 @@ public class FuncionarioController {
 	}
 	
 	@AcessoAdministrativo
-	@RestricaoAcesso
+	@ControleAcesso
 	@Path("/funcionario/remocao")
 	public void removerFuncionario(Long id) {
 		try {
@@ -89,7 +89,7 @@ public class FuncionarioController {
 	
 	// Faz a verificação se o login e senha usados no cadastro estão disponiveis
 	@SuppressWarnings("unchecked")
-	@RestricaoAcesso
+	@ControleAcesso
 	public Funcionario verificaDadosFuncionarios(Funcionario funcionario) {
 		Funcionario  funcionarioEncontrado = null;
 		List<Funcionario> funcionarios = daoImplementacao.find(Funcionario.class);
@@ -102,13 +102,13 @@ public class FuncionarioController {
 		return funcionarioEncontrado;
 	}
 	
-	@RestricaoAcesso
+	@ControleAcesso
 	public List<Funcionario> listaFuncionarios() {
 		return implementacaoMetodos.buscaFuncionariosAtivos();
 	}
 	
 	// Valida a consistência dos dados do formulário.
-	@RestricaoAcesso
+	@ControleAcesso
 	public Funcionario validaDadosFuncionario(Funcionario funcionario) {				
 		if(funcionario.getNome() == null){
 			validator.add(new I18nMessage("nome", "funcionario.nome.vazio"));

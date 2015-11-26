@@ -44,7 +44,7 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading"><label class="small"> Datas disponibilizadas para sugestões de cardápio</label></div>
-				<div class="panel-body">
+				<div class="panel-body" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
 					<table class="table table-responsive table-condensed">
 						<thead>
 							<tr>
@@ -79,25 +79,15 @@
 										<a class="btn btn-danger btn-sm" href='<c:url value="/disponibilidade/remocao?id=${datadisponivel.id}" />'>
 										Indisponibilizar</a>
 									</td>								
-								</c:if>
-								
+								</c:if>							
 							</tr>
 						</tbody>						
-						</c:forEach>
-						
-						
-					</table>
-				
-				
+						</c:forEach>											
+					</table>							
 				</div>
 			</div>
-		</div>
-		
-	
+		</div>			
 	</div>
-
-
-
 </div>
 
 </body>

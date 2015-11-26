@@ -52,10 +52,9 @@
 		</div>
 	</c:if>
 <div class="panel panel-default">
-	<div class="panel-heading"><label><strong>Avaliações de Cardápio</strong></label> 
-		<label class="pull-right">
-	    	<code>Total de avaliações : ${listaAvaliacoes.size()} - Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
-	    </label>
+	<div class="panel-heading"><label><strong></strong></label> 		
+			Total de avaliações : <span class="badge"> ${listaAvaliacoes.size()}</span> 
+			Media das avaliações : <span class="badge"><fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></span> 
 	</div>
 	
 	<div class="panel-body">

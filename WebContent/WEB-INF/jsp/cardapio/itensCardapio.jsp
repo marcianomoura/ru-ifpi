@@ -24,18 +24,24 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Itens do Cardápio</div>
 		<div class="panel-body">
-			<table class="table table-hover">
-				<tr class="active">
-					<td>Descricao</td>
-					<td>Quantidade de Calorias</td>
-					<td>Classe Nutricional</td>
-				</tr>
-				<c:forEach var="itemlista" items="${itemCardapios}">
-					<tr>
-						<td>${itemlista.item.descricao}</td>
-						<td>${itemlista.item.valorCalorico}</td>
-						<td>${itemlista.item.classeNutricional.descricao}</td>
+			<table class="table table-responsive">
+				<thead>
+					<tr class="active">
+						<td>Descricao</td>
+						<td>Quantidade de Calorias</td>
+						<td>Classe Nutricional</td>
 					</tr>
+				</thead>
+				
+				<c:forEach var="itemlista" items="${itemCardapios}">
+					<tbody>
+						<tr>
+							<td>${itemlista.item.descricao}</td>
+							<td>${itemlista.item.valorCalorico}</td>
+							<td>${itemlista.item.classeNutricional.descricao}</td>
+						</tr>
+					</tbody>
+					
 				</c:forEach>
 			</table>
 		</div>

@@ -26,9 +26,9 @@
          <div class="col-md-12">
              <div class="panel panel-default" >
 				<div class="panel-heading">Avaliação do Cardápio de Hoje 
-					<label class="pull-right">
-				    	<code>Media das avaliações : <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></code>
-				    </label>
+					
+				   Media das avaliações : <kbd> <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></kbd>
+				    
 				</div>
 				<div class="panel-body" >																		
 					<div class="col-md-8">
@@ -42,28 +42,28 @@
 									<th class="small">Calorias</th>
 								</tr>
 							</thead>
-							<c:forEach items="${cardapioDia.itemCardapio}" var="item">
+							<c:forEach items="${cardapioDia.itemCardapio}" var="itemCArdapio">
 								<tbody>
 									<tr>
-										<td>${item.item.descricao}</td>
+										<td>${itemCArdapio.item.descricao}</td>
 										<td>
-											<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+											<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body"   
 								  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-								  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+								  				data-content="${itemCArdapio.item.beneficios}"><span class="glyphicon glyphicon-plus" 
 								  				aria-hidden="true"></span> info
 								  			</a>
 										</td>
 										
-										<td>${item.item.maleficios}</td>
+										<td>${itemCArdapio.item.maleficios}</td>
 										
 										<td>
-											<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" 
+											<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body" 
 								  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-								  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
+								  				data-content="${itemCArdapio.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
 								  				aria-hidden="true"></span> info
 								  			</a>
 										</td>
-										<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>											
+										<td><span class="badge">${itemCArdapio.item.valorCalorico} Kcal</span></td>											
 									</tr>
 								</tbody>
 							</c:forEach>
@@ -75,22 +75,24 @@
 						<div class="panel panel-default">
 							<div class="panel-heading"><label class="small"> Faça sua avaliação</label></div>
 							<div class="panel-body">
+								<c:if test="${cardapioDia !=null}">
+									<a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${10}"></c:url>' 
+							    		class="btn btn-primary btn-sm btn-block">Excelente
+								    </a>
+								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${8}"></c:url>' 
+								    	class="btn btn-primary btn-sm btn-block">Bom
+								    </a>
+								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${6}"></c:url>' 
+								    	class="btn btn-warning btn-sm btn-block">Regular
+								    </a>
+								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${4}"></c:url>' 
+								    	class="btn btn-danger btn-sm btn-block">Ruim
+								    </a>
+								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${2}"></c:url>' 
+								    	class="btn btn-danger btn-sm btn-block">Muito Ruim
+								    </a>								
+								</c:if>								
 								
-								<a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${10}"></c:url>' 
-						    	class="btn btn-primary btn-sm">Excelente
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${8}"></c:url>' 
-							    	class="btn btn-primary btn-sm">Bom
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${6}"></c:url>' 
-							    	class="btn btn-warning btn-sm">Regular
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${4}"></c:url>' 
-							    	class="btn btn-danger btn-sm">Ruim
-							    </a>
-							    <a href='<c:url value="/avaliacao/cardapio?notaAvaliativa=${2}"></c:url>' 
-							    	class="btn btn-danger btn-sm">Muito Ruim
-							    </a>
 							</div>
 						</div>
 						

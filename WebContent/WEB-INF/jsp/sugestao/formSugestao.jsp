@@ -18,67 +18,75 @@
 
 <div class="col-md-12">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h5>Sugestão de Cardápio</h5></div>
+		<div class="panel-heading"><label class="small"> Sugestão de Cardápio</label></div>
 		<div class="panel-body">		
 			<form action='<c:url value="/sugestao/add"></c:url>'>
 				<fieldset>
-					<div class="form-group col-md-6">
-					  <label class="small" for="">Selecione os Itens disponíveis</label>
-					  <div class="controls">
-					    <select  name="item.id" class="form-control" required>
-					    	<option></option>
-							<c:forEach var="item" items="${items}"> 
-								<option value="${item.id}">NOME : ${item.descricao} - CLASSIFICACAO :  ${item.classeNutricional.descricao}</option>			
-							</c:forEach>
-					    </select>
-					  </div>
-					</div>
-					
-					<div class="form-group col-md-2">
-						<br>
-						<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
-					</div>
-					
-					<div class="form-group col-md-3">
-						<label class="small">Total de Calorias (Kcal)</label>
-						<small style="color: red" >${errors.from('totalCaloria')}</small>
-						<input class="form-control" value="${totalCaloriaCardapioSugerido}" readonly="readonly">
+					<div class="row">
+						<div class="col-md-7">
+							<div class="form-group">
+							  <label class="small" for="">Selecione os Itens disponíveis</label>
+							  <div class="controls">
+							    <select  name="item.id" class="form-control" required>
+							    	<option></option>
+									<c:forEach var="item" items="${items}"> 
+										<option value="${item.id}"> : ${item.descricao} - Classe :  ${item.classeNutricional.descricao}</option>			
+									</c:forEach>
+							    </select>
+							  </div>
+							</div>
+							
+							<div class="form-group ">
+								<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+							</div>
+						</div>
+						
+						<div class="col-md-5">
+							<div class="form-group ">
+								<label class="small"><kbd> Total de Calorias (Kcal)</kbd></label>
+								<small style="color: red" >${errors.from('totalCaloria')}</small>
+								<input class="form-control" value="${totalCaloriaCardapioSugerido}" readonly>
+							</div>
+						</div>
 					</div>
 				</fieldset>
 			</form>
-			
-			<hr>
+
 			<small style="color: red" >${errors.from('itemsDoCardapio')}</small>
-			<table class="table table-responsive table table-hover">
-				<tr class="active col-md-12">
-					
-				</tr>
+			<table class="table table-responsive table table-hover table table-condensed">
+				<thead>
+					<tr class="active col-md-12"></tr>
+				</thead>
+				
 				<c:forEach var="itemlista" items="${itemsLista}">
-					<tr>
-						<td>${itemlista.item.descricao}</td>
-						<td>${itemlista.item.valorCalorico}</td>
-						<td align="center">
-				  			<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-				  				data-content="${itemlista.item.beneficios}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> info
-				  			</a>
-				  		</td>
-				  		
-				  		<td>${itemlista.item.maleficios}</td>
-				  		
-				  		<td align="center">
-				  			<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-				  				data-content="${itemlista.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> info
-				  			</a>
-				  		</td>
-						
-						<td>${itemlista.item.classeNutricional.descricao}</td>
-						
-						<td>
-							<a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover este item" 
-							href='<c:url value="/sugestao/remocaoitem?id=${itemlista.item.id}"></c:url>'>
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>${itemlista.item.descricao}</td>
+							<td>${itemlista.item.valorCalorico}</td>
+							<td>
+					  			<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body"   title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+					  				data-content="${itemlista.item.beneficios}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> info
+					  			</a>
+					  		</td>
+					  		
+					  		<td>${itemlista.item.maleficios}</td>
+					  		
+					  		<td>
+					  			<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body" title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
+					  				data-content="${itemlista.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> info
+					  			</a>
+					  		</td>
+							
+							<td>${itemlista.item.classeNutricional.descricao}</td>
+							
+							<td>
+								<a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover este item" 
+								href='<c:url value="/sugestao/remocaoitem?id=${itemlista.item.id}"></c:url>'>
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+							</td>
+						</tr>
+					</tbody>
+					
 				</c:forEach>
 			</table>
 				
@@ -89,18 +97,16 @@
 					
 					<input name="sugestaoCardapio.totalCaloria" value="<fmt:formatNumber value="${totalCaloriaCardapioSugerido}" maxFractionDigits="2"/>" 
 					type="hidden">
-					
-					
-					  
+
 					<div class="form-group col-md-6">
 						<label class="small" for="">Data(s) disponível para sugestão de cardápio</label>
 						<div class="controls">
 					  		<div class="row">
-							  	<div class="col-md-3">
-							  		<a class="btn btn-info" href='<c:url value="/disponibilidade/validas"/>'> Buscar datas </a>
+							  	<div class="col-md-6">
+							  		<a class="btn btn-info btn-block" href='<c:url value="/disponibilidade/validas"/>'> Carregar datas </a>
 							  	</div>
 					  	
-							    <div class="col-md-9">
+							    <div class="col-md-6">
 							    	<select  name="sugestaoCardapio.disponibilidade.id" class="form-control" required>
 								    	<option></option>
 								    	

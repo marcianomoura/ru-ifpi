@@ -91,8 +91,8 @@
 					<div class="control-group col-md-12">
 					  <label class="control-label" for="button1id"></label>
 					  <div class="controls">
-					    <button type="submit" class="btn btn-primary">Salvar Dados</button>
-					    <button type="reset" class="btn btn-warning">Limpar Campos</button>
+					    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
+					    <button type="reset" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 					  </div>
 					</div>
 				

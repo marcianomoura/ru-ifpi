@@ -1,6 +1,7 @@
 package br.com.ruifpi.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.Usuario;
-import br.com.ruifpi.util.RestricaoAcesso;
+import br.com.ruifpi.util.ControleAcesso;
 
 @Controller
 public class AutenticacaoController {
@@ -37,12 +38,12 @@ public class AutenticacaoController {
 	
 	@Path("/")
 	public void home() {
-		avaliacaoController.mostraCardapioDia();
+		avaliacaoController.mostraCardapioDia(new Date());
 		avaliacaoController.listAvaliacoesCardapioDia();
 		disponibilidadeController.mostraResultadoSugestoesHome(disponibilidadeController.dataDisponivel());
 	}
 	
-	@RestricaoAcesso
+	@ControleAcesso
 	@Path("/index")
 	public void index() { }
 	
