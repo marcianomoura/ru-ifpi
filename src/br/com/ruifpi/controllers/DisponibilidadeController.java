@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -19,7 +21,6 @@ import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Disponibilidade;
 import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.SugestaoCardapio;
-import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller

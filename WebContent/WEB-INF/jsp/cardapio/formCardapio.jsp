@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cardápio</title>
+<title>Cardápio do dia</title>
 </head>
 <body>
 <div style="margin-top: 60px;">
@@ -22,7 +22,7 @@
 			<form action='<c:url value="/cardapio/addItem"></c:url>'>
 				<fieldset>
 					<div class="form-group col-md-6">
-					  <label class="small" for="">Selecione os Itens do Cardápio</label>
+					  <label class="small" for="">Monte o cardápio do dia escolhendo os Itens na lista abaixo</label>
 					  <div class="controls">
 					    <select  name="item.id" class="form-control" required>
 					    	<option></option>

@@ -18,26 +18,23 @@ import br.com.ruifpi.util.ControleAcesso;
 @AcceptsWithAnnotations(ControleAcesso.class)
 public class InterceptorAcessoLogado {
 	
+	@Inject
 	private UsuarioSession usuarioSession;
+	@Inject
 	private FuncionarioSession funcionarioSession;
+	@Inject
 	private Result result;
 	
-	public InterceptorAcessoLogado() {	}
-	
-	@Inject
-	public InterceptorAcessoLogado(UsuarioSession usuarioSession, FuncionarioSession funcionarioSession, Result result) {
-		super();
-		this.usuarioSession = usuarioSession;
-		this.funcionarioSession = funcionarioSession;
-		this.result = result;
-	}
 
 	@AroundCall
 	public void interceptaRequisicoesSemAutenticacao(ControllerMethod method, SimpleInterceptorStack stack) {
-		
+		System.out.println("Interceptando se usuarios estão logados");
+
 		if(!usuarioSession.logado() && !funcionarioSession.logado()){
 			result.include("erro", "Não autenticado.");
 			result.redirectTo(AutenticacaoController.class).home();
+		}else{
+			stack.next();
 		}
 	}
 }

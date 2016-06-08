@@ -42,7 +42,7 @@ public class FuncionarioController {
 					result.include("sucesso", "Dados inserido com sucesso.");
 					result.redirectTo(this).formFuncionario();
 				}else{
-					if(verificaDadosFuncionarios(funcionario).getId().equals(funcionario.getId())){	// Quando for alteração de dados ...	
+					if(verificaDadosFuncionarios(funcionario).getId().equals(funcionario.getId())){	// Quando for alteração de dados do funcionário...	
 						daoImplementacao.save(funcionario);
 						result.include("sucesso", "Alteração realizada com sucesso.");
 						result.redirectTo(this).formFuncionario();

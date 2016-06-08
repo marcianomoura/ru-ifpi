@@ -18,7 +18,7 @@
 
 <div class="col-md-12">
 	<div class="panel panel-default">
-		<div class="panel-heading">Cadastro dos Item Alimentares</div>
+		<div class="panel-heading">Cadastro dos alimentos do refeitório</div>
 		<div class="panel-body">
 			<label class="small" style="color: red" > * Campos Obrigatórios</label><br>
 			<form class="form-horizontal" action='<c:url value="/item/save"></c:url>' method="post">
@@ -26,7 +26,7 @@
 					<input type="hidden" name="item.id" value="${item.id}" >	
 				
 					<div class="control-group col-md-7">
-					  <label class="control-label small" for="nomeItem">* Nome do Item</label>
+					  <label class="control-label small" for="nomeItem">* Descrição do Alimento</label>
 					  <small style="color: red" >${errors.from('descricao')}</small>
 					  <div class="controls">
 					    <input  name="item.descricao" value="${item.descricao}"  type="text"   class="form-control" required="">
@@ -35,7 +35,7 @@
 					</div>			
 				
 					<div class="control-group col-md-4">
-					  <label class="control-label small" for="valorCalorico">* Valor Calórico</label>
+					  <label class="control-label small" for="valorCalorico">* Total de calorias (quantidade/aluno)</label>
 					  <small style="color: red" >${errors.from('valorCalorico')}</small>
 					  <div class="controls">				    
 					    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  
@@ -45,7 +45,7 @@
 					</div>				
 				
 					<div class="control-group col-md-8">
-					  <label class="control-label small" for="informacoesNutricionais">* Informações Nutricionais importantes</label>
+					  <label class="control-label small" for="informacoesNutricionais">* Descreva alguma informação nutricional importante</label>
 					  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
 					  <div class="controls">
 					    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
@@ -55,26 +55,26 @@
 					</div>				
 				
 					<div class="control-group col-md-5">
-					  <label class="control-label small" for="beneficios">Benefícios à saude </label>
+					  <label class="control-label small" for="beneficios">* Informe algum tipo de benefícios do alimento à saude </label>
 					  <small style="color: red" >${errors.from('beneficios')}</small>
 					  <div class="controls">
-					    <input name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">
-					    <p class="help-block">ex: Recomendado para diabéticos</p>
+					    <input required name="item.beneficios" value="${item.beneficios}" type="text" class="form-control">
+					    <p class="help-block">ex: Recomendado para diabéticos ou hipertensos</p>
 					  </div>
 					</div>
 				
 					<div class="control-group col-md-5">
-					  <label class="control-label small" for="contraIndicacoes">Contra Indicação</label>
+					  <label class="control-label small" for="contraIndicacoes">* Contra Indicação</label>
 					  <small style="color: red" >${errors.from('maleficios')}</small>
 					  <div class="controls">
 					    
-					    <input name="item.maleficios" value="${item.maleficios}" type="text" class="form-control">
+					    <input required name="item.maleficios" value="${item.maleficios}" type="text" class="form-control">
 					    <p class="help-block">Ex: Não recomendado para diabéticos</p>
 					  </div>
 					</div>					
 					
 					<div class="control-group col-md-4">
-					  <label class="control-label small" for="classeNutricional">Classe Nutricional</label>
+					  <label class="control-label small" for="classeNutricional">* Classe Nutricional ao qual pertence</label>
 					  <small style="color: red" >${errors.from('classeNutricional')}</small>
 					  <div class="controls">
 					    <select  name="item.classeNutricional.id" class="form-control" required>

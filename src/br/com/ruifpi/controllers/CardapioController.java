@@ -15,6 +15,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.dao.DaoException;
 import br.com.ruifpi.dao.DaoImplementacao;
@@ -23,6 +24,7 @@ import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemCardapio;
 import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.ControleAcesso.AcessoUsuario;
 
 @Controller
 public class CardapioController {
@@ -40,14 +42,17 @@ public class CardapioController {
 	private SimpleDateFormat formatadorDataUtil = new SimpleDateFormat();
 	private static double valorTotalCaloriaCardapio = 0;
 	private List<Cardapio> cardapioUtil = new ArrayList<Cardapio>();
+	private MetodosUtilImplementacao metodosUtilImplementacao;
 	
 	public CardapioController() {
-		this(null, null, null);
+		this(null, null, null, null);
 	}
 	
 	@Inject
-	public CardapioController(DaoImplementacao daoImplementacao, Validator validator, Result result) {
+	public CardapioController(DaoImplementacao daoImplementacao, Validator validator, Result result, 
+			MetodosUtilImplementacao metodosUtilImplementacao) {
 		this.validator = validator;
+		this.metodosUtilImplementacao = metodosUtilImplementacao;
 		this.daoImplementacao = daoImplementacao;
 		this.result = result;
 	}
@@ -70,7 +75,13 @@ public class CardapioController {
 		mostraItensCardapioLista();
 	}
 	
-	@AcessoAdministrativo
+	@ControleAcesso
+	@Path("/cardapio/semana")
+	public void cardapioSemanal() {
+		
+	}
+	
+	@ControleAcesso
 	@Path("/cardapio/itens")
 	public void itensCardapio(Cardapio cardapio) {
 		detalhesItensCardapios(cardapio);
@@ -309,4 +320,24 @@ public class CardapioController {
 			return null;
 		}
 	}
+	
+	@ControleAcesso
+	@Path("/cardapio/periodo")
+	public void buscaCardapioSemanal(java.util.Date periodoInicial, java.util.Date periodoFinal) {
+		try {
+			System.out.println("Entrou na pesquisa de cardapios da semana ...");
+			formatadorDataUtil.applyPattern("yyyy-MM-dd");
+			String inicioString =  formatadorDataUtil.format(periodoInicial);
+			String finalString =  formatadorDataUtil.format(periodoFinal);
+			java.sql.Date inicioSql = new java.sql.Date(formatadorDataUtil.parse(inicioString).getTime());
+			java.sql.Date finalSql = new java.sql.Date(formatadorDataUtil.parse(finalString).getTime());
+			cardapioUtil = metodosUtilImplementacao.buscaCardapioPeriodoSelecionado(inicioSql, finalSql);
+			result.include("cardapios", cardapioUtil);
+			result.redirectTo(this).cardapioSemanal();
+		} catch (Exception e) {
+			result.include("erro", "Erro na listagem dos cardápios da semana");
+			result.redirectTo(this).cardapioSemanal();
+		}
+	}
 }
+

@@ -59,7 +59,7 @@
 	
 	<div class="panel-body">
 		<form action='<c:url value="/avaliacao/cardapio_data" />' method="get">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<div class="form-group">
 					<label class="small">Escolha a data do cardápio para ver as avaliações</label>
 					<input id="dataCardapio" class="form-control" name="dataCardapio" required onfocus autocomplete="off" >

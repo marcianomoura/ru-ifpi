@@ -15,5 +15,8 @@ public interface MetodosUtil {
 	public List<Usuario> buscaUsuariosAtivos();
 	
 	public Cardapio buscaCardapioDataSolicitada(Date dataCardapio);
+	
+	public List<Cardapio> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal);
+	
 
 }

@@ -50,6 +50,8 @@ $(function () {
     $( "#datepicker2" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataCardapio" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataDisponibilizada" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#dataPesquisaCardapio1" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#dataPesquisaCardapio2" ).datepicker({dateFormat: "dd/mm/yy"});
   });
 </script>
 

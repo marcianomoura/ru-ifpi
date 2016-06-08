@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
+import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.controllers.CardapioController;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Cardapio;
@@ -26,6 +27,7 @@ public class CardapioControllerTest extends TestCase {
 	private SimpleDateFormat formatDatautil;
 	private List<ItemCardapio> listaItemCardapioUtil;
 	private ItemCardapio itemCardapioUtil;
+	private MetodosUtilImplementacao metodosUtil;
 	
 	@Before
 	public void setUp() {
@@ -36,7 +38,8 @@ public class CardapioControllerTest extends TestCase {
 		result = new MockResult();
 		cardapioUtil = new Cardapio();
 		validator = new MockValidator();
-		cardapioController = new CardapioController(daoImplementacao, validator, result);
+		metodosUtil = new MetodosUtilImplementacao();
+		cardapioController = new CardapioController(daoImplementacao, validator, result, metodosUtil);
 	}
 	
 	@Test

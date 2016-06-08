@@ -1,6 +1,6 @@
 package br.com.ruifpi.auxiliar;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -30,7 +30,6 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 			List<Funcionario> funcionarios = query.getResultList();
 			return funcionarios;
 		} catch (Exception e) {
-			System.out.println("Erro na pesquisa de  funcionarios ...");
 			throw new DaoException("Erro na pesquisa de funcionarios...");
 		}
 	}
@@ -44,7 +43,6 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 			List<Usuario> usuarios = query.getResultList();
 			return usuarios;
 		} catch (Exception e) {
-			System.out.println("Erro na pesquisa de  usuarios ...");
 			throw new DaoException("Erro na pesquisa de usuario...");
 		}
 	}
@@ -81,6 +79,24 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 			System.out.println("Erro na pesquisa de  usuarios ...");
 			throw new DaoException("Erro na pesquisa de usuario...");
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cardapio> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal) {
+		entityManager = JpaUtil.getEntityAtual();
+		try {
+			Query query = entityManager.createQuery("select cardapio from Cardapio cardapio where cardapio.dataCardapio between :periodoInicial and :periodoFinal");
+			query.setParameter("periodoInicial", periodoInicial);
+			query.setParameter("periodoFinal", periodoFinal);
+			query.setFirstResult(0);	// Inicia do index 0 da lista ...
+			query.setMaxResults(5);		// Lista apenas 5 resultados ...
+			List<Cardapio> cardapioPeriodo = query.getResultList();
+			return cardapioPeriodo;
+		} catch (Exception e) {
+			throw new DaoException("Erro na pesquisa de cardapio por periodo");
+		}
+
 	}
 	
 }

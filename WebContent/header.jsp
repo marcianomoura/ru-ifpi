@@ -33,7 +33,9 @@
 	                                               
 	                <li><a href='<c:url value="/avaliacao"/>'> Avaliar Cardápio </a></li>
 	                
-	                <li><a href='<c:url value="/sugestao"/>'>Sugerir Cardápio</a></li>
+	                <li><a href='<c:url value="/sugestao"/>'>Escolher Cardápio</a></li>
+	                
+	                <li><a href='<c:url value="/cardapio/semana"/>'>Cardápio Semanal</a></li>
 	                
 	                <li><a href='<c:url value="/logout/usuario"></c:url>'> Sair :  ${usuarioSessao.usuario.perfil} (a) ${usuarioSessao.usuario.nome}</a>
 	                </li>
@@ -68,36 +70,47 @@
 	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="cardapio">
-				 				<span class="glyphicon glyphicon-plus"></span> Registro de Cardápio </a>
+				 				<span class="glyphicon glyphicon-plus"></span> Registro de Cardápios</a>
 				 			</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapios"></c:url>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciar Cardápio </a>
+			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Cardápios </a>
 			 				</li>
 			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/avaliacoes" />'>
-			 					<span class="glyphicon glyphicon-list-alt"></span> Ver Avaliações </a>
+			 					<span class="glyphicon glyphicon-list-alt"></span> Analisar Avaliações de cardápios</a>
 			 				</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestoes"/>'>
-			 					<span class="glyphicon glyphicon-list-alt"></span> Ver Sugestões </a>
+			 					<span class="glyphicon glyphicon-list-alt"></span> Ver cardápio mais votado </a>
 			 				</li>
 	                	</ul>
 	                </li>
 	                
 	               
 	                <li class="dropdown">
-	                	<a data-toggle="dropdown"  href="#"> Itens Alimentares </a>
+	                	<a data-toggle="dropdown"  href="#"> Alimentos </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="item">
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Item</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Alimentos</a>
 				 			</li>
 				 				<li role="presentation"><a role="menuitem" tabindex="-1" href="items">
-				 				<span class="glyphicon glyphicon-pencil"></span> Alteração de Itens</a></li>
+				 				<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Alimentos</a></li>
+	                	</ul>
+	                </li>
+	                
+	                <li class="dropdown">
+	                	<a data-toggle="dropdown"  href="#"> Montagem dos cardapios </a>
+	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="item">
+				 				<span class="glyphicon glyphicon-plus"></span> Cardapios para escolha dos usuários</a>
+				 			</li>
+				 			<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href="items">
+			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a>
+			 				</li>
 	                	</ul>
 	                </li>  
-	                
-	                <li><a href='<c:url value="disponibilidade"/>'> Data para Sugestoes </a></li>
 	                
 	                <li><a href='<c:url value="funcionario" />'> Funcionários </a></li>
 	                
