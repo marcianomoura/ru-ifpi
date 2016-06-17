@@ -9,9 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.com.ruifpi.dao.DaoException;
-import br.com.ruifpi.models.Cardapio;
-import br.com.ruifpi.models.Disponibilidade;
 import br.com.ruifpi.models.Funcionario;
+import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.util.JpaUtil;
 
@@ -49,15 +48,15 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Cardapio buscaCardapioDataSolicitada(java.sql.Date dataCardapio) {
-		Cardapio cardapioEncontrado = null;
+	public PratoDia buscaCardapioDataSolicitada(java.sql.Date dataCardapio) {
+		PratoDia cardapioEncontrado = null;
 		entityManager = JpaUtil.getEntityAtual();
 			try {
 				Query query = entityManager.createQuery("select cardapio from Cardapio cardapio WHERE cardapio.dataCardapio="+ dataCardapio);
-				List<Cardapio> cardapios = query.getResultList();
-				for (Cardapio cardapio : cardapios) {
-					if(cardapio.getDataCardapio().equals(cardapio)){
-						cardapioEncontrado = cardapio;
+				List<PratoDia> pratoDias = query.getResultList();
+				for (PratoDia pratoDia : pratoDias) {
+					if(pratoDia.getDataCardapio().equals(pratoDia)){
+						cardapioEncontrado = pratoDia;
 						break;
 					}
 				}
@@ -69,21 +68,8 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 	
 
 	@SuppressWarnings("unchecked")
-	public List<Disponibilidade> buscaDatasDisponiveisSugestaoCardapio() {
-		entityManager = JpaUtil.getEntityAtual();
-		try {
-			Query query = entityManager.createQuery("select disponibilidade from Disponibilidade disponibilidade WHERE disponibilidade.disponivel=false");
-			List<Disponibilidade> disponibilidades = query.getResultList();
-			return disponibilidades;
-		} catch (Exception e) {
-			System.out.println("Erro na pesquisa de  usuarios ...");
-			throw new DaoException("Erro na pesquisa de usuario...");
-		}
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cardapio> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal) {
+	public List<PratoDia> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal) {
 		entityManager = JpaUtil.getEntityAtual();
 		try {
 			Query query = entityManager.createQuery("select cardapio from Cardapio cardapio where cardapio.dataCardapio between :periodoInicial and :periodoFinal");
@@ -91,7 +77,7 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 			query.setParameter("periodoFinal", periodoFinal);
 			query.setFirstResult(0);	// Inicia do index 0 da lista ...
 			query.setMaxResults(5);		// Lista apenas 5 resultados ...
-			List<Cardapio> cardapioPeriodo = query.getResultList();
+			List<PratoDia> cardapioPeriodo = query.getResultList();
 			return cardapioPeriodo;
 		} catch (Exception e) {
 			throw new DaoException("Erro na pesquisa de cardapio por periodo");

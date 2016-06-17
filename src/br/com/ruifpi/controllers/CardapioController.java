@@ -17,14 +17,10 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.components.FuncionarioSession;
-import br.com.ruifpi.dao.DaoException;
 import br.com.ruifpi.dao.DaoImplementacao;
-import br.com.ruifpi.models.Cardapio;
-import br.com.ruifpi.models.Item;
-import br.com.ruifpi.models.ItemCardapio;
+import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
-import br.com.ruifpi.util.ControleAcesso.AcessoUsuario;
 
 @Controller
 public class CardapioController {
@@ -36,12 +32,11 @@ public class CardapioController {
 	private FuncionarioSession usuarioSession;
 	@Inject 
 	private ItemController itemController;
-	private static List<ItemCardapio> itemsCardapio = new ArrayList<>();
 	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
-	private static Cardapio cardapioAlteracao = new Cardapio();
+	private static PratoDia cardapioAlteracao = new PratoDia();
 	private SimpleDateFormat formatadorDataUtil = new SimpleDateFormat();
 	private static double valorTotalCaloriaCardapio = 0;
-	private List<Cardapio> cardapioUtil = new ArrayList<Cardapio>();
+	private List<PratoDia> cardapioUtil = new ArrayList<PratoDia>();
 	private MetodosUtilImplementacao metodosUtilImplementacao;
 	
 	public CardapioController() {
@@ -57,34 +52,11 @@ public class CardapioController {
 		this.result = result;
 	}
 	
-	@AcessoAdministrativo
-	public void setListItens(List<ItemCardapio> listaItens) {
-		itemsCardapio = listaItens;
-	}
-	
-	@AcessoAdministrativo
-	public List<ItemCardapio> getListaItens() {
-		return itemsCardapio;
-	}
-			
-	@AcessoAdministrativo				
-	@Path("/cardapio")
-	public void formCardapio() {			
-		itemController.listaItensAlimentares();
-		result.include("totalCaloria", Double.parseDouble(decimalFormat.format(valorTotalCaloriaCardapio).replace(",", ".")));
-		mostraItensCardapioLista();
-	}
 	
 	@ControleAcesso
 	@Path("/cardapio/semana")
 	public void cardapioSemanal() {
 		
-	}
-	
-	@ControleAcesso
-	@Path("/cardapio/itens")
-	public void itensCardapio(Cardapio cardapio) {
-		detalhesItensCardapios(cardapio);
 	}
 	
 	@AcessoAdministrativo
@@ -93,140 +65,18 @@ public class CardapioController {
 		listCardapios();
 	}
 	
-	@AcessoAdministrativo
-	@Path("/cardapio/save")
-	public void save(Cardapio cardapio) {
-		if (!validaDadosCardapio(cardapio) || !verificaListaItensVazia() || !verificaCardapioPublicadoNaoAlteracao(cardapio)) {
-			validator.onErrorRedirectTo(this).formCardapio();
-		}
-		try {			
-			if (cardapioAlteracao.getId() == null) { // Não é alteração de cardápio ...
-				cardapio.setFuncionario(this.usuarioSession.getFuncionario());
-				insereIdCardapio(cardapio);
-				cardapio.setItemCardapio(itemsCardapio);
-				daoImplementacao.save(cardapio);
-				result.include("sucesso", "Cardapio inserido com sucesso.");
-
-			} else {
-				insereIdCardapio(cardapioAlteracao);
-				cardapioAlteracao.setFuncionario(this.usuarioSession.getFuncionario());
-				cardapioAlteracao.setItemCardapio(itemsCardapio);
-				cardapioAlteracao.setDataCardapio(cardapio.getDataCardapio());
-				cardapioAlteracao.setTotalCaloria(cardapio.getTotalCaloria());
-				removeItensCardapioDoBanco(cardapioAlteracao);
-				daoImplementacao.save(cardapioAlteracao);
-				result.include("sucesso", "Cardapio alterado com sucesso.");
-			}
-			limpaDadosCardapio();
-
-		} catch (Exception e) {
-			result.include("erro","Cardapio não inserido. Verifique os dados informados e tente novamente.");
-			result.redirectTo(this).formCardapio();
-		}
-	}
 	
-	@AcessoAdministrativo
-	@Path("/cardapio/clear")
-	public void limpaDadosCardapio() {
-		cardapioAlteracao = new Cardapio();
-		itemsCardapio.clear();
-		valorTotalCaloriaCardapio = 0.0;
-		result.redirectTo(this).formCardapio();
-	}
-	
-	// Função que remove do banco de dados os itens do cardápio que irá ser alterado para que sejam substituidos pelos novos itens.
-	@AcessoAdministrativo
-	public void removeItensCardapioDoBanco(Cardapio cardapio) {
-		try {
-			Cardapio cardapioRemocaoItens = (Cardapio) daoImplementacao.findById(Cardapio.class, cardapio.getId());
-			for (ItemCardapio itemCardapio : cardapioRemocaoItens.getItemCardapio()) {
-				daoImplementacao.remove(itemCardapio);
-			}
-		} catch (Exception e) {
-			throw new DaoException("erro na remoção dos itens");
-		}
-		
-	}
-	
-	@AcessoAdministrativo
-	public void mostraItensCardapioLista() {
-		result.include("itemsLista", itemsCardapio);
-	}
-	
-	@AcessoAdministrativo
-	public void insereIdCardapio(Cardapio cardapio) {
-		for (ItemCardapio itemCardapio : itemsCardapio) {
-			itemCardapio.setCardapio(cardapio);
-		}
-	}
-	
-	@AcessoAdministrativo
-	public double somaCaloriaCardapio(ItemCardapio itemCardapio) {
-		return valorTotalCaloriaCardapio += itemCardapio.getTotalCaloria();
-	}
-	
-	@AcessoAdministrativo
-	public double subtraiCaloriaCardapio(ItemCardapio itemCardapio) {
-		return valorTotalCaloriaCardapio -= itemCardapio.getTotalCaloria();
-	}
-	
-	@AcessoAdministrativo
-	@Path("/cardapio/addItem")
-	public void addItemCardapio(Item item) {
-		try {
-			Item itemBanco = (Item) daoImplementacao.findById(Item.class, item.getId());
-			ItemCardapio itemCardapio = new ItemCardapio();
-			itemCardapio.setItem(itemBanco);
-			itemCardapio.setTotalCaloria(itemBanco.getValorCalorico());
-			somaCaloriaCardapio(itemCardapio);
-			itemsCardapio.add(itemCardapio);
-			result.redirectTo(this).formCardapio();
-		} catch (Exception e) {
-			result.include("erro", "Ocorreu um erro na inserção do item. Tente novamente");
-			result.redirectTo(this).formCardapio();
-		}
-		
-	}
-	
-	@AcessoAdministrativo
-	@Path("/cardapio/removeItem")
-	public void removeItem(Long id) {	// Id do Produto
-		try {
-			for (ItemCardapio itemCardapio : itemsCardapio) {
-				if(itemCardapio.getItem().getId() == id){
-					subtraiCaloriaCardapio(itemCardapio);
-					itemsCardapio.remove(itemCardapio);
-					break;
-				}
-			}
-			result.redirectTo(this).formCardapio();
-		} catch (Exception e) {
-			result.include("erro", "Ocorreu um erro ao tentar remover o item do cardapio.");
-			result.redirectTo(this).formCardapio();
-		}
-	}
-	
-	@AcessoAdministrativo
-	@Path("/carpapio/alteracao")
-	public void alteracaoCardapio(Cardapio cardapio) {
-		cardapioAlteracao = (Cardapio) daoImplementacao.findById(Cardapio.class, cardapio.getId());
-		for (ItemCardapio itemCardapio : cardapioAlteracao.getItemCardapio()) {
-			itemsCardapio.add(itemCardapio);
-			valorTotalCaloriaCardapio+=itemCardapio.getTotalCaloria();
-		}
-		result.redirectTo(this).formCardapio();
-	}
 	
 	@SuppressWarnings("unchecked")
 	@AcessoAdministrativo
-	public boolean verificaCardapioDia(Cardapio cardapio) {
+	public boolean verificaCardapioDia(PratoDia pratoDia) {
 		boolean cardapioEncontrado = false;
 		try {
 			formatadorDataUtil.applyPattern("yyyy-MM-dd");
-			String dataCardapioString = formatadorDataUtil.format(cardapio.getDataCardapio());
+			String dataCardapioString = formatadorDataUtil.format(pratoDia.getDataCardapio());
 			java.sql.Date dataCardapioSql = new java.sql.Date(formatadorDataUtil.parse(dataCardapioString).getTime());
-			cardapioUtil = daoImplementacao.find(Cardapio.class);
-			for (Cardapio cardapio2 : cardapioUtil) {
+			cardapioUtil = daoImplementacao.find(PratoDia.class);
+			for (PratoDia cardapio2 : cardapioUtil) {
 				if(dataCardapioSql.equals(cardapio2.getDataCardapio())){
 					cardapioEncontrado = true;
 					break;
@@ -253,9 +103,9 @@ public class CardapioController {
 	}
 
 	@AcessoAdministrativo
-	public boolean validaDadosCardapio(Cardapio cardapio){	
+	public boolean validaDadosCardapio(PratoDia pratoDia){	
 		try {
-			if(cardapio.getDataCardapio().before(formataData())){
+			if(pratoDia.getDataCardapio().before(formataData())){
 				validator.add(new I18nMessage("dataCardapio", "cardapio.datacardapio.invalida"));
 				return false;
 			}
@@ -264,11 +114,11 @@ public class CardapioController {
 			return false;
 		}
 				
-		if(cardapio.getDataCardapio() == null){
+		if(pratoDia.getDataCardapio() == null){
 			validator.add(new I18nMessage("dataCardapio", "cardapio.datacardapio.invalida"));
 			return false;			
 		}		
-		if(cardapio.getTotalCaloria() <= 0.0 ){
+		if(pratoDia.getTotalCaloria() <= 0.0 ){
 			validator.add(new I18nMessage("totalCaloria", "cardapio.totalcaloria.invalido"));
 			return false;
 		}
@@ -276,8 +126,8 @@ public class CardapioController {
 	}
 	
 	@AcessoAdministrativo
-	public boolean verificaCardapioPublicadoNaoAlteracao(Cardapio cardapio) {
-		if ((verificaCardapioDia(cardapio)) && (cardapioAlteracao.getId() == null)) {	// Se nao for alteração ...
+	public boolean verificaCardapioPublicadoNaoAlteracao(PratoDia pratoDia) {
+		if ((verificaCardapioDia(pratoDia)) && (cardapioAlteracao.getId() == null)) {	// Se nao for alteração ...
 			validator.add(new I18nMessage("dataCardapio", "cardapio.existente"));
 			return false;
 		}else{
@@ -285,41 +135,17 @@ public class CardapioController {
 		}
 	}
 	
-	@AcessoAdministrativo
-	public boolean verificaListaItensVazia() {
-		if(itemsCardapio.isEmpty() || itemsCardapio.size() <= 0){
-			validator.add(new I18nMessage("itemsDoCardapio", "cardapio.items.vazio"));
-			return false;
-		}else{
-			return true;
-		}
-	}
-	
+
 	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
-	public List<Cardapio> listCardapios() {
-		List<Cardapio> cardapios = daoImplementacao.find(Cardapio.class);
-		new Cardapio().ordenaCardapioByData(cardapios);
-		Collections.reverse(cardapios);	// Mostrando pela ultima data...
-		result.include("cardapios", cardapios);
-		return cardapios;
+	public List<PratoDia> listCardapios() {
+		List<PratoDia> pratoDias = daoImplementacao.find(PratoDia.class);
+		new PratoDia().ordenaPratoDiaByData(pratoDias);
+		Collections.reverse(pratoDias);	// Mostrando pela ultima data...
+		result.include("cardapios", pratoDias);
+		return pratoDias;
 	}
-	
-	@AcessoAdministrativo
-	public List<ItemCardapio> detalhesItensCardapios(Cardapio cardapio) {
-		List<ItemCardapio> itemCardapios  =  new ArrayList<>();
-		try {
-			Cardapio cardapioEncontrado = (Cardapio) daoImplementacao.findById(Cardapio.class, cardapio.getId());
-			for (ItemCardapio itemCardapio : cardapioEncontrado.getItemCardapio()) {
-				itemCardapios.add(itemCardapio);
-			}
-			result.include("itemCardapios", itemCardapios);
-			return itemCardapios;
-		} catch (Exception e) {
-			result.include("erro", "Erro na listagem de itens do cardápio.");
-			return null;
-		}
-	}
+
 	
 	@ControleAcesso
 	@Path("/cardapio/periodo")

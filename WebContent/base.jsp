@@ -52,6 +52,7 @@ $(function () {
     $( "#dataDisponibilizada" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataPesquisaCardapio1" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataPesquisaCardapio2" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#dataDisponivelCardapio" ).datepicker({dateFormat: "dd/mm/yy"});
   });
 </script>
 

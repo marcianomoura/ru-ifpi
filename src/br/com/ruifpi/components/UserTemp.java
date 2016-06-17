@@ -1,20 +1,23 @@
 package br.com.ruifpi.components;
 
 import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
 import br.com.ruifpi.models.Usuario;
 
 /*
- * Usuários ao estarem logados no sistema.
+ * 	Usuários temporários. Apenas no momento que estiverem cadastrando os seus dados pessoais.
  * 
  */
+
 @SessionScoped
-@Named("usuarioSessao")
-public class UsuarioSession implements Serializable {
-
+@Named("userTemp")
+public class UserTemp implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	private Usuario usuario;
 	
 	public Usuario getUsuario() {
@@ -25,19 +28,12 @@ public class UsuarioSession implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	public void login(Usuario usuario) {
+	public void insereUsuarioSessaoTemporaria(Usuario usuario) {
 		this.usuario = usuario;
 	}
 	
-	public void logout() {
+	public void limpaUsuarioSessaoTemporaria() {
 		this.usuario = null;
 	}
 	
-	public boolean logado() {
-		if(this.usuario == null){
-			return false;
-		}else{
-			return true;
-		}
-	}
 }

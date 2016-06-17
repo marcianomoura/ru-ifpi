@@ -33,7 +33,7 @@
 	                                               
 	                <li><a href='<c:url value="/avaliacao"/>'> Avaliar Cardápio </a></li>
 	                
-	                <li><a href='<c:url value="/sugestao"/>'>Escolher Cardápio</a></li>
+	                <li><a href='<c:url value="/cardapioespecial/escolha"/>'>Escolher Cardápio</a></li>
 	                
 	                <li><a href='<c:url value="/cardapio/semana"/>'>Cardápio Semanal</a></li>
 	                
@@ -102,11 +102,11 @@
 	                <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Montagem dos cardapios </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="item">
-				 				<span class="glyphicon glyphicon-plus"></span> Cardapios para escolha dos usuários</a>
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapioespecial"/>'>
+				 				<span class="glyphicon glyphicon-plus"></span> Sugerir cardapios para seleção</a>
 				 			</li>
 				 			<li class="divider"></li>
-			 				<li role="presentation"><a role="menuitem" tabindex="-1" href="items">
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapio/semana"/>'>
 			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a>
 			 				</li>
 	                	</ul>

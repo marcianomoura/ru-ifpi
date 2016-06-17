@@ -23,7 +23,6 @@ public class Item implements Comparable<Item>, Serializable{
 	private String beneficios;
 	private String maleficios;
 	private double valorCalorico;
-	private String informacoesNutricionais;
 	@ManyToOne
 	private ClasseNutricional classeNutricional;
 	
@@ -31,14 +30,13 @@ public class Item implements Comparable<Item>, Serializable{
 	}
 	public Item(Long id, String descricao, String beneficios,
 			String maleficios, double valorCalorico,
-			String informacoesNutricionais, ClasseNutricional classeNutricional) {
+			ClasseNutricional classeNutricional) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.beneficios = beneficios;
 		this.maleficios = maleficios;
 		this.valorCalorico = valorCalorico;
-		this.informacoesNutricionais = informacoesNutricionais;
 		this.classeNutricional = classeNutricional;
 	}
 	
@@ -89,15 +87,6 @@ public class Item implements Comparable<Item>, Serializable{
 	public void setValorCalorico(double valorCalorico) {
 		this.valorCalorico = valorCalorico;
 	}
-
-	public String getInformacoesNutricionais() {
-		return informacoesNutricionais;
-	}
-
-	public void setInformacoesNutricionais(String informacoesNutricionais) {
-		this.informacoesNutricionais = informacoesNutricionais;
-	}
-	
 
 	@Override
 	public int hashCode() {

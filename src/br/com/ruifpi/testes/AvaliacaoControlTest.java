@@ -13,9 +13,8 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.ruifpi.controllers.AvaliacaoController;
 import br.com.ruifpi.dao.DaoImplementacao;
-import br.com.ruifpi.models.AvaliacaoCardapio;
-import br.com.ruifpi.models.Cardapio;
-import br.com.ruifpi.models.Usuario;
+import br.com.ruifpi.models.AvaliacaoRefeicao;
+import br.com.ruifpi.models.PratoDia;
 import junit.framework.TestCase;
 
 public class AvaliacaoControlTest extends TestCase{
@@ -24,9 +23,9 @@ public class AvaliacaoControlTest extends TestCase{
 	private MockResult result;
 	private AvaliacaoController avaliacaoCardapioCOntroller;
 	private DaoImplementacao daoimplementacao;
-	private List<AvaliacaoCardapio> avaliacoes;
-	private AvaliacaoCardapio avaliacaoCardapio1;
-	private AvaliacaoCardapio avaliacaoCardapio2;
+	private List<AvaliacaoRefeicao> avaliacoes;
+	private AvaliacaoRefeicao avaliacaoCardapio1;
+	private AvaliacaoRefeicao avaliacaoCardapio2;
 	private SimpleDateFormat formatDate;
 	
 	@Before
@@ -34,11 +33,11 @@ public class AvaliacaoControlTest extends TestCase{
 		daoimplementacao = new DaoImplementacao();
 		result = new MockResult();
 		formatDate = new SimpleDateFormat("dd/MM/yyyy");
-		avaliacaoCardapio1 = new AvaliacaoCardapio();
-		avaliacaoCardapio2 = new AvaliacaoCardapio();
+		avaliacaoCardapio1 = new AvaliacaoRefeicao();
+		avaliacaoCardapio2 = new AvaliacaoRefeicao();
 		validator = new MockValidator();
 		avaliacaoCardapioCOntroller = new AvaliacaoController(result,validator,daoimplementacao);
-		avaliacoes = new ArrayList<AvaliacaoCardapio>();
+		avaliacoes = new ArrayList<AvaliacaoRefeicao>();
 	}
 	
 	@Test
@@ -75,26 +74,26 @@ public class AvaliacaoControlTest extends TestCase{
 	
 	@Test
 	public void testaNotaAvalicaoMenorZero() {
-		AvaliacaoCardapio avaliacaoCardapio1 = new AvaliacaoCardapio();
+		AvaliacaoRefeicao avaliacaoCardapio1 = new AvaliacaoRefeicao();
 		avaliacaoCardapio1.setNotaAvaliativa(-6);	
 		assertFalse(this.avaliacaoCardapioCOntroller.validaNotaAvaliativa(avaliacaoCardapio1));
 	}
 	
 	@Test
 	public void testaNotaAvalicaoIgualZero() {
-		this.avaliacaoCardapio1 = new AvaliacaoCardapio();
+		this.avaliacaoCardapio1 = new AvaliacaoRefeicao();
 		this.avaliacaoCardapio1.setNotaAvaliativa(0);	
 		assertFalse(this.avaliacaoCardapioCOntroller.validaNotaAvaliativa(avaliacaoCardapio1));
 	}
 	
 	@Test
 	public void testaCardapioDoDiaPublicado() throws ParseException {
-		Cardapio cardapioEsperado = new Cardapio();
+		PratoDia cardapioEsperado = new PratoDia();
 		cardapioEsperado.setId(10L);
 		cardapioEsperado.setTotalCaloria(803);
 		String data = "16/11/2015";
 		Date dataFormatada = formatDate.parse(data);
-		Cardapio resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
+		PratoDia resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
 		assertEquals(cardapioEsperado.getId(), resultado.getId());
 		assertEquals(cardapioEsperado.getTotalCaloria(), resultado.getTotalCaloria(), 0);
 		
@@ -102,7 +101,7 @@ public class AvaliacaoControlTest extends TestCase{
 	
 	@Test
 	public void testaEnvioMensagemCardapioPublicado() throws ParseException {
-		Cardapio cardapioEsperado = new Cardapio();
+		PratoDia cardapioEsperado = new PratoDia();
 		cardapioEsperado.setId(10L);
 		cardapioEsperado.setTotalCaloria(803);
 		String data = "16/11/2015";
@@ -113,10 +112,10 @@ public class AvaliacaoControlTest extends TestCase{
 	
 	@Test
 	public void testaCardapioDoDiaNaoPublicado() throws ParseException {
-		Cardapio valorEsperadoCardapio = null;
+		PratoDia valorEsperadoCardapio = null;
 		String data = "01/01/1500";
 		Date dataFormatada = formatDate.parse(data);
-		Cardapio resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
+		PratoDia resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
 		assertEquals(valorEsperadoCardapio, resultado);
 	}
 	

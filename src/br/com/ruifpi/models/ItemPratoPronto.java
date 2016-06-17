@@ -2,7 +2,6 @@ package br.com.ruifpi.models;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,40 +9,34 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ItemCardapio implements Serializable {
-
+public class ItemPratoPronto implements Serializable {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private Item item;
+	@ManyToOne
+	private PratoPronto pratoPronto;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private Cardapio itemCardapio;
+	@ManyToOne
+	private Item item;
 	
 	private double totalCaloria;
 	
-	public ItemCardapio() {
+	public ItemPratoPronto() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public ItemCardapio(Long id, Item item, Cardapio itemCardapio,
-			double totalCaloria) {
+	public ItemPratoPronto(Long id, PratoPronto pratoPronto, Item item, double totalCaloria) {
 		super();
 		this.id = id;
+		this.pratoPronto = pratoPronto;
 		this.item = item;
-		this.itemCardapio = itemCardapio;
 		this.totalCaloria = totalCaloria;
-	}
-	
-	public Cardapio getCardapio() {
-		return itemCardapio;
-	}
-	
-	public void setCardapio(Cardapio cardapio) {
-		this.itemCardapio = cardapio;
 	}
 
 	public Long getId() {
@@ -52,6 +45,14 @@ public class ItemCardapio implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public PratoPronto getPratoPronto() {
+		return pratoPronto;
+	}
+
+	public void setPratoPronto(PratoPronto pratoPronto) {
+		this.pratoPronto = pratoPronto;
 	}
 
 	public Item getItem() {
@@ -74,10 +75,9 @@ public class ItemCardapio implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((itemCardapio == null) ? 0 : itemCardapio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + ((pratoPronto == null) ? 0 : pratoPronto.hashCode());
 		return result;
 	}
 
@@ -89,12 +89,7 @@ public class ItemCardapio implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemCardapio other = (ItemCardapio) obj;
-		if (itemCardapio == null) {
-			if (other.itemCardapio != null)
-				return false;
-		} else if (!itemCardapio.equals(other.itemCardapio))
-			return false;
+		ItemPratoPronto other = (ItemPratoPronto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -105,8 +100,13 @@ public class ItemCardapio implements Serializable {
 				return false;
 		} else if (!item.equals(other.item))
 			return false;
+		if (pratoPronto == null) {
+			if (other.pratoPronto != null)
+				return false;
+		} else if (!pratoPronto.equals(other.pratoPronto))
+			return false;
 		return true;
 	}
-
-
+		
+	
 }

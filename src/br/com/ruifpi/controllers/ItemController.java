@@ -86,10 +86,7 @@ public class ItemController {
 			validator.add(new I18nMessage("valorCalorico", "item.valorCalorico.invalido"));
 			return null;
 		}
-		if(item.getInformacoesNutricionais() == null){
-			validator.add(new I18nMessage("informacaoNutricional", "item.informacaoNutricional.invalido"));
-			return null;
-		}
+		
 		if(item.getBeneficios().length() < 5){
 			validator.add(new I18nMessage("beneficios", "item.beneficios.invalido"));
 			return null;

@@ -3,7 +3,7 @@ package br.com.ruifpi.auxiliar;
 import java.sql.Date;
 import java.util.List;
 
-import br.com.ruifpi.models.Cardapio;
+import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.models.Usuario;
 
@@ -14,9 +14,9 @@ public interface MetodosUtil {
 	
 	public List<Usuario> buscaUsuariosAtivos();
 	
-	public Cardapio buscaCardapioDataSolicitada(Date dataCardapio);
+	public PratoDia buscaCardapioDataSolicitada(Date dataCardapio);
 	
-	public List<Cardapio> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal);
+	public List<PratoDia> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal);
 	
 
 }

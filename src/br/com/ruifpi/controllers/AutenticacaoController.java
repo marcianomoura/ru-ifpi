@@ -1,6 +1,5 @@
 package br.com.ruifpi.controllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,10 +12,8 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.components.FuncionarioSession;
-import br.com.ruifpi.components.ListItemSugerido;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.models.Funcionario;
-import br.com.ruifpi.models.ItemSugestaoCardapio;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.util.ControleAcesso;
 
@@ -27,25 +24,22 @@ public class AutenticacaoController {
 	@Inject private Validator validator;
 	@Inject private MetodosUtilImplementacao implementacaoMetodos;
 			private Funcionario funcionario = null;
-	@Inject	private ListItemSugerido listItemSugerido;
-			private List<ItemSugestaoCardapio> itemSugestaoCardapios = new ArrayList<ItemSugestaoCardapio>();
+	//		private List<ItemCardapioAEscolher> itemCardapioAEscolher = new ArrayList<ItemCardapioAEscolher>();
 			private Usuario usuario = null;
 	@Inject private FuncionarioSession funcionarioSession;
 	@Inject private UsuarioSession usuarioSession;
 	@Inject private AvaliacaoController avaliacaoController;
-	@Inject private DisponibilidadeController disponibilidadeController;
 			
 	
 	@Path("/")
 	public void home() {
 		avaliacaoController.mostraCardapioDia(new Date());
-		avaliacaoController.listAvaliacoesCardapioDia();
-		disponibilidadeController.mostraResultadoSugestoesHome(disponibilidadeController.dataDisponivel());
+	//	avaliacaoController.listAvaliacoesCardapioDia();
 	}
 	
 	@ControleAcesso
 	@Path("/index")
-	public void index() { }
+	public void index() { }	
 	
 	public boolean verificaAutenticacaoFuncionario(Funcionario funcionario) {
 		List<Funcionario> funcionariosValidos = implementacaoMetodos.buscaFuncionariosAtivos();
@@ -58,6 +52,7 @@ public class AutenticacaoController {
 		}			
 		if(this.funcionario != null){
 			this.funcionarioSession.login(this.funcionario);
+//			this.listItemCardapioAEscolher.setItemCardapioAEscolher(itemCardapioAEscolher);
 			return true;
 		}else{
 			validator.add(new I18nMessage("funcionario", "credenciais.nao.conferem"));
@@ -95,7 +90,6 @@ public class AutenticacaoController {
 			}
 		}
 		if(this.usuario != null){
-			this.listItemSugerido.setItemSugestaoCardapios(itemSugestaoCardapios);
 			this.usuarioSession.login(this.usuario);
 			return true;
 		}else{
