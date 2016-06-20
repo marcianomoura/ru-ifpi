@@ -26,7 +26,6 @@
 			  		<th>Descrição</th>
 			  		<th>Benefícios</th>
 			  		<th>Contraindicações</th>
-			  		<th>Inf. Nutricionais</th>
 			  		<th>Valor Calórico</th>
 			  		<th>Classe Nutricional</th>
 			  		<th>Alteração</th>
@@ -44,11 +43,6 @@
 			  			</a>
 			  		</td>
 			  		<td>${item.maleficios}</td>
-			  		<td>
-			  			<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-			  				data-content="${item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> info
-			  			</a>
-			  		</td>
 			  		
 			  		<td>${item.valorCalorico}</td>
 			  		<td>${item.classeNutricional.descricao}</td>

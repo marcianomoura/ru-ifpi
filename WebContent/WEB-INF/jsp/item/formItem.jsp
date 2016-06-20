@@ -43,17 +43,7 @@
 					    <p class="help-block">Ex: 200 Kcal</p>
 					  </div>
 					</div>				
-				
-					<div class="control-group col-md-8">
-					  <label class="control-label small" for="informacoesNutricionais">* Descreva alguma informação nutricional importante</label>
-					  <small style="color: red" >${errors.from('informacaoNutricional')}</small>
-					  <div class="controls">
-					    <input name="item.informacoesNutricionais" value="${item.informacoesNutricionais}" type="text"
-					    class="form-control" required="">
-					    <p class="help-block">Ex: Fonte de Vitamina A e C</p>
-					  </div>
-					</div>				
-				
+								
 					<div class="control-group col-md-5">
 					  <label class="control-label small" for="beneficios">* Informe algum tipo de benefícios do alimento à saude </label>
 					  <small style="color: red" >${errors.from('beneficios')}</small>

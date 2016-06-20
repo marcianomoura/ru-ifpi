@@ -69,11 +69,11 @@
 	                 <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="cardapio">
-				 				<span class="glyphicon glyphicon-plus"></span> Registro de Cardápios</a>
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratodia"></c:url>'>
+				 				<span class="glyphicon glyphicon-plus"></span> Registrar Cardápio do Dia</a>
 				 			</li>
 			 				
-			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapios"></c:url>'>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratos/list"></c:url>'>
 			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Cardápios </a>
 			 				</li>
 			 				<li class="divider"></li>
@@ -110,9 +110,40 @@
 			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a>
 			 				</li>
 	                	</ul>
-	                </li>  
+	                </li>
 	                
-	                <li><a href='<c:url value="funcionario" />'> Funcionários </a></li>
+	                <li class="dropdown">
+	                	<a data-toggle="dropdown"  href="#"> Catálogo de Pratos  </a>
+	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratopronto"/>'>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Pratos</a>
+				 			</li>
+				 			<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratosprontos"/>'>
+			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Pratos</a>
+			 				</li>
+	                	</ul>
+	                </li>
+	                
+	                <li class="dropdown">
+	                	<a data-toggle="dropdown"  href="#"> Institucional </a>
+	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/campus"/>'>
+				 				<span class="glyphicon glyphicon-pencil"></span> Gerenciar Campus</a>
+				 			</li>
+				 			<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/instituicao"/>'>
+			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciar Instituições</a>
+			 				</li>
+			 				<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/refeitorio"/>'>
+			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciar de Refeitórios</a>
+	                	</ul>
+	                </li>   
+	                
+	                <li><a href='<c:url value="/funcionario" />'> Funcionários </a></li>
+	                
+	                <li><a href='<c:url value="/sobremesa" />'> Sobremesas </a></li>
 	                
 	                <li><a href='<c:url value="/logout/funcionario"></c:url>'> Sair :
 	                <span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.perfil} (a) ${funcionarioSessao.funcionario.nome}</a>

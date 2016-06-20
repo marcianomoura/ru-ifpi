@@ -1,6 +1,8 @@
 package br.com.ruifpi.models;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class PratoPronto implements Serializable {
+public class PratoPronto implements Serializable, Comparable<PratoPronto> {
 
 	/**
 	 * 
@@ -98,6 +100,22 @@ public class PratoPronto implements Serializable {
 		} else if (!itemPratoProntos.equals(other.itemPratoProntos))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(PratoPronto o) {
+		return 0;
+	}
+	
+	public void ordenaPratoByTitulo(List<PratoPronto> pratoProntos) {
+		Collections.sort(pratoProntos, new Comparator<PratoPronto>() {
+		
+		@Override
+		public int compare(PratoPronto o1, PratoPronto o2) {
+			// TODO Auto-generated method stub
+			return o1.getTituloPrato().compareToIgnoreCase(o2.getTituloPrato());
+		}
+		});
 	}
 
 }

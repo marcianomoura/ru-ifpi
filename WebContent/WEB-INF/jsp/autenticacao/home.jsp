@@ -96,31 +96,31 @@
 											<th>Calorias</th>
 										</tr>
 									</thead>
-									<c:forEach items="${cardapioDia.itemCardapio}" var="item">
-										<tbody>
-											<tr>
-												<td>${item.item.descricao}</td>
-												<td>
-													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
-										  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-										  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-										  				aria-hidden="true"></span> info
-										  			</a>
-												</td>
+<%-- 									<c:forEach items="${cardapioDia.itemCardapio}" var="item"> --%>
+<!-- 										<tbody> -->
+<!-- 											<tr> -->
+<%-- 												<td>${item.item.descricao}</td> --%>
+<!-- 												<td> -->
+<!-- 													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"    -->
+<!-- 										  				title="Beneficios a saúde" data-toggle="popover" data-placement="top"  -->
+<%-- 										  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus"  --%>
+<!-- 										  				aria-hidden="true"></span> info -->
+<!-- 										  			</a> -->
+<!-- 												</td> -->
 												
-												<td>${item.item.maleficios}</td>
+<%-- 												<td>${item.item.maleficios}</td> --%>
 												
-												<td>
-													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body" 
-										  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-										  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
-										  				aria-hidden="true"></span> info
-										  			</a>
-												</td>
-												<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>											
-											</tr>
-										</tbody>
-									</c:forEach>
+<!-- 												<td> -->
+<!-- 													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"  -->
+<!-- 										  				title="Informações Nutricionais" data-toggle="popover" data-placement="top"  -->
+<%-- 										  				data-content="${item.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus"  --%>
+<!-- 										  				aria-hidden="true"></span> info -->
+<!-- 										  			</a> -->
+<!-- 												</td> -->
+<%-- 												<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>											 --%>
+<!-- 											</tr> -->
+<!-- 										</tbody> -->
+<%-- 									</c:forEach> --%>
 								</table>
 																
 							</div>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cardápio do dia</title>
+<title>Pratos</title>
 </head>
 <body>
 <div style="margin-top: 60px;">
@@ -17,12 +17,12 @@
 
 <div class="col-md-12">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h5>Gerenciamento de Cardápio</h5></div>
+		<div class="panel-heading"><h5>Cadastro de Pratos Prontos</h5></div>
 		<div class="panel-body">		
-			<form action='<c:url value="/cardapio/addItem"></c:url>'>
+			<form action='<c:url value="/pratopronto/addItem"></c:url>'>
 				<fieldset>
 					<div class="form-group col-md-6">
-					  <label class="small" for="">Monte o cardápio do dia escolhendo os Itens na lista abaixo</label>
+					  <label class="small" for="">Monte o escolhendo os Itens na lista abaixo</label>
 					  <div class="controls">
 					    <select  name="item.id" class="form-control" required>
 					    	<option></option>
@@ -46,26 +46,26 @@
 				</fieldset>
 			</form>
 			
-			<hr>
-			<small style="color: red" >${errors.from('itemsDoCardapio')}</small>
+			
+			
 			<table class="table table-responsive table table-hover">
 				<thead>
 					<tr class="active">
-						<th>Descricao</th>
-						<th>Total de Calorias</th>
-						<th>Classe Nutricional</th>
-						<th>Remoção</th>
+						<th class="small">Descricao</th>
+						<th class="small">Total de Calorias</th>
+						<th class="small">Classe Nutricional</th>
+						<th class="small">Remoção</th>
 					</tr>
 				</thead>
-				<c:forEach var="itemlista" items="${itemsLista}">
+				<c:forEach var="itemPratoPronto" items="${listItemPratoPronto}">
 					<tbody>
 						<tr>
-						<td>${itemlista.item.descricao}</td>
-						<td>${itemlista.item.valorCalorico}</td>
-						<td>${itemlista.item.classeNutricional.descricao}</td>
+						<td>${itemPratoPronto.item.descricao}</td>
+						<td>${itemPratoPronto.item.valorCalorico}</td>
+						<td>${itemPratoPronto.item.classeNutricional.descricao}</td>
 						<td>
 							<a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover este item" 
-							href='<c:url value="/cardapio/removeItem?id=${itemlista.item.id}"></c:url>'>
+							href='<c:url value="/pratopronto/remocao?id=${itemPratoPronto.item.id}"></c:url>'>
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 						</td>
 					</tr>
@@ -73,25 +73,22 @@
 					
 				</c:forEach>
 			</table>
-				
-			<form class="form-horizontal" action='<c:url value="/cardapio/save"></c:url>' method="post" >
+			<hr>	
+			<form class="form-horizontal" action='<c:url value="/pratopronto/save"></c:url>' method="post" >
 				<fieldset>
 					
-					<input name="cardapio.id" value="${cardapio.id}" type="hidden">
-					
-					<input name="cardapio.totalCaloria" value="<fmt:formatNumber value="${totalCaloria}" maxFractionDigits="2"/>" type="hidden">
+					<input name="pratoPronto.id" value="${pratoPronto.id}" type="hidden">
 					
 					<div class="form-group col-md-6">
-					  <label class="small">Data do Cardápio</label>
-					  <small style="color: red" >${errors.from('dataCardapio')}</small>
-					  <input id="datepicker" name="cardapio.dataCardapio" value="<fmt:formatDate value="${cardapio.dataCardapio}" pattern="dd/MM/yyyy"/>" 
-					    type="text" placeholder="Insira a data do cardápio" class="form-control" required="">
+					  <label class="small">Finalize o cadastro escolhendo um titulo para Prato</label>
+					  <input  required name="pratoPronto.tituloPrato" value="${pratoPronto.tituloPrato}" type="text" 
+					  placeholder="Ex: Baião de Dois com Frango" class="form-control">
 					</div>
 					
 					<div class="form-group col-md-12">
 						<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
 						<a data-toggle="tooltip" data-placement="top" title="Cancelar operação" class="btn btn-danger btn-lg" 
-						href="cardapio/clear" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						href="pratopronto/clear" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</a>
 					</div>
 				</fieldset>
