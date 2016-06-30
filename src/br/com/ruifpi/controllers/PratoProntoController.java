@@ -1,6 +1,8 @@
 package br.com.ruifpi.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import br.com.caelum.vraptor.Controller;
@@ -8,9 +10,11 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemPratoPronto;
+import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.PratoPronto;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
@@ -26,6 +30,8 @@ public class PratoProntoController {
 	private static List<ItemPratoPronto> listItemPratoProntos = new ArrayList<>();
 	private static PratoPronto pratoProntoAlteracao = new PratoPronto(); 
 	private static List<ItemPratoPronto> listAuxiliar = new ArrayList<>();
+	@Inject
+	private MetodosUtilImplementacao metodosUtilImplementacao;
 
 	public PratoProntoController() {
 		this(null, null, null);
@@ -48,6 +54,11 @@ public class PratoProntoController {
 	@Path("/pratosprontos")
 	public void listPratosProntos() {
 		listPratosPronto();
+	}
+	
+	@Path("/cardapiosemanal")
+	public void cardapioSemanal() {
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -131,14 +142,17 @@ public class PratoProntoController {
 				if(pratoProntoAlteracao.getId() != null){
 					pratoProntoAlteracao.setItemPratoProntos(listItemPratoProntos);
 					pratoProntoAlteracao.setTituloPrato(pratoPronto.getTituloPrato());
+					pratoProntoAlteracao.setTotalCaloria(totalCaloria);
 					insereIdPrato(pratoProntoAlteracao);
 					atualizaItensAposAlteracao();
 					dao.save(pratoProntoAlteracao);
+					pratoProntoAlteracao = new PratoPronto();
 					listAuxiliar.clear();
 					result.include("sucesso", "Prato alterado com sucesso.");
 				}else{
 					insereIdPrato(pratoPronto);
 					pratoPronto.setItemPratoProntos(listItemPratoProntos);
+					pratoPronto.setTotalCaloria(totalCaloria);
 					dao.save(pratoPronto);
 					result.include("sucesso", "Prato Adicionado ao catálogo de pratos prontos.");
 				}
@@ -175,6 +189,27 @@ public class PratoProntoController {
 			result.include("erro", "Ocorreu um erro na listagem dos itens. Tente novamente mais tarde.");
 			result.redirectTo(this).listPratosProntos();
 		}	
+	}
+	
+	@Path("/prato/listpratosemanal")
+	public void buscaCardapiosSemana(Date dataInicioSemana, Date dataFinalSemana) {
+		SimpleDateFormat formatador = new SimpleDateFormat();
+		formatador.applyPattern("yyy-MM-dd");
+		try {
+			java.sql.Date dataInicioSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataInicioSemana)).getTime());
+			java.sql.Date dataFinalSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataFinalSemana)).getTime());
+			List<PratoDia> listPratosSemana = metodosUtilImplementacao.buscaCardapioPeriodoSelecionado(dataInicioSqlConvertida, dataFinalSqlConvertida);
+			if(listPratosSemana.isEmpty()){
+				result.include("sucesso", "Ainda não foi publicado cardápio nesta semana.");
+			}else{
+				result.include("dataInicioSemana", dataInicioSemana);
+				result.include("dataFinalSemana", dataFinalSemana);
+				result.include("listPratosSemana", listPratosSemana);
+			}
+		} catch (Exception e) {
+			result.include("erro", "Erro ao pesquisar os cardápios da semana.");
+		}
+		result.redirectTo(this).cardapioSemanal();
 	}
 	
 }

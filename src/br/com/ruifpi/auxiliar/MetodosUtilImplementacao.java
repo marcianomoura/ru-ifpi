@@ -1,6 +1,7 @@
 package br.com.ruifpi.auxiliar;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,9 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.com.ruifpi.dao.DaoException;
+import br.com.ruifpi.models.AvaliacaoRefeicao;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.Usuario;
+import br.com.ruifpi.models.Votacao;
 import br.com.ruifpi.util.JpaUtil;
 
 @Stateless
@@ -48,22 +51,21 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public PratoDia buscaCardapioDataSolicitada(java.sql.Date dataCardapio) {
-		PratoDia cardapioEncontrado = null;
+	public List<PratoDia> buscaCardapioDataSolicitada(java.sql.Date dataCardapio) {
+		List<PratoDia> pratosEncontrados = new ArrayList<>();
 		entityManager = JpaUtil.getEntityAtual();
 			try {
-				Query query = entityManager.createQuery("select cardapio from Cardapio cardapio WHERE cardapio.dataCardapio="+ dataCardapio);
+				Query query = entityManager.createQuery("select pratoDia from PratoDia pratoDia");
 				List<PratoDia> pratoDias = query.getResultList();
 				for (PratoDia pratoDia : pratoDias) {
-					if(pratoDia.getDataCardapio().equals(pratoDia)){
-						cardapioEncontrado = pratoDia;
-						break;
+					if(pratoDia.getDataCardapio().equals(dataCardapio)){
+						pratosEncontrados.add(pratoDia);
 					}
 				}
+				return pratosEncontrados;
 			} catch (Exception e) {
 				throw new DaoException("Erro na pesquisa do cardapio");
-			}	
-		return cardapioEncontrado;
+			}		
 	}
 	
 
@@ -72,7 +74,7 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 	public List<PratoDia> buscaCardapioPeriodoSelecionado(Date periodoInicial, Date periodoFinal) {
 		entityManager = JpaUtil.getEntityAtual();
 		try {
-			Query query = entityManager.createQuery("select cardapio from Cardapio cardapio where cardapio.dataCardapio between :periodoInicial and :periodoFinal");
+			Query query = entityManager.createQuery("select pratodia from PratoDia pratodia where pratodia.dataCardapio between :periodoInicial and :periodoFinal");
 			query.setParameter("periodoInicial", periodoInicial);
 			query.setParameter("periodoFinal", periodoFinal);
 			query.setFirstResult(0);	// Inicia do index 0 da lista ...
@@ -82,7 +84,34 @@ public class MetodosUtilImplementacao implements MetodosUtil {
 		} catch (Exception e) {
 			throw new DaoException("Erro na pesquisa de cardapio por periodo");
 		}
-
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Votacao> pesquisaVotacaoById(Long id) {
+		entityManager = JpaUtil.getEntityAtual();
+		try {
+			Query query = entityManager.createQuery("select votacao from Votacao votacao where votacao.sugestaoPrato.id=" + id);
+			List<Votacao> listaVotos = query.getResultList();
+			return listaVotos;
+		} catch (Exception e) {
+			throw new DaoException();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AvaliacaoRefeicao> buscaAvaliacaoDeUmCardapio(Long id) {
+		entityManager = JpaUtil.getEntityAtual();
+		try {
+			Query query = entityManager.createQuery("select avaliacao from AvaliacaoRefeicao avaliacao where avaliacao.pratoDia.id=" + id);
+			List<AvaliacaoRefeicao> listaAvaliacoes = query.getResultList();
+			return listaAvaliacoes;
+		} catch (Exception e) {
+			throw new DaoException();
+		}
 	}
 	
 }
+
+
+
+

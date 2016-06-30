@@ -1,6 +1,5 @@
 package br.com.ruifpi.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,13 +27,14 @@ public class AutenticacaoController {
 			private Usuario usuario = null;
 	@Inject private FuncionarioSession funcionarioSession;
 	@Inject private UsuarioSession usuarioSession;
-	@Inject private AvaliacaoController avaliacaoController;
-			
+	@Inject private PratoDiaController pratoDiaController;
+	@Inject private SugestaoController sugestaoController;		
 	
 	@Path("/")
 	public void home() {
-		avaliacaoController.mostraCardapioDia(new Date());
-	//	avaliacaoController.listAvaliacoesCardapioDia();
+		pratoDiaController.pratoDiaPublicado();
+		sugestaoController.listCardapiosAbertosParaVotacao();
+	
 	}
 	
 	@ControleAcesso
@@ -52,7 +52,6 @@ public class AutenticacaoController {
 		}			
 		if(this.funcionario != null){
 			this.funcionarioSession.login(this.funcionario);
-//			this.listItemCardapioAEscolher.setItemCardapioAEscolher(itemCardapioAEscolher);
 			return true;
 		}else{
 			validator.add(new I18nMessage("funcionario", "credenciais.nao.conferem"));
