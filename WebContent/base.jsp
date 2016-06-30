@@ -46,8 +46,8 @@ $(function () {
 	
 <script type="text/javascript">
  $(function() {
-    $( "#datepicker" ).datepicker({dateFormat: "dd/mm/yy"});
-    $( "#datepicker2" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#dataNascimento" ).datepicker({dateFormat: "dd/mm/yy"});
+    $( "#datafinalvotacao" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataCardapio" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataDisponibilizada" ).datepicker({dateFormat: "dd/mm/yy"});
     $( "#dataPesquisaCardapio1" ).datepicker({dateFormat: "dd/mm/yy"});
@@ -64,7 +64,7 @@ $(function () {
      $("#valorCalorico").keypress(verificaNumero);
 
      function verificaNumero(e) {
-    	    if (e.which != 8 && e.which != 0 && e.which != 13  && (e.which < 48 || e.which > 57)) {
+    	    if (e.which != 8 && e.which != 0 && e.which != 13 && e.which != 44 && e.which != 46  && (e.which < 48 || e.which > 57)) {
     	      	alert("Prezado Usuário, "+ "\nApenas Numeros  são permitidos neste campo !");
     	    	return false;
     	    }else{

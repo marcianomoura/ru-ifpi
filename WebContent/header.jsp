@@ -33,11 +33,11 @@
 	                                               
 	                <li><a href='<c:url value="/avaliacao"/>'> Avaliar Cardápio </a></li>
 	                
-	                <li><a href='<c:url value="/cardapioespecial/escolha"/>'>Escolher Cardápio</a></li>
+	                <li><a href='<c:url value="/sugestoes"/>'>Votar em um Cardápio</a></li>
 	                
-	                <li><a href='<c:url value="/cardapio/semana"/>'>Cardápio Semanal</a></li>
+	                <li><a href='<c:url value="/cardapiosemanal"/>'>Cardápio Semanal</a></li>
 	                
-	                <li><a href='<c:url value="/logout/usuario"></c:url>'> Sair :  ${usuarioSessao.usuario.perfil} (a) ${usuarioSessao.usuario.nome}</a>
+	                <li><a href='<c:url value="/logout/usuario"></c:url>'> Sair : ${usuarioSessao.usuario.primeiroNome}</a>
 	                </li>
 	            </ul>
 	        </div>
@@ -63,54 +63,57 @@
 	        <div class="collapse navbar-collapse navbar-menubuilder">
 	            <ul class="nav navbar-nav navbar-right">
 	                <li >
-	                	<a href="index"><span class="glyphicon glyphicon-home"></span></a>
+	                	<a href='<c:url value="/index" />'><span class="glyphicon glyphicon-home"></span></a>
 	                </li>
 	                               
 	                 <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratodia"></c:url>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Registrar Cardápio do Dia</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Registrar cardápio do dia</a>
 				 			</li>
 			 				
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestao"/>'>
+			 					<span class="glyphicon glyphicon-plus"></span> Registrar cardapio para votação </a>
+			 				</li>
+			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratos/list"></c:url>'>
 			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Cardápios </a>
 			 				</li>
-			 				<li class="divider"></li>
+			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/avaliacoes" />'>
 			 					<span class="glyphicon glyphicon-list-alt"></span> Analisar Avaliações de cardápios</a>
 			 				</li>
 			 				
-			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestoes"/>'>
-			 					<span class="glyphicon glyphicon-list-alt"></span> Ver cardápio mais votado </a>
-			 				</li>
+			 				
 	                	</ul>
 	                </li>
 	                
-	               
+	                <li><a href='<c:url value="/sobremesa" />'> Sobremesas </a></li>
+	                
 	                <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Alimentos </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	                		<li role="presentation"><a role="menuitem" tabindex="-1" href="item">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/item"></c:url>'>
 				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Alimentos</a>
 				 			</li>
-				 				<li role="presentation"><a role="menuitem" tabindex="-1" href="items">
+				 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/items"></c:url>'>
 				 				<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Alimentos</a></li>
 	                	</ul>
 	                </li>
 	                
-	                <li class="dropdown">
-	                	<a data-toggle="dropdown"  href="#"> Montagem dos cardapios </a>
-	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapioespecial"/>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Sugerir cardapios para seleção</a>
-				 			</li>
-				 			<li class="divider"></li>
-			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapio/semana"/>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a>
-			 				</li>
-	                	</ul>
-	                </li>
+<!-- 	                <li class="dropdown"> -->
+<!-- 	                	<a data-toggle="dropdown"  href="#"> Montagem dos cardapios </a> -->
+<!-- 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"> -->
+<%-- 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapioespecial"/>'> --%>
+<!-- 				 				<span class="glyphicon glyphicon-plus"></span> Sugerir cardapios para seleção</a> -->
+<!-- 				 			</li> -->
+<!-- 				 			<li class="divider"></li> -->
+<%-- 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapio/semana"/>'> --%>
+<!-- 			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a> -->
+<!-- 			 				</li> -->
+<!-- 	                	</ul> -->
+<!-- 	                </li> -->
 	                
 	                <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Catálogo de Pratos  </a>
@@ -143,10 +146,8 @@
 	                
 	                <li><a href='<c:url value="/funcionario" />'> Funcionários </a></li>
 	                
-	                <li><a href='<c:url value="/sobremesa" />'> Sobremesas </a></li>
-	                
 	                <li><a href='<c:url value="/logout/funcionario"></c:url>'> Sair :
-	                <span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.perfil} (a) ${funcionarioSessao.funcionario.nome}</a>
+	                <span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.nome}</a>
 	                </li>
 	            </ul>
 	        </div>

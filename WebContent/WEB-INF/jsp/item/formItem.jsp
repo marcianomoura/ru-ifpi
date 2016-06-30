@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -37,10 +37,11 @@
 					<div class="control-group col-md-4">
 					  <label class="control-label small" for="valorCalorico">* Total de calorias (quantidade/aluno)</label>
 					  <small style="color: red" >${errors.from('valorCalorico')}</small>
-					  <div class="controls">				    
-					    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2"  
-					    value="${item.valorCalorico}"></fmt:formatNumber>" type="text"  class="form-control" required="">
-					    <p class="help-block">Ex: 200 Kcal</p>
+					  <div class="controls">
+					   				    
+					    <input id="valorCalorico"  name="item.valorCalorico" value="<fmt:formatNumber maxFractionDigits="2" value="${item.valorCalorico}" />"
+					     type="text"  class="form-control" required="">
+					     <p class="help-block">Ex: 200 Kcal</p>
 					  </div>
 					</div>				
 								

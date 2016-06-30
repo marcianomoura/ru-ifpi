@@ -19,7 +19,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h5>Cardápio do Dia</h5></div>
 		<div class="panel-body">
-			<c:if test="${pratoDia == null }">		
+<%-- 			<c:if test="${pratoDia == null }">		 --%>
 				<form action='<c:url value="/pratodia/montar"></c:url>'>
 					<div class="row">
 						<fieldset>
@@ -27,7 +27,7 @@
 							  <label class="small" for="">Esolha o prato em seu catálogo de pratos prontos.</label>
 							  <div class="controls">
 							    <select  name="pratoDia.pratoPronto.id" class="form-control" required>
-							    	<option></option>
+							    	<option value="${pratoDia.pratoPronto.id}"> ${pratoDia.pratoPronto.tituloPrato}</option>
 									<c:forEach var="pratopronto" items="${listPratoProntos}"> 
 										<option value="${pratopronto.id}">${pratopronto.tituloPrato}</option>			
 									</c:forEach>
@@ -39,7 +39,7 @@
 							  <label class="small" for="">Escolha a Sobremesa</label>
 							  <div class="controls">
 							    <select  name="pratoDia.sobremesa.id" class="form-control" required>
-							    	<option></option>
+							    	<option value="${pratoDia.sobremesa.id}" >${pratoDia.sobremesa.descricao}</option>
 									<c:forEach var="sobremesa" items="${sobremesas}"> 
 										<option value="${sobremesa.id}">${sobremesa.descricao}</option>			
 									</c:forEach>
@@ -51,7 +51,7 @@
 							  <label class="small" for="">Tipo de Refeição</label>
 							  <div class="controls">
 							    <select  name="pratoDia.tipoPrato.id" class="form-control" required>
-							    	<option></option>
+							    	<option value="${pratoDia.tipoPrato.id}">${pratoDia.tipoPrato.descricao}</option>
 							    	<option value="${1}"> Almoço</option>
 							    	<option value="${2}"> Jantar</option>
 							    </select>
@@ -60,7 +60,8 @@
 							
 							<div class="form-group col-md-3">
 								<label class="small">Data do Cardápio</label>
-								<input id="dataCardapio" name="pratoDia.dataCardapio" value="${pratoDia.dataCardapio}" class="form-control" required >
+								<input id="dataCardapio" name="pratoDia.dataCardapio" 
+								value="<fmt:formatDate value="${pratoDia.dataCardapio}" pattern="dd/MM/yyyy"/>"class="form-control" required >
 							</div>
 							
 						</fieldset>
@@ -71,7 +72,7 @@
 					</div>
 					<hr>
 				</form>
-			</c:if>
+<%-- 			</c:if> --%>
 			<c:if test="${pratoDia != null }">
 				<div class="row">
 					<div class="col-md-8">
@@ -94,20 +95,10 @@
 												<th>Calorias</th>
 											</tr>
 										</thead>
-										<c:forEach items="${listItemPratoPronto}" var="item">
+										<c:forEach items="${listItemPratoPronto}" var="item" >
 											<tbody>
 												<tr>
 													<td>${item.item.descricao}</td>
-	<!-- 												<td> -->
-	<!-- 													<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"    -->
-	<!-- 										  				title="Beneficios a saúde" data-toggle="popover" data-placement="top"  -->
-	<%-- 										  				data-content="${item.item.beneficios}"><span class="glyphicon glyphicon-plus"  --%>
-	<!-- 										  				aria-hidden="true"></span> info -->
-	<!-- 										  			</a> -->
-	<!-- 												</td> -->
-													
-	<%-- 												<td>${item.item.maleficios}</td> --%>
-													
 													<td><span class="badge">${item.item.valorCalorico} Kcal</span></td>											
 												</tr>
 											</tbody>
@@ -121,11 +112,11 @@
 					<div class="col-md-4">
 						<label class="small">SOBREMESA</label>
 						<ul class="list-group">
-						  <li class="list-group-item"><label class="small">Descrição : </label> ${sobremesa.descricao}</li>
-						  <li class="list-group-item"><label class="small">Vitaminas : </label> ${sobremesa.vitaminas}</li>
-						  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${sobremesa.beneficios}</li>
-						  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${sobremesa.maleficios}</li>
-						  <li class="list-group-item"><label class="small">Classificação :</label> ${sobremesa.classeNutricional.descricao}</li>
+						  <li class="list-group-item"><label class="small">Descrição : </label> ${pratoDia.sobremesa.descricao}</li>
+						  <li class="list-group-item"><label class="small">Vitaminas : </label> ${pratoDia.sobremesa.vitaminas}</li>
+						  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${pratoDia.sobremesa.beneficios}</li>
+						  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${pratoDia.sobremesa.maleficios}</li>
+						  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDia.sobremesa.classeNutricional.descricao}</li>
 						</ul>
 					</div>
 				</div>	
@@ -133,11 +124,12 @@
 				<form class="form-horizontal" action='<c:url value="/pratodia/save"></c:url>' method="post" >
 					
 					<input name="pratoDia.id" value="${pratoDia.id}" type="hidden">
-					<input name="pratoDia.pratoPronto.id" value="${pratoPronto.id}" type="hidden">
+					<input name="pratoDia.pratoPronto.id" value="${pratoDia.pratoPronto.id}" type="hidden">
 					<input name="pratoDia.tipoPrato.id" value="${pratoDia.tipoPrato.id}" type="hidden">
-					<input name="pratoDia.sobremesa.id" value="${sobremesa.id}" type="hidden">
+					<input name="pratoDia.sobremesa.id" value="${pratoDia.sobremesa.id}" type="hidden">
+					
 					<input name="pratoDia.dataCardapio" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${pratoDia.dataCardapio}" />' type="hidden">
-					<input name="pratoDia.totalCaloria" value="${pratoDia.totalCaloria}" type="hidden">
+					<input name="pratoDia.totalCaloria" value='<fmt:formatNumber maxFractionDigits="2" value="${pratoDia.totalCaloria}" />' type="hidden">
 					
 					<div class="form-group col-md-12">
 						

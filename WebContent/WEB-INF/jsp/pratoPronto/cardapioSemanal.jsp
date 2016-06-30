@@ -19,22 +19,21 @@
 	<div class="panel panel-default">
 		<div class="panel panel-heading">Cardápios da Semana</div>	
 			<div class="panel-body">
-				<form  method="get" action='<c:url value="/cardapio/periodo"></c:url>'  >
+				<form  method="get" action='<c:url value="/prato/listpratosemanal"></c:url>'  >
 				
 					<div class="col-md-4">
 						<label class="small">Forneca o primeiro dia da semana que deseja pesquisar</label>
 						<div class="form-group">
-							<input required class="form-control" type="text" name="periodoInicial" value="<fmt:formatDate value="${periodoInicial}" pattern="dd/MM/yyyy"/>" 
-							id="dataPesquisaCardapio1">
+							<input required class="form-control" type="text" name="dataInicioSemana" 
+							value="<fmt:formatDate value="${dataInicioSemana}" pattern="dd/MM/yyyy"/>" id="dataPesquisaCardapio1">
 						</div>
 					</div>
 					<div class="col-md-4">
 						<label class="small"> Forneca o ultimo dia da semana que deseja pesquisar</label>
 						<div class="form-group">
-							<input required class="form-control" type="text" name="periodoFinal" value="<fmt:formatDate value="${periodoFinal}" pattern="dd/MM/yyyy"/>" 
-							id="dataPesquisaCardapio2">
+							<input required class="form-control" type="text" name="dataFinalSemana" 
+							value="<fmt:formatDate value="${dataFinalSemana}" pattern="dd/MM/yyyy"/>" id="dataPesquisaCardapio2">
 						</div>
-					
 					</div>
 				
 					<div class="col-md-2">
@@ -47,31 +46,28 @@
 	
 	<table class="table table-responsive">
 			<thead>
-				<tr align="center" class="small">
-			  		<th >Código</th>
+				<tr class="small">
 			  		<th >Data do Cardápio</th>
+			  		<th >Prato</th>
+			  		<th >Sobremesa</th>
 			  		<th >Total de Calorias</th>
 			  		<th >Itens do Cardápio</th>
-			  		<th >Alteração</th>
 			  	</tr>
 			</thead>
 			
-			  <c:forEach items="${cardapios}" var="cardapio">
+			  <c:forEach items="${listPratosSemana}" var="prato">
 			  	<tbody>
-			  		<tr align="center">
-				  		<td>${cardapio.id}</td>
-				  		<td><fmt:formatDate value="${cardapio.dataCardapio}" pattern="dd/MM/yyyy"/></td>
-				  		<td>${cardapio.totalCaloria}</td>
+			  		<tr>
+				  		
+				  		<td><fmt:formatDate value="${prato.dataCardapio}" pattern="dd/MM/yyyy"/></td>
+				  		<td>${prato.pratoPronto.tituloPrato}</td>
+				  		<td>${prato.sobremesa.descricao}</td>
+				  		<td>${prato.totalCaloria}</td>
 				  		<td>
-				  			<a target="blank" href='<c:url value="/cardapio/itens?cardapio.id=${cardapio.id}"></c:url>' >
+				  			<a target="blank" href='<c:url value="/pratopronto/itens?id=${prato.pratoPronto.id}"></c:url>' >
 				  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> detalhes
 				  			</a>
 				  		</td>
-				  		<td> 
-							<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este cardapio" 
-								href='<c:url value="/carpapio/alteracao?cardapio.id=${cardapio.id}"></c:url>'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a>
-						</td>		  		
 				  	</tr>
 			  	</tbody>		  	
 			  </c:forEach>	  
