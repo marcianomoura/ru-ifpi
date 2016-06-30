@@ -23,7 +23,6 @@
 		<div class="panel-body">
 		<div style="margin-top: 15px;  margin-bottom: 10px;" >
 			<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Voltar</a>
-<!-- 			<button class="btn btn-danger btn-sm" onclick="window.close()"> Fechar esta Pagina</button>	 -->
 		</div>
 			<table class="table table-responsive">
 				<thead>

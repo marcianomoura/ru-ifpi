@@ -29,6 +29,7 @@
 								<th>Data do cardápio</th>
 								<th>Data final votação</th>
 								<th>Votação de Cardápio</th>
+								<th>Resultado Parcial</th>
 							</tr>
 						</thead>
 						<c:forEach items="${listSugestaoPratos}" var="sugestaoPrato">
@@ -39,7 +40,12 @@
 									<td><fmt:formatDate value="${sugestaoPrato.dataFinalVotacao}"/></td>
 									<td>
 										<a  class="btn btn-info" href='<c:url value="/sugestao/itens?id=${sugestaoPrato.id}"></c:url>'>
-										Veja as opções
+										Escolha o seu
+										</a>
+									</td>
+									<td>
+										<a  class="btn btn-default" href='<c:url value="/votacao/resultado?id=${sugestaoPrato.id}"></c:url>'>
+										Resultado Parcial
 										</a>
 									</td>
 								</tr>
