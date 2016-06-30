@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,104 +30,213 @@
 					
 				   Media das avaliações : <kbd> <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></kbd>
 				    
-				</div>
-				<div class="panel-body" >																		
-					<div class="col-md-8">
-					    <table class="table table-responsive table-condensed">
-							<thead>
-								<tr>
-									<th class="small">Item</th>
-									<th class="small">Beneficios</th>
-									<th class="small">Não recomendado</th>
-									<th class="small">Inf. Nutricionais</th>
-									<th class="small">Calorias</th>
-								</tr>
-							</thead>
-							<c:forEach items="${cardapioDia.itemCardapio}" var="itemCArdapio">
-								<tbody>
-									<tr>
-										<td>${itemCArdapio.item.descricao}</td>
-										<td>
-											<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body"   
-								  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-								  				data-content="${itemCArdapio.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-								  				aria-hidden="true"></span> info
-								  			</a>
-										</td>
-										
-										<td>${itemCArdapio.item.maleficios}</td>
-										
-										<td>
-											<a class="btn btn-info btn-sm btn-block" data-trigger="hover" data-container="body" 
-								  				title="Informações Nutricionais" data-toggle="popover" data-placement="top" 
-								  				data-content="${itemCArdapio.item.informacoesNutricionais}"><span class="glyphicon glyphicon-plus" 
-								  				aria-hidden="true"></span> info
-								  			</a>
-										</td>
-										<td><span class="badge">${itemCArdapio.item.valorCalorico} Kcal</span></td>											
-									</tr>
-								</tbody>
-							</c:forEach>
-						</table>				    
-					</div>
-					
-					<div class="col-md-4">
-				
-						<div class="panel panel-default">
-							<div class="panel-heading"><label class="small"> Faça sua avaliação</label></div>
-							<div class="panel-body">
-								<c:if test="${cardapioDia !=null}">
-									<a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${10}"></c:url>' 
-							    		class="btn btn-primary btn-sm btn-block">Excelente
-								    </a>
-								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${8}"></c:url>' 
-								    	class="btn btn-primary btn-sm btn-block">Bom
-								    </a>
-								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${6}"></c:url>' 
-								    	class="btn btn-warning btn-sm btn-block">Regular
-								    </a>
-								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${4}"></c:url>' 
-								    	class="btn btn-danger btn-sm btn-block">Ruim
-								    </a>
-								    <a href='<c:url value="/avaliacao/cardapio?avaliacaoCardapio.notaAvaliativa=${2}"></c:url>' 
-								    	class="btn btn-danger btn-sm btn-block">Muito Ruim
-								    </a>								
-								</c:if>								
-								
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="col-md-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">Resultado das Avaliações para este cardapio</div>
-							<div class="panel-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
-								<table class="table table-responsive table-condensed">
-									<thead>
-										<tr>
-											<td>Nome</td>
-											<td>Matricula</td>
-											<td>Nota</td>								
-										</tr>
-									</thead>
-									<c:forEach items="${listaAvaliacoes}" var="avaliacao">
-										<tbody>								
-											<tr>
-												<td>${avaliacao.usuario.nome}</td>
-												<td>${avaliacao.usuario.matricula}</td>
-												<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+				</div>																	
+					<div class="panel-body">
+			  		<ul class="nav nav-tabs" role="tablist">
+			    		<li role="presentation" class="active"><a href="#almoco" aria-controls="home" role="tab" data-toggle="tab">Almoço</a></li>
+			    		<li role="presentation"><a href="#jantar" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a></li>
+			  		</ul>
+						<div class="tab-content">
+						  	<div role="tabpanel" class="tab-pane active" id="almoco">
+							    <div class="col-md-3">
+							    	<br>
+									<label class="">${pratoDiaAlmoco.pratoPronto.tituloPrato} </label><br>
+									<label class="small">Total de Calorias : <kbd>${pratoDiaAlmoco.totalCaloria} Kcal</kbd></label><br><br>
+								    <div class="thumbnail">
+								      <img class="img-responsive" src="img/almoco.jpg" width="100%">
+								    </div>
+								</div>
+							    
+							    <br>
+							    <div class="col-md-3">
+									<label class="small">Sobremesa</label>
+									<ul class="list-group">
+									  <li class="list-group-item"><label class="small">Descrição : </label> ${pratoDiaAlmoco.sobremesa.descricao}</li>
+									  <li class="list-group-item"><label class="small">Vitaminas : </label> ${pratoDiaAlmoco.sobremesa.vitaminas}</li>
+									  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${pratoDiaAlmoco.sobremesa.beneficios}</li>
+									  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${pratoDiaAlmoco.sobremesa.maleficios}</li>
+									  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaAlmoco.sobremesa.classeNutricional.descricao}</li>
+									</ul>
+								</div>
+								<br>
+								<div class="col-md-6">
+									<label class="small">Itens do Cardápio</label>
+									<table class="table table-responsive">
+										<thead>
+											<tr class="small">
+												<th>Item</th>
+												<th>Beneficios</th>
+												<th>Contra Indicado</th>
+												<th>Calorias</th>
 											</tr>
-										</tbody>
-									</c:forEach>
-								</table>
+										</thead>
+										<c:forEach items="${almoco.itemPratoProntos}" var="itemPrato">
+											<tbody>
+												<tr>
+													<td>${itemPrato.item.descricao}</td>
+													<td>
+														<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+											  				aria-hidden="true"></span> info
+											  			</a>
+													</td>
+													
+													<td>${itemPrato.item.maleficios}</td>
+													
+													<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
+												</tr>
+											</tbody>
+										</c:forEach>
+									</table>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="panel panel-default">
+										<div class="panel-heading"><label class="small"> Faça sua avaliação</label></div>
+										<div class="panel-body">
+											<c:if test="${pratoDiaAlmoco !=null}">
+												
+												<form action='<c:url  value="/avaliacao/cardapio" />'>
+													<input type="hidden" name="tipoPrato.id" value="${pratoDiaAlmoco.tipoPrato.id }">
+													<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
+													<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
+													<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaAlmoco.id}">
+													<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
+														<option></option>
+														<option value="10">Excelente</option>
+														<option value="9">Muito Bom</option>
+														<option value="8">Bom</option>
+														<option value="6">Regular</option>
+														<option value="4">Ruim</option>
+														<option value="2">Muito Ruim</option>
+													</select>
+													<br>
+													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar</button>
+												</form>
+			
+											</c:if>								
+											
+										</div>
+									</div>
+								</div>
+								
+										
 							</div>
-						</div>
+						    <div role="tabpanel" class="tab-pane" id="jantar">
+						    	<div class="col-md-3">
+							    	<br>
+									<label class="">${pratoDiaJanta.pratoPronto.tituloPrato} </label><br>
+									<label class="small">Total de Calorias : <kbd>${pratoDiaJanta.totalCaloria} Kcal</kbd></label><br><br>
+								    <div class="thumbnail">
+								      <img class="img-responsive" src="img/almoco.jpg" width="100%">
+								    </div>
+								</div>
+							    
+							    <br>
+							    <div class="col-md-3">
+									<label class="small">Sobremesa</label>
+									<ul class="list-group">
+									  <li class="list-group-item"><label class="small">Descrição : </label> ${pratoDiaJanta.sobremesa.descricao}</li>
+									  <li class="list-group-item"><label class="small">Vitaminas : </label> ${pratoDiaJanta.sobremesa.vitaminas}</li>
+									  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${pratoDiaJanta.sobremesa.beneficios}</li>
+									  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${pratoDiaJanta.sobremesa.maleficios}</li>
+									  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaJanta.sobremesa.classeNutricional.descricao}</li>
+									</ul>
+								</div>
+								<br>
+						    	<div class="col-md-6">
+									<label class="small">Itens do Cardápio</label>
+									<table class="table table-responsive">
+										<thead>
+											<tr class="small">
+												<th>Item</th>
+												<th>Beneficios</th>
+												<th>Contra Indicado</th>
+												<th>Calorias</th>
+											</tr>
+										</thead>
+										<c:forEach items="${janta.itemPratoProntos}" var="itemPrato">
+											<tbody>
+												<tr>
+													<td>${itemPrato.item.descricao}</td>
+													<td>
+														<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+											  				aria-hidden="true"></span> info
+											  			</a>
+													</td>
+													
+													<td>${itemPrato.item.maleficios}</td>
+													
+													<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
+												</tr>
+											</tbody>
+										</c:forEach>
+									</table>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="panel panel-default">
+										<div class="panel-heading"><label class="small"> Faça sua avaliação</label></div>
+										<div class="panel-body">
+											<c:if test="${pratoDiaJanta !=null}">
+												<form action='<c:url  value="/avaliacao/cardapio" />'>
+													<input type="hidden" name="tipoPrato.id" value="${pratoDiaJanta.tipoPrato.id }">
+													<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
+													<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
+													<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaJanta.id}">
+													<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
+														<option></option>
+														<option value="10">Excelente</option>
+														<option value="9">Muito Bom</option>
+														<option value="8">Bom</option>
+														<option value="6">Regular</option>
+														<option value="4">Ruim</option>
+														<option value="2">Muito Ruim</option>
+													</select>
+													<br>
+													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar</button>
+												</form>
+			
+											</c:if>								
+											
+										</div>
+									</div>
+									
+								</div>
+						    </div>
+					  	</div>
 					
-					</div>
+					
 				</div>
-			</div>   
-    </div>
-</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">Média das avaliações : <fmt:formatNumber maxFractionDigits="2" value="${mediaAvaliacao}" /> </div>
+				<div class="panel-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
+					<table class="table table-responsive table-condensed">
+						<thead>
+							<tr>
+								<td>Nome</td>
+								<td>Matricula</td>
+								<td>Nota</td>								
+							</tr>
+						</thead>
+						<c:forEach items="${listaAvaliacoes}" var="avaliacao">
+							<tbody>								
+								<tr>
+									<td>${avaliacao.usuario.primeiroNome}</td>
+									<td>${avaliacao.usuario.matricula}</td>
+									<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+								</tr>
+							</tbody>
+						</c:forEach>
+					</table>
+				</div>
+			</div>		 
+    	</div>
+	</div>
 </body>
 </html>
