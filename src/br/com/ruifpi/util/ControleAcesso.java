@@ -22,4 +22,10 @@ public @interface ControleAcesso {
 		
 	}
 	
+	@Target(value=ElementType.METHOD)
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface PermissaoUsuarioCadastro {
+		
+	}
+	
 }
