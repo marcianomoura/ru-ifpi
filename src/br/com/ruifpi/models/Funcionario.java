@@ -24,6 +24,18 @@ public class Funcionario{
 	}
 	
 	
+	
+	public Funcionario(String nome, String matricula, String login, String senha, boolean statusOperacional) {
+		super();
+		this.nome = nome;
+		this.matricula = matricula;
+		this.login = login;
+		this.senha = senha;
+		this.statusOperacional = statusOperacional;
+	}
+
+
+
 	public Funcionario(Long id, String nome, String matricula, String login,
 			String senha, String funcao, boolean statusOperacional,
 			String perfil) {
