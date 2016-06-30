@@ -29,14 +29,17 @@ public class PratoPronto implements Serializable, Comparable<PratoPronto> {
 
 	@OneToMany(mappedBy = "pratoPronto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ItemPratoPronto> itemPratoProntos;
+	
+	private double totalCaloria;
 
 	public PratoPronto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PratoPronto(Long id, String tituloPrato, List<ItemPratoPronto> itemPratoProntos) {
+	public PratoPronto(Long id, String tituloPrato, List<ItemPratoPronto> itemPratoProntos, double totalCaloria) {
 		super();
 		this.id = id;
+		this.totalCaloria = totalCaloria;
 		this.tituloPrato = tituloPrato;
 		this.itemPratoProntos = itemPratoProntos;
 	}
@@ -48,7 +51,16 @@ public class PratoPronto implements Serializable, Comparable<PratoPronto> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	public double getTotalCaloria() {
+		return totalCaloria;
+	}
+	
+	public void setTotalCaloria(double totalCaloria) {
+		this.totalCaloria = totalCaloria;
+	}
+	
+	
 	public String getTituloPrato() {
 		return tituloPrato;
 	}
@@ -63,12 +75,6 @@ public class PratoPronto implements Serializable, Comparable<PratoPronto> {
 
 	public void setItemPratoProntos(List<ItemPratoPronto> itemPratoProntos) {
 		this.itemPratoProntos = itemPratoProntos;
-	}
-
-	@Override
-	public String toString() {
-		return "PratoPronto [id=" + id + ", tituloPrato=" + tituloPrato + ", itemPratoProntos=" + itemPratoProntos
-				+ "]";
 	}
 
 	@Override

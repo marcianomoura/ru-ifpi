@@ -14,22 +14,22 @@ public class Votacao {
 	private Long id;
 
 	@ManyToOne
-	private Escolha escolha;
+	private SugestaoPrato sugestaoPrato;
 	@ManyToOne
 	private Usuario usuario;
 	@ManyToOne
-	private ItemEscolhaPratoPronto escolhaPratoPronto;
+	private ItemSugestaoPratoPronto itemSugestaoPratoPronto;
 
 	public Votacao() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Votacao(Long id, Escolha escolha, Usuario usuario, ItemEscolhaPratoPronto escolhaPratoPronto) {
+	public Votacao(Long id, SugestaoPrato sugestaoPrato, Usuario usuario, ItemSugestaoPratoPronto itemSugestaoPratoPronto) {
 		super();
 		this.id = id;
-		this.escolha = escolha;
+		this.sugestaoPrato = sugestaoPrato;
 		this.usuario = usuario;
-		this.escolhaPratoPronto = escolhaPratoPronto;
+		this.itemSugestaoPratoPronto = itemSugestaoPratoPronto;
 	}
 
 	public Long getId() {
@@ -40,12 +40,12 @@ public class Votacao {
 		this.id = id;
 	}
 
-	public Escolha getEscolha() {
-		return escolha;
+	public SugestaoPrato getSugestaoPrato() {
+		return sugestaoPrato;
 	}
 
-	public void setEscolha(Escolha escolha) {
-		this.escolha = escolha;
+	public void setSugestaoPrato(SugestaoPrato sugestaoPrato) {
+		this.sugestaoPrato = sugestaoPrato;
 	}
 
 	public Usuario getUsuario() {
@@ -56,18 +56,12 @@ public class Votacao {
 		this.usuario = usuario;
 	}
 
-	public ItemEscolhaPratoPronto getEscolhaPratoPronto() {
-		return escolhaPratoPronto;
+	public void setItemSugestaoPratoPronto(ItemSugestaoPratoPronto itemSugestaoPratoPronto) {
+		this.itemSugestaoPratoPronto = itemSugestaoPratoPronto;
 	}
 
-	public void setEscolhaPratoPronto(ItemEscolhaPratoPronto escolhaPratoPronto) {
-		this.escolhaPratoPronto = escolhaPratoPronto;
+	public ItemSugestaoPratoPronto getItemSugestaoPratoPronto() {
+		return itemSugestaoPratoPronto;
 	}
-
-	@Override
-	public String toString() {
-		return "Votacao [id=" + id + ", escolha=" + escolha + ", usuario=" + usuario + ", escolhaPratoPronto="
-				+ escolhaPratoPronto + "]";
-	}
-
+	
 }
