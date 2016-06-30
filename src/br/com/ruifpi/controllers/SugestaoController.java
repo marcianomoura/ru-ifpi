@@ -133,7 +133,7 @@ public class SugestaoController {
 		sugestaoPratosUtil = dao.find(SugestaoPrato.class);
 		List<SugestaoPrato> listSugestoesValidas = new ArrayList<>();
 		for (SugestaoPrato sugestaoPrato : sugestaoPratosUtil) {
-			if(sugestaoPrato.getDataFinalVotacao().after(new Date())){
+			if(new Date().before(sugestaoPrato.getDataDisponibilizada())){
 				listSugestoesValidas.add(sugestaoPrato);
 			}
 		}

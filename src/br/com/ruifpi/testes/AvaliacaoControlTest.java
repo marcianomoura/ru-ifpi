@@ -1,9 +1,7 @@
 package br.com.ruifpi.testes;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,7 +12,6 @@ import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.ruifpi.controllers.AvaliacaoController;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.AvaliacaoRefeicao;
-import br.com.ruifpi.models.PratoDia;
 import junit.framework.TestCase;
 
 public class AvaliacaoControlTest extends TestCase{
