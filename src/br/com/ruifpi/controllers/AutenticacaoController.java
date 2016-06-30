@@ -39,7 +39,7 @@ public class AutenticacaoController {
 	
 	@ControleAcesso
 	@Path("/index")
-	public void index() { }	
+	public void index() { System.out.println("**** INDEX ****");}	
 	
 	public boolean verificaAutenticacaoFuncionario(Funcionario funcionario) {
 		List<Funcionario> funcionariosValidos = implementacaoMetodos.buscaFuncionariosAtivos();
