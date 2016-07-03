@@ -2,6 +2,7 @@ package br.com.ruifpi.interceptor;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+
 import br.com.caelum.vraptor.AroundCall;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
@@ -10,7 +11,7 @@ import br.com.caelum.vraptor.interceptor.AcceptsWithAnnotations;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
 import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.components.UsuarioSession;
-import br.com.ruifpi.controllers.AutenticacaoController;
+import br.com.ruifpi.controllers.RuifpiController;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Intercepts
@@ -35,10 +36,10 @@ public class InterceptorAdministracao {
 		
 			if(usuarioSession.logado()){
 				result.include("erro", "Operação não permitida.Acesso restrito");
-				result.redirectTo(AutenticacaoController.class).index();
+				result.redirectTo(RuifpiController.class).index();
 			}else{
 				result.include("erro", "Operação não permitida.Acesso restrito");
-				result.redirectTo(AutenticacaoController.class).home();
+				result.redirectTo(RuifpiController.class).home();
 			}
 		}
 	}
