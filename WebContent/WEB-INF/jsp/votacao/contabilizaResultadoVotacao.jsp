@@ -15,10 +15,15 @@
 <div style="margin-top: 60px;">
 	<c:import url="/header.jsp"></c:import>
 </div>
-
+		
 <div class="col-md-12">
+
+<div style="margin-top: 15px;  margin-bottom: 10px;" >
+	<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Pagina Anterior</a>
+</div>
+	
 	<div class="panel panel-default">            	
-		<div class="panel-heading">Resultado da Votação : 
+		<div class="panel-heading">Quantidade de votos : 
 				<kbd><fmt:formatNumber value="${totalVotos}" maxFractionDigits="2"/> Votos</kbd>		    	
 		</div>
 		<div class="panel-body">

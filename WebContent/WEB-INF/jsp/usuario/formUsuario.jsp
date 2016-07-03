@@ -43,7 +43,7 @@
 				<div class="col-md-4">
 					<div class="form-group">
 					<label class="small">Data de Nascimento</label>
-						<input type="text" class="form-control" name="usuario.dataNascimento" id="dataNascimento"
+						<input readonly="readonly" type="text" class="form-control" name="usuario.dataNascimento" id="dataNascimento"
 						value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy" />" required >
 					</div>
 				</div>
@@ -67,7 +67,8 @@
 					<label class="small">Perfl</label>
 					<select class="form-control" name="usuario.perfil" required>
 						<option value="${usuario.perfil}">${usuario.perfil}</option>
-					  	<option>Aluno / Servidores</option>
+					  	<option>Aluno</option>
+					  	<option>Servidor IFPI</option>
 					</select>
 				</div>
 				

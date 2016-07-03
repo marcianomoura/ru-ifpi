@@ -22,7 +22,7 @@
 		<div class="panel-heading">Cardápios Propostos</div>
 		<div class="panel-body">
 		<div style="margin-top: 15px;  margin-bottom: 10px;" >
-			<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Voltar</a>
+			<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Pagina Anterior</a>
 		</div>
 			<table class="table table-responsive">
 				<thead>
