@@ -10,7 +10,8 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
+import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.util.ControleAcesso;
@@ -23,7 +24,8 @@ public class FuncionarioController {
 	@Inject	private DaoImplementacao daoImplementacao;
 	@Inject private Result result;
 	@Inject private Validator validator;
-	@Inject private MetodosUtilImplementacao implementacaoMetodos;
+	@Inject private RepositorioMetodos repositorio;
+	@Inject private FuncionarioSession funcionarioSession;
 	
 	@Path("/funcionario")
 	public void formFuncionario() {
@@ -38,6 +40,7 @@ public class FuncionarioController {
 				validator.onErrorRedirectTo(this).formFuncionario();
 			}else{
 				if(verificaDadosFuncionarios(funcionario) == null){	// Login e senha disponíveis para cadastro...
+					funcionario.setMatriculado(true);
 					daoImplementacao.save(funcionario);
 					result.include("sucesso", "Dados inserido com sucesso.");
 					result.redirectTo(this).formFuncionario();
@@ -58,16 +61,29 @@ public class FuncionarioController {
 		}
 	}
 	
+	public boolean verificaTentativaAlteracao(Funcionario funcionario) {
+		if(funcionario.getId().equals(funcionarioSession.getFuncionario().getId())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	@AcessoAdministrativo
 	@ControleAcesso
 	@Get("/funcionario/alteracao")
 	public void alteracaoDados(Long id) {
 		try {
 			Funcionario funcionario = (Funcionario) daoImplementacao.findById(Funcionario.class, id);
-			result.include("funcionario", funcionario);
+			if(verificaTentativaAlteracao(funcionario)){
+				result.include("funcionario", funcionario);
+			}else{
+				result.include("erro", "Sem permissão de alterar os dados desse usuário.");
+			}
 			result.redirectTo(this).formFuncionario();
 		} catch (Exception e) {
-			
+			result.include("erro", "Erro na tentativa de alterar os dados do funcionario");
+			result.redirectTo(this).formFuncionario();
 		}
 	}
 	
@@ -77,7 +93,7 @@ public class FuncionarioController {
 	public void removerFuncionario(Long id) {
 		try {
 			Funcionario funcionario = (Funcionario) daoImplementacao.findById(Funcionario.class, id);
-			funcionario.setStatusOperacional(true);
+			funcionario.setMatriculado(false);
 			daoImplementacao.save(funcionario);
 			result.include("sucesso", "Funcionario removido.");
 			result.redirectTo(this).formFuncionario();
@@ -104,7 +120,7 @@ public class FuncionarioController {
 	
 	@ControleAcesso
 	public List<Funcionario> listaFuncionarios() {
-		return implementacaoMetodos.buscaFuncionariosAtivos();
+		return repositorio.buscaFuncionariosAtivos();
 	}
 	
 	// Valida a consistência dos dados do formulário.

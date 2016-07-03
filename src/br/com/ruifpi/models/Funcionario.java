@@ -16,29 +16,23 @@ public class Funcionario{
 	private String login;
 	private String senha;
 	private String funcao;
-	private boolean statusOperacional;
-	private String perfil;
+	private boolean matriculado;
 	
 	public Funcionario() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	public Funcionario(String nome, String matricula, String login, String senha, boolean statusOperacional) {
+	public Funcionario(String nome, String matricula, String login, String senha, boolean matriculado) {
 		super();
 		this.nome = nome;
 		this.matricula = matricula;
 		this.login = login;
 		this.senha = senha;
-		this.statusOperacional = statusOperacional;
+		this.matriculado = matriculado;
 	}
 
-
-
 	public Funcionario(Long id, String nome, String matricula, String login,
-			String senha, String funcao, boolean statusOperacional,
-			String perfil) {
+			String senha, String funcao, boolean matriculado) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -46,24 +40,16 @@ public class Funcionario{
 		this.login = login;
 		this.senha = senha;
 		this.funcao = funcao;
-		this.statusOperacional = statusOperacional;
-		this.perfil = perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+		this.matriculado = matriculado;
+	
 	}
 	
-	public String getPerfil() {
-		return perfil;
+	public void setMatriculado(boolean matriculado) {
+		this.matriculado = matriculado;
 	}
 	
-	public void setStatusOperacional(boolean statusOperacional) {
-		this.statusOperacional = statusOperacional;
-	}
-	
-	public boolean isStatusOperacional() {
-		return statusOperacional;
+	public boolean isMatriculado() {
+		return matriculado;
 	}
 	
 	public Long getId() {

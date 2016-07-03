@@ -31,7 +31,7 @@
 				<h5>Cadastro de Funcionários - <span class="small">Usuários do Sistema</span></h5>
 				<hr>
 					<label class="small" style="color: red" > * Campos Obrigatórios</label><br>
-					<form action='<c:url value="/funcionario/save"></c:url>'>
+					<form action='<c:url value="/funcionario/save"></c:url>' method="post">
 						<input  type="hidden" name="funcionario.id" value="${funcionario.id}" >
 						
 					    <label class="small">* Nome</label>
