@@ -152,7 +152,7 @@ public class SugestaoController {
 			result.include("sugestaoPrato", sugestaoPrato);
 		} catch (Exception e) {
 			result.include("erro", "Erro ao iniciar votação. Tente mais tarde");
-			result.redirectTo(AutenticacaoController.class).index();
+			result.redirectTo(RuifpiController.class).index();
 		}
 		
 	}

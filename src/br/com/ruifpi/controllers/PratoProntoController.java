@@ -10,7 +10,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemPratoPronto;
@@ -31,7 +31,7 @@ public class PratoProntoController {
 	private static PratoPronto pratoProntoAlteracao = new PratoPronto(); 
 	private static List<ItemPratoPronto> listAuxiliar = new ArrayList<>();
 	@Inject
-	private MetodosUtilImplementacao metodosUtilImplementacao;
+	private RepositorioMetodos repositorioMetodos;
 
 	public PratoProntoController() {
 		this(null, null, null);
@@ -198,7 +198,7 @@ public class PratoProntoController {
 		try {
 			java.sql.Date dataInicioSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataInicioSemana)).getTime());
 			java.sql.Date dataFinalSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataFinalSemana)).getTime());
-			List<PratoDia> listPratosSemana = metodosUtilImplementacao.buscaCardapioPeriodoSelecionado(dataInicioSqlConvertida, dataFinalSqlConvertida);
+			List<PratoDia> listPratosSemana = repositorioMetodos.buscaCardapioPeriodoSelecionado(dataInicioSqlConvertida, dataFinalSqlConvertida);
 			if(listPratosSemana.isEmpty()){
 				result.include("sucesso", "Ainda não foi publicado cardápio nesta semana.");
 			}else{

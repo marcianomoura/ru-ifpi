@@ -12,7 +12,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.dao.DaoException;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.AvaliacaoRefeicao;
@@ -30,7 +30,7 @@ public class AvaliacaoController {
 	private  Validator validator;
 	private List<AvaliacaoRefeicao> avaliacaoRefeicaosUtil = new ArrayList<>();
 	@Inject
-	private MetodosUtilImplementacao metodosUtil;
+	private RepositorioMetodos metodosUtil;
 
 	@Inject
 	private PratoDiaController pratoDiaController;

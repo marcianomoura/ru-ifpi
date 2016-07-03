@@ -66,7 +66,7 @@ public class UsuarioController {
 				}
 			}
 			if(!validaDadosCadastroUsuario(usuarioEncontrado)){
-				validator.onErrorRedirectTo(AutenticacaoController.class).home();
+				validator.onErrorRedirectTo(RuifpiController.class).home();
 			}else{
 				result.include("usuario", usuarioEncontrado);
 				result.redirectTo(this).formUsuario();
@@ -74,7 +74,7 @@ public class UsuarioController {
 			
 		} catch (Exception e) {
 			result.include("erro", "Ocorreu um erro ao tentar se cadastrar no sistema. Verifique os dados informados e tente novamente.");
-			result.redirectTo(AutenticacaoController.class).home();
+			result.redirectTo(RuifpiController.class).home();
 		}
 	
 	}
@@ -132,18 +132,18 @@ public class UsuarioController {
 				dao.save(usuario);
 				usuarioSession.setUsuario(null);
 				result.include("sucesso", "Usuario cadastrado com sucesso");
-				result.redirectTo(AutenticacaoController.class).home();
+				result.redirectTo(RuifpiController.class).home();
 			} catch (Exception e) {
 				usuarioSession.setUsuario(null);
 				result.include("erro", "Ocorreu um erro ao efetuar o cadastro. Verifique e tente novamente.");
-				result.redirectTo(AutenticacaoController.class).home();
+				result.redirectTo(RuifpiController.class).home();
 			}	
 		}
 	}
 	@Path("/usuario/cadastrardepois")
 	public void desistirCadastro() {
 		usuarioSession.setUsuario(null);
-		result.redirectTo(AutenticacaoController.class).home();
+		result.redirectTo(RuifpiController.class).home();
 	}
 	
 	

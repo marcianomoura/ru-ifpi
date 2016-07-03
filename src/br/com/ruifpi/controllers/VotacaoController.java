@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
-import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Votacao;
@@ -25,7 +25,7 @@ public class VotacaoController {
 	@Inject
 	private UsuarioSession usuarioSession;
 	@Inject
-	private MetodosUtilImplementacao metodosUtilImplementacao;
+	private RepositorioMetodos repositorioMetodos;
 	
 	@AcessoUsuario
 	@Path("/votacao/contabiliza")
@@ -48,7 +48,7 @@ public class VotacaoController {
 
 	public boolean validaDadosVotacao(Long id) {
 		boolean votoEncontrado = false;
-		List<Votacao> votacoes = metodosUtilImplementacao.pesquisaVotacaoById(id);		// Votos referentes ao sugestao de cardápio fornecido pelo ID.
+		List<Votacao> votacoes = repositorioMetodos.pesquisaVotacaoById(id);		// Votos referentes ao sugestao de cardápio fornecido pelo ID.
 		System.out.println("Quantidades de Votos da lista de Votação" + votacoes.size());
 		for (Votacao voto : votacoes) {
 			if(voto.getUsuario().getId().equals(usuarioSession.getUsuario().getId())){
@@ -63,7 +63,7 @@ public class VotacaoController {
 	public void contabilizaResultadoVotacao(Long id) {
 		try {
 			HashMap<String, Integer> mapVotos = new HashMap<>();
-			List<Votacao> listVotacao = metodosUtilImplementacao.pesquisaVotacaoById(id);
+			List<Votacao> listVotacao = repositorioMetodos.pesquisaVotacaoById(id);
 			for (Votacao votacao : listVotacao) {
 				Integer quantidade = mapVotos.get(votacao.getItemSugestaoPratoPronto().getPratoPronto().getTituloPrato());
 				if(quantidade == null){

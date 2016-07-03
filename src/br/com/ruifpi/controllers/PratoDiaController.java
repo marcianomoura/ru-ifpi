@@ -13,7 +13,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.ruifpi.auxiliar.MetodosUtilImplementacao;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.ItemPratoPronto;
@@ -40,7 +40,7 @@ public class PratoDiaController {
 	private List<ItemPratoPronto> listItensPratoPronto = new ArrayList<>(); 
 	private SimpleDateFormat formatadorData = new SimpleDateFormat();
 	@Inject
-	private MetodosUtilImplementacao metodosUtil;
+	private RepositorioMetodos metodosUtil;
 	
 	@Path("/pratodia")
 	public void formPratoDia() {
