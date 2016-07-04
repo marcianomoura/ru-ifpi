@@ -35,10 +35,10 @@ public class InterceptorAdministracao {
 		}else{
 		
 			if(usuarioSession.logado()){
-				result.include("erro", "Operação não permitida.Acesso restrito");
+				result.include("erro", "Operação não permitida. Acesso restrito");
 				result.redirectTo(RuifpiController.class).index();
 			}else{
-				result.include("erro", "Operação não permitida.Acesso restrito");
+				result.include("erro", "Operação não permitida. Acesso restrito");
 				result.redirectTo(RuifpiController.class).home();
 			}
 		}

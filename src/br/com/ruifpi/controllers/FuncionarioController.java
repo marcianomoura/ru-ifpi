@@ -16,6 +16,7 @@ import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
+import br.com.ruifpi.util.CriptografaSenhaUtil;
 
 
 @Controller
@@ -27,40 +28,32 @@ public class FuncionarioController {
 	@Inject private RepositorioMetodos repositorio;
 	@Inject private FuncionarioSession funcionarioSession;
 	
+	@ControleAcesso
 	@Path("/funcionario")
 	public void formFuncionario() {
 		result.include("funcionarios", listaFuncionarios());
 	}
-		
-	@ControleAcesso
+	
+	@AcessoAdministrativo
 	@Path("/funcionario/save")
 	public void save(Funcionario funcionario) {
-		try {
-			if(validaDadosFuncionario(funcionario) == null){
-				validator.onErrorRedirectTo(this).formFuncionario();
-			}else{
-				if(verificaDadosFuncionarios(funcionario) == null){	// Login e senha disponíveis para cadastro...
-					funcionario.setMatriculado(true);
-					daoImplementacao.save(funcionario);
-					result.include("sucesso", "Dados inserido com sucesso.");
-					result.redirectTo(this).formFuncionario();
-				}else{
-					if(verificaDadosFuncionarios(funcionario).getId().equals(funcionario.getId())){	// Quando for alteração de dados do funcionário...	
-						daoImplementacao.save(funcionario);
-						result.include("sucesso", "Alteração realizada com sucesso.");
-						result.redirectTo(this).formFuncionario();
-					}else{
-						validator.add(new I18nMessage("login",  "login.senha.invalidos"));
-						validator.onErrorRedirectTo(this).formFuncionario();
-					}
-				}
+		if(validaDadosFuncionario(funcionario) == null){
+			validator.onErrorRedirectTo(this).formFuncionario();
+		}else{
+			try {
+				funcionario.setMatriculado(true);
+				funcionario.setSenha(CriptografaSenhaUtil.criptografaSenha(funcionario));
+				daoImplementacao.save(funcionario);
+				result.include("sucesso", "Dados inserido com sucesso.");
+				result.redirectTo(this).formFuncionario();
+			} catch (Exception e) {
+				result.include("erro", "Erro na inserção dos dados. Verifique as informações e tente novamente.");
+				result.redirectTo(this).formFuncionario();
 			}
-		} catch (Exception e) {
-			result.include("erro", "Erro na inserção dos dados. Verifique as informações e tente novamente.");
-			result.redirectTo(this).formFuncionario();
 		}
 	}
 	
+	@ControleAcesso
 	public boolean verificaTentativaAlteracao(Funcionario funcionario) {
 		if(funcionario.getId().equals(funcionarioSession.getFuncionario().getId())){
 			return true;
@@ -69,7 +62,6 @@ public class FuncionarioController {
 		}
 	}
 	
-	@AcessoAdministrativo
 	@ControleAcesso
 	@Get("/funcionario/alteracao")
 	public void alteracaoDados(Long id) {
@@ -88,14 +80,17 @@ public class FuncionarioController {
 	}
 	
 	@AcessoAdministrativo
-	@ControleAcesso
 	@Path("/funcionario/remocao")
 	public void removerFuncionario(Long id) {
 		try {
-			Funcionario funcionario = (Funcionario) daoImplementacao.findById(Funcionario.class, id);
-			funcionario.setMatriculado(false);
-			daoImplementacao.save(funcionario);
-			result.include("sucesso", "Funcionario removido.");
+			if(funcionarioSession.getFuncionario().getFuncao().equals("Cordenador")){
+				Funcionario funcionario = (Funcionario) daoImplementacao.findById(Funcionario.class, id);
+				funcionario.setMatriculado(false);
+				daoImplementacao.save(funcionario);
+				result.include("sucesso", "Funcionario removido.");
+			}else{
+				result.include("erro", "Sem autorização para esta funcionalidade.");
+			}
 			result.redirectTo(this).formFuncionario();
 		} catch (Exception e) {
 			result.include("erro", "Ocorreu um erro na remoção do Funcionario.");
@@ -103,44 +98,37 @@ public class FuncionarioController {
 		}
 	}
 	
-	// Faz a verificação se o login e senha usados no cadastro estão disponiveis
-	@SuppressWarnings("unchecked")
-	@ControleAcesso
-	public Funcionario verificaDadosFuncionarios(Funcionario funcionario) {
-		Funcionario  funcionarioEncontrado = null;
-		List<Funcionario> funcionarios = daoImplementacao.find(Funcionario.class);
-		for (Funcionario funcionarioBanco : funcionarios) {
-			if(funcionarioBanco.getLogin().equals(funcionario.getLogin()) && funcionarioBanco.getSenha().equals(funcionario.getSenha())){
-				funcionarioEncontrado = funcionarioBanco;
-				break;
-			}
-		}
-		return funcionarioEncontrado;
-	}
-	
 	@ControleAcesso
 	public List<Funcionario> listaFuncionarios() {
 		return repositorio.buscaFuncionariosAtivos();
 	}
 	
-	// Valida a consistência dos dados do formulário.
+
 	@ControleAcesso
-	public Funcionario validaDadosFuncionario(Funcionario funcionario) {				
-		if(funcionario.getNome() == null){
-			validator.add(new I18nMessage("nome", "funcionario.nome.vazio"));
+	public Funcionario validaDadosFuncionario(Funcionario funcionario) {
+		
+		if(funcionario.getNome().length() < 6){
+			validator.add(new I18nMessage("nome", "funcionario.nome.pequeno"));
 			return null;
-		}else if(funcionario.getMatricula() == null){
-			validator.add(new I18nMessage("matricula", "funcionario.matricula.vazio"));
+		}
+		if(funcionario.getMatricula().length() < 6){
+			validator.add(new I18nMessage("matricula", "funcionario.matricula.pequeno"));
 			return null;		
-		}else if(funcionario.getLogin() == null){
+		}
+		if(funcionario.getLogin() == null){
 			validator.add(new I18nMessage("login", "funcionario.login.vazio"));
 			return null;
-		}else if(funcionario.getSenha() == null){
+		}
+		if(funcionario.getSenha() == null){
 			validator.add(new I18nMessage("senha", "funcionario.senha.vazio"));
 			return null;
-		}else{	// está tudo ok.
-			return funcionario;
 		}
+		if(funcionario.getFuncao().equals("Cordenador") && !funcionarioSession.getFuncionario().getFuncao().equals("Cordenador")){
+			validator.add(new I18nMessage("Função", "funcionario.sem.autorizacao"));
+			return null;
+		}
+		return funcionario;
 	}
-}
+	
 
+}

@@ -35,28 +35,28 @@
 						<input  type="hidden" name="funcionario.id" value="${funcionario.id}" >
 						
 					    <label class="small">* Nome</label>
-					    	<small style="color: red" >${errors.from('nome')}</small>
+<%-- 					    	<small style="color: red" >${errors.from('nome')}</small> --%>
 					      	<input class="form-control" type="text" name="funcionario.nome" value="${funcionario.nome}" placeholder="informe seu nome" required>
 					    
 					  	<label class="small">* Matricula</label>
-					  		<small style="color: red" >${errors.from('matricula')}</small>
+<%-- 					  		<small style="color: red" >${errors.from('matricula')}</small> --%>
 					      	<input required class="form-control" type="text" name="funcionario.matricula" value="${funcionario.matricula}" placeholder="Informe sua matricula">
 					    <label class="small">Função</label>
 					    	<select required class="form-control" name="funcionario.funcao">
 					    		<option value="${funcionario.funcao}">${funcionario.funcao}</option>
-					    		<option>Coordenador</option>
+					    		<option>Cordenador</option>
 					    		<option>Estagiario</option>
 					    		<option>Administrativo</option>
 					    	</select>		    
 					    
 					    <label class="small">* Login</label>
-					    	<small style="color: red">${errors.from('login')}</small>
+<%-- 					    	<small style="color: red">${errors.from('login')}</small> --%>
 					      <input required class="form-control" type="text" name="funcionario.login" value="${funcionario.login}" placeholder="Informe seu login de acesso ao sistema">
 					    
 					    
 					    <label class="small">Senha</label>
-					    <small style="color: red">${errors.from('senha')}</small>
-					      <input required class="form-control" type="password" name="funcionario.senha" value="${funcionario.senha}" placeholder="Informe sua senha de acesso">
+<%-- 					    <small style="color: red">${errors.from('senha')}</small> --%>
+					      <input required class="form-control" type="password" name="funcionario.senha" placeholder="Informe sua senha de acesso">
 					   	
 					   	<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
 					    <button type="reset" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>					
@@ -83,6 +83,7 @@
 									<td>${funcionario.nome}</td>
 									<td>${funcionario.matricula}</td>
 									<td>${funcionario.funcao}</td>
+									
 									<td> 
 										<a class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar os dados deste funcionário"
 										href='<c:url value="/funcionario/alteracao?id=${funcionario.id}"></c:url>'>

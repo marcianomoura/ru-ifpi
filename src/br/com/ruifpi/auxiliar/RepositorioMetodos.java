@@ -20,6 +20,7 @@ import br.com.ruifpi.models.Funcionario;
 import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.models.Votacao;
+import br.com.ruifpi.util.CriptografaSenhaUtil;
 import br.com.ruifpi.util.JpaUtil;
 
 @Stateless
@@ -123,8 +124,9 @@ public class RepositorioMetodos implements Repositorio {
 		Funcionario funcionarioAutenticado = null;
 		try {
 			entityManager = JpaUtil.getEntityAtual();
+			String senhaCriptografada = CriptografaSenhaUtil.criptografaSenha(funcionario);
 			Query query = entityManager.createQuery("select f from Funcionario f where f.login=:login and f.senha=:senha and f.matriculado=true")
-					.setParameter("login", funcionario.getLogin()).setParameter("senha", funcionario.getSenha());
+					.setParameter("login", funcionario.getLogin()).setParameter("senha", senhaCriptografada);
 			List<Funcionario> funcionarios = query.getResultList();
 			if(funcionarios.isEmpty()){
 				validator.add(new I18nMessage("funcionario", "credenciais.nao.conferem"));
