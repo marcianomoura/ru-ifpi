@@ -23,12 +23,13 @@ public class UsuarioController {
 	@Inject	private Result result;
 	@Inject private Validator validator;
 	@Inject	private UsuarioSession usuarioSession;
-	
+			
 	
 	@Path("/usuario/cadastro")
 	public void iniciaCadastroUsuario(Usuario usuario) {
 		verificaMatriculaValidaUsuario(usuario);
 	}
+	
 	
 	@PermissaoUsuarioCadastro
 	@Path("/usuario")
@@ -146,5 +147,19 @@ public class UsuarioController {
 		result.redirectTo(RuifpiController.class).home();
 	}
 	
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
