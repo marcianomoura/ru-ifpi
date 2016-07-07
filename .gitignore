@@ -1,1 +1,9 @@
 /build/
+target
+*.class
+.classpath
+.project
+.settings
+*.iml
+*.ipr
+*.iws
