@@ -1,5 +1,8 @@
 package br.com.ruifpi.controllers;
-
+/*
+ * 	Apenas testando a nova branch.
+ * 
+ * */
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
