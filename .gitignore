@@ -1,8 +1,8 @@
-/classes/
 .classpath
 .project
 .settings
 *.iml
 *.ipr
 *.iws
+
 /build/
