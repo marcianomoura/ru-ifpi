@@ -29,7 +29,6 @@ public class InterceptorAdministracao {
 	
 	@AroundCall
 	public void interceptaAdminitracao(SimpleInterceptorStack stack , ControllerMethod method) {
-		System.out.println("Interceptando função administrativa ...");
 		if(funcionarioSession.logado() && method.containsAnnotation(AcessoAdministrativo.class)){
 			stack.next();
 		}else{
