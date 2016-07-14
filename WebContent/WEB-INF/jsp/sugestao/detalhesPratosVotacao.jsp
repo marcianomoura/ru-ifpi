@@ -22,7 +22,8 @@
 		<div class="panel-heading">Cardápios Propostos</div>
 		<div class="panel-body">
 		<div style="margin-top: 15px;  margin-bottom: 10px;" >
-			<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Pagina Anterior</a>
+			<a class="btn btn-default" href='<c:url value="/sugestoes" />'>
+			<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
 		</div>
 			<table class="table table-responsive">
 				<thead>
@@ -46,7 +47,7 @@
 									<input type="hidden" name="votacao.id" value="${votacao.id}">
 									<input type="hidden" name="votacao.sugestaoPrato.id" value="${sugestaoPrato.id}">	
 									<input type="hidden" name="votacao.itemSugestaoPratoPronto.id" value="${itemPrato.id}">
-									<button type="submit" class="btn btn-primary btn-sm">Votar</button>
+									<button type="submit" class="btn btn-primary btn-sm">Votar Neste</button>
 								</form>
 							</td>											
 						</tr>

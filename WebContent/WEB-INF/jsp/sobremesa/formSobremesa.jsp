@@ -94,7 +94,7 @@
 									<td>${sobremesa.maleficios}</td>
 									<td>${sobremesa.classeNutricional.descricao}</td>
 									<td> 
-										<a class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar os dados deste sobremesa"
+										<a class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar esta sobremesa"
 										href='<c:url value="/sobremesa/alteracao?id=${sobremesa.id}"></c:url>'>
 											 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 										</a>

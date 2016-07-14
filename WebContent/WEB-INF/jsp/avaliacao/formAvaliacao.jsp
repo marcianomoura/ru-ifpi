@@ -20,21 +20,21 @@
      <div class="">
          <div class="row">
              <div class="col-lg-12 text-center">
-                 <h3>Avaliação de Cardápio</h3>
+                 <h3>Avaliação do Cardápio de Hoje</h3>
                  <hr class="star-primary">
              </div>
          </div>
          <div class="col-md-12">
              <div class="panel panel-default" >
-				<div class="panel-heading">Avaliação do Cardápio de Hoje 
-					
-				   Media das avaliações : <kbd> <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></kbd>
-				    
-				</div>																	
+				<div class="panel-heading"></div>																	
 					<div class="panel-body">
 			  		<ul class="nav nav-tabs" role="tablist">
-			    		<li role="presentation" class="active"><a href="#almoco" aria-controls="home" role="tab" data-toggle="tab">Almoço</a></li>
-			    		<li role="presentation"><a href="#jantar" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a></li>
+			    		<li role="presentation" class="active"><a href="#almoco" aria-controls="home" role="tab" data-toggle="tab">Almoço 
+			    			<span class="badge"><fmt:formatNumber value="${mediaAlmoco}" maxFractionDigits="2"/></span></a>
+			    		</li>
+			    		<li role="presentation"><a href="#jantar" aria-controls="profile" role="tab" data-toggle="tab">Jantar
+			    			<span class="badge"> <fmt:formatNumber value="${mediaJanta}" maxFractionDigits="2"/></span></a>
+			    		</li>
 			  		</ul>
 						<div class="tab-content">
 						  	<div role="tabpanel" class="tab-pane active" id="almoco">
@@ -112,7 +112,7 @@
 														<option value="2">Muito Ruim</option>
 													</select>
 													<br>
-													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar</button>
+													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar esta Refeição</button>
 												</form>
 			
 											</c:if>								
@@ -197,7 +197,7 @@
 														<option value="2">Muito Ruim</option>
 													</select>
 													<br>
-													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar</button>
+													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar esta refeição</button>
 												</form>
 			
 											</c:if>								
@@ -208,32 +208,59 @@
 								</div>
 						    </div>
 					  	</div>
-					
-					
 				</div>
 			</div>
 			
-			<div class="panel panel-default">
-				<div class="panel-heading">Média das avaliações : <fmt:formatNumber maxFractionDigits="2" value="${mediaAvaliacao}" /> </div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">Avaliação de Outros Usuarios</div>
 				<div class="panel-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
-					<table class="table table-responsive table-condensed">
-						<thead>
-							<tr>
-								<td>Nome</td>
-								<td>Matricula</td>
-								<td>Nota</td>								
-							</tr>
-						</thead>
-						<c:forEach items="${listaAvaliacoes}" var="avaliacao">
-							<tbody>								
-								<tr>
-									<td>${avaliacao.usuario.primeiroNome}</td>
-									<td>${avaliacao.usuario.matricula}</td>
-									<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
-								</tr>
-							</tbody>
-						</c:forEach>
-					</table>
+					<ul class="nav nav-tabs" role="tablist">
+			    		<li role="presentation" class="active"><a href="#almocoAvaliacao" aria-controls="home" role="tab" data-toggle="tab">Almoço</a></li>
+			    		<li role="presentation"><a href="#jantarAvaliacao" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a></li>
+			  		</ul>
+			  		<div class="tab-content">
+					  	<div role="tabpanel" class="tab-pane active" id="almocoAvaliacao">
+						    <table class="table table-responsive table-condensed">
+								<thead>
+									<tr>
+										<td>Nome</td>
+										<td>Matricula</td>
+										<td>Nota</td>								
+									</tr>
+								</thead>
+								<c:forEach items="${listAvaliacaoAlmoco}" var="avaliacao">
+									<tbody>								
+										<tr>
+											<td>${avaliacao.usuario.primeiroNome}</td>
+											<td>${avaliacao.usuario.matricula}</td>
+											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+				  		</div>
+				  		
+				  		<div role="tabpanel" class="tab-pane" id="jantarAvaliacao">
+					    	<table class="table table-responsive table-condensed">
+								<thead>
+									<tr>
+										<td>Nome</td>
+										<td>Matricula</td>
+										<td>Nota</td>								
+									</tr>
+								</thead>
+								<c:forEach items="${listAvaliacaoJanta}" var="avaliacao">
+									<tbody>								
+										<tr>
+											<td>${avaliacao.usuario.primeiroNome}</td>
+											<td>${avaliacao.usuario.matricula}</td>
+											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+					    </div>
+					</div>
 				</div>
 			</div>		 
     	</div>

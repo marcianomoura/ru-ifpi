@@ -25,6 +25,7 @@
 				<thead>
 					<tr class="small">
 				  		<th >Data do Cardápio</th>
+				  		<th >Cardapio</th>
 				  		<th >Tipo</th>
 				  		<th >Sobremesa</th>
 				  		<th >Total Calorias</th>
@@ -37,6 +38,7 @@
 				  	<tbody>
 				  		<tr>
 					  		<td><fmt:formatDate pattern="dd/MM/yyyy" value="${pratoDia.dataCardapio}" /></td>
+					  		<td>${pratoDia.pratoPronto.tituloPrato}</td>
 					  		<td>${pratoDia.tipoPrato.descricao}</td>
 					  		<td>${pratoDia.sobremesa.descricao}</td>
 					  		<td>${pratoDia.totalCaloria}</td>
@@ -46,7 +48,7 @@
 					  			</a>
 					  		</td>
 					  		<td> 
-								<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este pratoDia" 
+								<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este prato" 
 									href='<c:url value="/pratodia/alteracao?id=${pratoDia.id}"></c:url>'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								</a>
 							</td>		  		

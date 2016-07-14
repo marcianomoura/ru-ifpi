@@ -41,7 +41,7 @@
 				  			</a>
 				  		</td>
 				  		<td> 
-							<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este pratoPronto" 
+							<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este prato" 
 								href='<c:url value="/pratopronto/alteracao?id=${pratoPronto.id}"></c:url>'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</a>
 						</td>		  		

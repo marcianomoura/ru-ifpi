@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,9 +33,9 @@
                     <a href="#cardapio">Cardápio</a>
                 </li>
                 
-                <li class="page-scroll">
-                    <a href="#avaliacao">Avaliações</a>
-                </li>
+<!--                 <li class="page-scroll"> -->
+<!--                     <a href="#avaliacao">Avaliações</a> -->
+<!--                 </li> -->
                 
                 <li class="page-scroll">
                     <a href="#sugestao">Sugestões de cardápio</a>
@@ -200,53 +200,6 @@
         </div>
     </section>
     
-    <section class="primary" id="avaliacao">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h3>Avaliação de Cardápio</h3>
-                    <hr class="star-primary">
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="panel panel-default" >
-					<div class="panel-heading">Avaliações do Cardápio de Hoje - 		
-							Media das avaliações :<kbd> <fmt:formatNumber value="${mediaAvaliacao}" maxFractionDigits="2"/></kbd>		    
-					</div>
-					<div class="panel-body" >						
-												
-						<div class="col-md-5">
-						    <div class="thumbnail">
-						      <img class="img-responsive" src="img/almoco.jpg" width="100%">
-						    </div>						    
-						</div>
-						
-						<div class="col-md-7" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
-							<table class="table table-responsive table-condensed">
-								<thead>
-									<tr class="small">
-										<th>Nome</th>
-										<th>Matricula</th>
-										<th>Nota</th>								
-									</tr>
-								</thead>
-								<c:forEach items="${listaAvaliacoes}" var="avaliacao">
-									<tbody>								
-										<tr>
-											<td>${avaliacao.usuario.primeiroNome}</td>
-											<td>${avaliacao.usuario.matricula}</td>
-											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
-										</tr>
-									</tbody>
-								</c:forEach>
-							</table>
-						</div>
-					</div>
-				</div>
-            </div>
-        </div>
-    </section>
-    
     <section class="primary" id="sugestao">
         <div class="container">
             <div class="row">
@@ -267,7 +220,7 @@
 						    </div>
 						</div>
 						
-						<div class="col-md-6" style="max-height: 350px; overflow-y: scroll; overflow-x: hidden; ">
+						<div class="col-md-6">
 							<table class="table table-responsive table-condensed">
 						<thead>
 							<tr class="small">
@@ -294,8 +247,8 @@
 									
 									<c:if test="${usuarioSessao.usuario == null  }">
 										<td>
-											<a href="#" data-toggle="modal"  data-target="#modalAutenticacao" class="btn btn-info btn-sm">
-											<span class="glyphicon glyphicon-info"></span>Votar</a>
+											<a href="#" data-toggle="modal"  data-target="#modalAutenticacao" class="btn btn-primary btn-sm">
+											<span class="glyphicon glyphicon-info"></span>Escolha o Cardápio</a>
 										</td>
 									
 									</c:if>
@@ -335,10 +288,10 @@
 		      <div role="tabpanel" class="tab-pane fade active in" id="usuario" aria-labelledby="profile-tab">	      	
 		        <form action='<c:url value="/autenticacao/usuario"></c:url>' method="post">
 					  <fieldset>
-					  	  <h3 class="form-signin-heading">Alunos e Servidores </h3>	       
+					  	  <h3 class="form-signin-heading">Usuários do Refeitório </h3>	       
 						  <hr class="colorgraph"><br>
 						  <small style="color: red" >${errors.from('usuario')}</small>
-						  <input type="text" class="form-control" name="usuario.login" value="${usuario.login}" 
+						  <input autocomplete="off" type="text" class="form-control" name="usuario.login" value="${usuario.login}" 
 						  	placeholder="Login" required="" autofocus="" />
 						  <br>
 						  <input type="password" class="form-control" name="usuario.senha" value="${usuario.senha}"
@@ -356,7 +309,7 @@
 							<h3 class="form-signin-heading">Administração do Refeitório</h3>
 						  	<hr class="colorgraph"><br>
 						  	<small style="color: red" >${errors.from('funcionario')}</small>
-						  	<input type="text" class="form-control" name="funcionario.login" value="${funcionario.login}" 
+						  	<input autocomplete="off" type="text" class="form-control" name="funcionario.login" value="${funcionario.login}" 
 						  		placeholder="Username" required="" autofocus="" />
 						  	<br>
 							<input type="password" class="form-control" name="funcionario.senha" value="${funcionario.senha}"
@@ -373,10 +326,10 @@
 							<h3 class="form-signin-heading">Cadastro de Usuário</h3>
 						  	<hr class="colorgraph"><br>
 						  	<small style="color: red" >${errors.from('usuario')}</small>
-						  	<input type="text" class="form-control" name="usuario.matricula" value="${usuario.matricula}" 
+						  	<input autocomplete="off" type="text" class="form-control" name="usuario.matricula" value="${usuario.matricula}" 
 						  		placeholder="Matricula do Usuario" required="" autofocus="" />
 						  	<br>
-							<input id="dataNascimento" type="text" class="form-control" name="usuario.dataNascimento" 
+							<input autocomplete="off" id="dataNascimento" type="text" class="form-control" name="usuario.dataNascimento" 
 							value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy"/>"
 						  		placeholder="Data de nascimento" required=""/>     		  
 						 	<br>

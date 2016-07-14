@@ -16,46 +16,43 @@
 	<c:import url="/header.jsp"></c:import>
 </div>
 
-<div class="col-md-12" style="margin-top: 20px;">
-	
-		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">Sugestões de cardápios disponíveis para votação</div>
-				<div class="panel-body">
-					<table class="table table-responsive">
-						<thead>
-							<tr class="small">
-								<th>Id</th>
-								<th>Data do cardápio</th>
-								<th>Data final votação</th>
-								<th>Votação de Cardápio</th>
-								<th>Resultado Parcial</th>
-							</tr>
-						</thead>
-						<c:forEach items="${listSugestaoPratos}" var="sugestaoPrato">
-							<tbody>
-								<tr>
-									<td>${sugestaoPrato.id}</td>
-									<td><fmt:formatDate value="${sugestaoPrato.dataDisponibilizada}" /></td>
-									<td><fmt:formatDate value="${sugestaoPrato.dataFinalVotacao}"/></td>
-									<td>
-										<a  class="btn btn-info" href='<c:url value="/sugestao/itens?id=${sugestaoPrato.id}"></c:url>'>
-										Escolha o seu
-										</a>
-									</td>
-									<td>
-										<a  class="btn btn-default" href='<c:url value="/votacao/resultado?id=${sugestaoPrato.id}"></c:url>'>
-										Resultado Parcial
-										</a>
-									</td>
-								</tr>
-							</tbody>
-						</c:forEach>
-					</table>
-				</div>	
-			</div>	
-		</div>
-	</div>
+<div class="col-md-12" style="margin-top: 20px;">	
+	<div class="panel panel-default">
+		<div class="panel-heading">Sugestões de cardápios disponíveis para votação</div>
+		<div class="panel-body">
+			<table class="table table-responsive">
+				<thead>
+					<tr class="small">
+						<th>Id</th>
+						<th>Data do cardápio</th>
+						<th>Data final votação</th>
+						<th>Pratos</th>
+						<th>Resultado Parcial</th>
+					</tr>
+				</thead>
+				<c:forEach items="${listSugestaoPratos}" var="sugestaoPrato">
+					<tbody>
+						<tr>
+							<td>${sugestaoPrato.id}</td>
+							<td><fmt:formatDate value="${sugestaoPrato.dataDisponibilizada}" /></td>
+							<td><fmt:formatDate value="${sugestaoPrato.dataFinalVotacao}"/></td>
+							<td>
+								<a  class="btn btn-primary" href='<c:url value="/sugestao/itens?id=${sugestaoPrato.id}"></c:url>'>
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pratos
+								</a>
+							</td>
+							<td>
+								<a  class="btn btn-default" href='<c:url value="/votacao/resultado?id=${sugestaoPrato.id}"></c:url>'>
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Votação
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</c:forEach>
+			</table>
+		</div>	
+	</div>			
+</div>
 
 </body>
 </html>

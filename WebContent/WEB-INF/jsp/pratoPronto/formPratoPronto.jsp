@@ -40,8 +40,7 @@
 					
 					<div class="form-group col-md-3">
 						<label class="small">Total de Calorias </label>
-						<small style="color: red" >${errors.from('totalCaloria')}</small>
-						<input class="form-control" value="${totalCaloria}" readonly="readonly">
+						<input class="form-control" value="<fmt:formatNumber value="${totalCaloria}" maxFractionDigits="2" />" readonly="readonly">
 					</div>
 				</fieldset>
 			</form>

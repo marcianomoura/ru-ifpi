@@ -9,24 +9,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Usuário</title>
-
-<c:import url="/base.jsp"></c:import>
-
 </head>
 <body>
-<div class="mensagens" style="margin-bottom: 20px; margin-top: 20px;">
-	<c:import url="/mensagens.jsp"></c:import>
-</div>
 
-<form action='<c:url value="/usuario/save"></c:url>' method="post">
-	<div class="col-md-12">
+<c:if test="${funcionarioSessao.funcionario != null }">
+	<div class="" style="margin-top: 60px;">
+		<c:import url="/header.jsp"></c:import>	
+	</div>
+
+</c:if>
+
+<c:if test="${usuarioSessao.usuario != null }">
+	<div>
+		<c:import url="/base.jsp"></c:import>	
+	</div>
+	
+	<div class="" style="margin-top: 60px;">
+		<c:import url="/mensagens.jsp"></c:import>	
+	</div>
+</c:if>
+
+<div class="col-md-12">
+	<form action='<c:url value="/usuario/save"></c:url>' method="post">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Cadastro de Usuários</div>			
 			<div class="panel-body">
 				<input name="usuario.id" value="${usuario.id}" type="hidden" >
-				
-				<input name="usuario.matriculado" value="${usuario.matriculado}" type="hidden" >
-				
 				<div class="col-md-4">
 					<div class="form-group">
 					<label class="small">Primeiro Nome</label>
@@ -40,20 +48,43 @@
 						<input type="text" class="form-control" name="usuario.sobrenome" value="${usuario.sobrenome}" required >
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="form-group">
-					<label class="small">Data de Nascimento</label>
-						<input readonly="readonly" type="text" class="form-control" name="usuario.dataNascimento" id="dataNascimento"
-						value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy" />" required >
+				<c:if test="${usuarioSessao.usuario == null }">
+					<div class="col-md-4">
+						<div class="form-group">
+						<label class="small">Data de Nascimento</label>
+							<input  type="text" class="form-control" name="usuario.dataNascimento" id="dataNascimento"
+							value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy" />" required >
+						</div>
 					</div>
-				</div>
-				<div class="col-md-4">
-				<label class="small">Matricula</label>
-					<div class="form-group">
-						<input readonly="readonly" type="text" class="form-control" name="usuario.matricula" value="${usuario.matricula}" required >
+					
+					<div class="col-md-4">
+						<label class="small">Matricula</label>
+						<div class="form-group">
+							<input type="text" class="form-control" name="usuario.matricula" value="${usuario.matricula}" required >
+						</div>
 					</div>
-				</div>
-		
+					
+					
+				</c:if>
+				
+				<c:if test="${usuarioSessao.usuario != null }">
+					<div class="col-md-4">
+						<div class="form-group">
+						<label class="small">Data de Nascimento</label>
+							<input readonly="readonly" type="text" class="form-control" name="usuario.dataNascimento" id="dataNascimento"
+							value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy" />" required >
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<label class="small">Matricula</label>
+						<div class="form-group">
+							<input readonly="readonly" type="text" class="form-control" name="usuario.matricula" value="${usuario.matricula}" required >
+						</div>
+					</div>
+				
+				</c:if>
+				
 				<div class="col-md-3">
 					<label class="small">Sexo</label>
 					<select class="form-control" name="usuario.sexo" required>
@@ -79,29 +110,40 @@
 					    </label>
 					</div>
 				</div>
-				
-				<div class="col-md-4">
-					<div class="form-group">
-					<label class="small">Login</label>
-						<input readonly="readonly" type="text" class="form-control" name="usuario.login" value="${usuario.matricula}" required >
+				<c:if test="${usuarioSessao.usuario != null }">
+					<div class="col-md-4">
+						<div class="form-group">
+						<label class="small">Login</label>
+							<input readonly="readonly" type="text" class="form-control" name="usuario.login" value="${usuario.matricula}" required >
+						</div>
 					</div>
-				</div>
+				</c:if>
+				
+				<c:if test="${usuarioSessao.usuario == null }">
+					<div class="col-md-4">
+						<div class="form-group">
+						<label class="small">Login</label>
+							<input  type="text" class="form-control" name="usuario.login" value="${usuario.matricula}" required >
+						</div>
+					</div>
+				</c:if>
 				
 				<div class="col-md-4">
 					<div class="form-group">
 					<label class="small">Senha</label>
-						<input type="password" class="form-control" name="usuario.senha" value="${usuario.senha}" required >
+						<input type="password" class="form-control" name="usuario.senha" required >
 					</div>
 					
 				</div>
 				<div class="col-md-12">
-					<button class="btn btn-primary" type="submit">Cadastrar</button>
-					<a href='<c:url value="/usuario/cadastrardepois"></c:url>' class="btn btn-default"> Cadastrar-me depois</a>
+					<button class="btn btn-primary" type="submit"> Finalizar Cadastro</button>
+					<c:if test="${funcionarioSessao.funcionario == null && usuarioSessao.usuario == null }">	
+						<a href='<c:url value="/usuario/cadastrardepois"></c:url>' class="btn btn-default"> Cadastrar Depois</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
-	</div>
-</form>
-
+	</form>
+</div>
 </body>
 </html>

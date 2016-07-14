@@ -19,60 +19,61 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h5>Cardápio do Dia</h5></div>
 		<div class="panel-body">
-<%-- 			<c:if test="${pratoDia == null }">		 --%>
-				<form action='<c:url value="/pratodia/montar"></c:url>'>
-					<div class="row">
-						<fieldset>
-							<div class="form-group col-md-4">
-							  <label class="small" for="">Esolha o prato em seu catálogo de pratos prontos.</label>
-							  <div class="controls">
-							    <select  name="pratoDia.pratoPronto.id" class="form-control" required>
-							    	<option value="${pratoDia.pratoPronto.id}"> ${pratoDia.pratoPronto.tituloPrato}</option>
-									<c:forEach var="pratopronto" items="${listPratoProntos}"> 
-										<option value="${pratopronto.id}">${pratopronto.tituloPrato}</option>			
-									</c:forEach>
-							    </select>
-							  </div>
-							</div>
+			<form action='<c:url value="/pratodia/montar"></c:url>'>
+				<div class="row">
+					<fieldset>
+						<input type="hidden" name="pratoDia.id" value="${pratoDia.id}">
 						
-							<div class="form-group col-md-3">
-							  <label class="small" for="">Escolha a Sobremesa</label>
-							  <div class="controls">
-							    <select  name="pratoDia.sobremesa.id" class="form-control" required>
-							    	<option value="${pratoDia.sobremesa.id}" >${pratoDia.sobremesa.descricao}</option>
-									<c:forEach var="sobremesa" items="${sobremesas}"> 
-										<option value="${sobremesa.id}">${sobremesa.descricao}</option>			
-									</c:forEach>
-							    </select>
-							  </div>
-							</div>
-							
-							<div class="form-group col-md-2">
-							  <label class="small" for="">Tipo de Refeição</label>
-							  <div class="controls">
-							    <select  name="pratoDia.tipoPrato.id" class="form-control" required>
-							    	<option value="${pratoDia.tipoPrato.id}">${pratoDia.tipoPrato.descricao}</option>
-							    	<option value="${1}"> Almoço</option>
-							    	<option value="${2}"> Jantar</option>
-							    </select>
-							  </div>
-							</div>
-							
-							<div class="form-group col-md-3">
-								<label class="small">Data do Cardápio</label>
-								<input id="dataCardapio" name="pratoDia.dataCardapio" 
-								value="<fmt:formatDate value="${pratoDia.dataCardapio}" pattern="dd/MM/yyyy"/>"class="form-control" required >
-							</div>
-							
-						</fieldset>
-					</div>
+						<div class="form-group col-md-4">
+						  <label class="small" for="">Esolha o prato em seu catálogo de pratos prontos.</label>
+						  <div class="controls">
+						    <select  name="pratoDia.pratoPronto.id" class="form-control" required>
+						    	<option value="${pratoDia.pratoPronto.id}"> ${pratoDia.pratoPronto.tituloPrato}</option>
+								<c:forEach var="pratopronto" items="${listPratoProntos}"> 
+									<option value="${pratopronto.id}">${pratopronto.tituloPrato}</option>			
+								</c:forEach>
+						    </select>
+						  </div>
+						</div>
 					
-					<div>
-						<button type="submit" class="btn btn-primary">Montar Cardapio</button>
-					</div>
-					<hr>
-				</form>
-<%-- 			</c:if> --%>
+						<div class="form-group col-md-3">
+						  <label class="small" for="">Escolha a Sobremesa</label>
+						  <div class="controls">
+						    <select  name="pratoDia.sobremesa.id" class="form-control" required>
+						    	<option value="${pratoDia.sobremesa.id}" >${pratoDia.sobremesa.descricao}</option>
+								<c:forEach var="sobremesa" items="${sobremesas}"> 
+									<option value="${sobremesa.id}">${sobremesa.descricao}</option>			
+								</c:forEach>
+						    </select>
+						  </div>
+						</div>
+						
+						<div class="form-group col-md-2">
+						  <label class="small" for="">Tipo de Refeição</label>
+						  <div class="controls">
+						    <select  name="pratoDia.tipoPrato.id" class="form-control" required>
+						    	<option value="${pratoDia.tipoPrato.id}">${pratoDia.tipoPrato.descricao}</option>
+						    	<option value="${1}"> Almoço</option>
+						    	<option value="${2}"> Jantar</option>
+						    </select>
+						  </div>
+						</div>
+						
+						<div class="form-group col-md-3">
+							<label class="small">Data do Cardápio</label>
+							<input id="dataCardapio" name="pratoDia.dataCardapio" 
+							value="<fmt:formatDate value="${pratoDia.dataCardapio}" pattern="dd/MM/yyyy"/>"class="form-control" required >
+						</div>
+						
+					</fieldset>
+				</div>
+				
+				<div>
+					<button type="submit" class="btn btn-primary">Montar Cardapio</button>
+				</div>
+				<hr>
+			</form>
+
 			<c:if test="${pratoDia != null }">
 				<div class="row">
 					<div class="col-md-8">
@@ -90,8 +91,6 @@
 										<thead>
 											<tr class="small">
 												<th>Item</th>
-	<!-- 											<th>Beneficios</th> -->
-	<!-- 											<th>Não recomendado</th> -->
 												<th>Calorias</th>
 											</tr>
 										</thead>

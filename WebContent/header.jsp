@@ -36,8 +36,17 @@
 	                <li><a href='<c:url value="/sugestoes"/>'>Votar em um Cardápio</a></li>
 	                
 	                <li><a href='<c:url value="/cardapiosemanal"/>'>Cardápio Semanal</a></li>
-	                
-	                <li><a href='<c:url value="/logout/usuario"></c:url>'> Sair : ${usuarioSessao.usuario.primeiroNome}</a>
+	                <li class="dropdown">
+	                	<a data-toggle="dropdown"  href="#">Bem vindo(a) <b><span class="glyphicon glyphicon-user"></span> ${usuarioSessao.usuario.primeiroNome}</b> </a>
+	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/usuario/alteracao?id=${usuarioSessao.usuario.id}"/>'>
+				 				<span class="glyphicon glyphicon-edit"></span> Alterar meus dados</a>
+				 			</li>
+				 			<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/logout/usuario"/>'>
+			 					<span class="glyphicon glyphicon-off"></span> Sair</a>
+			 				</li>
+	                	</ul>
 	                </li>
 	            </ul>
 	        </div>
@@ -70,22 +79,20 @@
 	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratodia"></c:url>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Registrar cardápio do dia</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar cardápio do dia</a>
 				 			</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestao"/>'>
-			 					<span class="glyphicon glyphicon-plus"></span> Registrar cardapio para votação </a>
+			 					<span class="glyphicon glyphicon-plus"></span> Cadastrar cardapio para votação </a>
 			 				</li>
 			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratos/list"></c:url>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Cardápios </a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Cardápios </a>
 			 				</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/avaliacoes" />'>
 			 					<span class="glyphicon glyphicon-list-alt"></span> Analisar Avaliações de cardápios</a>
 			 				</li>
-			 				
-			 				
 	                	</ul>
 	                </li>
 	                
@@ -95,35 +102,22 @@
 	                	<a data-toggle="dropdown"  href="#"> Alimentos </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/item"></c:url>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Alimentos</a>
-				 			</li>
-				 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/items"></c:url>'>
-				 				<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Alimentos</a></li>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Alimentos</a></li>
+				 			<li class="divider"></li>
+				 			<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/items"></c:url>'>
+				 				<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Alimentos</a></li>
 	                	</ul>
 	                </li>
-	                
-<!-- 	                <li class="dropdown"> -->
-<!-- 	                	<a data-toggle="dropdown"  href="#"> Montagem dos cardapios </a> -->
-<!-- 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"> -->
-<%-- 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapioespecial"/>'> --%>
-<!-- 				 				<span class="glyphicon glyphicon-plus"></span> Sugerir cardapios para seleção</a> -->
-<!-- 				 			</li> -->
-<!-- 				 			<li class="divider"></li> -->
-<%-- 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/cardapio/semana"/>'> --%>
-<!-- 			 					<span class="glyphicon glyphicon-pencil"></span> Cardapios da semana</a> -->
-<!-- 			 				</li> -->
-<!-- 	                	</ul> -->
-<!-- 	                </li> -->
 	                
 	                <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Catálogo de Pratos  </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratopronto"/>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastro de Pratos</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Pratos para Catálogo</a>
 				 			</li>
 				 			<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratosprontos"/>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciamento de Pratos</a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Pratos do Catálogo</a>
 			 				</li>
 	                	</ul>
 	                </li>
@@ -131,16 +125,22 @@
 	                <li class="dropdown">
 	                	<a data-toggle="dropdown"  href="#"> Institucional </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/usuario"/>'>
+			 					<span class="glyphicon glyphicon-plus"></span> Cadastrar Aluno</a>
+			 				</li>
+	                		<li class="divider"></li>
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/campus"/>'>
-				 				<span class="glyphicon glyphicon-pencil"></span> Gerenciar Campus</a>
+				 				<span class="glyphicon glyphicon-edit"></span> Gerenciar Campus</a>
 				 			</li>
 				 			<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/instituicao"/>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciar Instituições</a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciar Instituições</a>
 			 				</li>
 			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/refeitorio"/>'>
-			 					<span class="glyphicon glyphicon-pencil"></span> Gerenciar de Refeitórios</a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciar de Refeitórios</a>
+			 				</li>	
 	                	</ul>
 	                </li>   
 	                

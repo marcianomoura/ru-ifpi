@@ -19,7 +19,8 @@
 <div class="col-md-12">
 
 <div style="margin-top: 15px;  margin-bottom: 10px;" >
-	<a class="btn btn-success" href='<c:url value="/sugestoes" />'>Pagina Anterior</a>
+	<a class="btn btn-default" href='<c:url value="/sugestoes" />'> 
+	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
 </div>
 	
 	<div class="panel panel-default">            	
