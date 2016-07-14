@@ -124,7 +124,7 @@ public class RepositorioMetodos implements Repositorio {
 		Funcionario funcionarioAutenticado = null;
 		try {
 			entityManager = JpaUtil.getEntityAtual();
-			String senhaCriptografada = CriptografaSenhaUtil.criptografaSenha(funcionario);
+			String senhaCriptografada = CriptografaSenhaUtil.criptografaSenha(funcionario.getSenha());
 			Query query = entityManager.createQuery("select f from Funcionario f where f.login=:login and f.senha=:senha and f.matriculado=true")
 					.setParameter("login", funcionario.getLogin()).setParameter("senha", senhaCriptografada);
 			List<Funcionario> funcionarios = query.getResultList();
@@ -146,9 +146,10 @@ public class RepositorioMetodos implements Repositorio {
 	public boolean autenticacaoUsuario(Usuario usuario) {
 		Usuario usuarioAutenticado = null;
 		try {
+			String senhaHash = CriptografaSenhaUtil.criptografaSenha(usuario.getSenha());
 			entityManager = JpaUtil.getEntityAtual();
 			Query query = entityManager.createQuery("select u from Usuario u where u.login=:login and u.senha=:senha and u.matriculado=true")
-					.setParameter("login", usuario.getLogin()).setParameter("senha", usuario.getSenha());
+					.setParameter("login", usuario.getLogin()).setParameter("senha", senhaHash);
 			List<Usuario> usuarios = query.getResultList();
 			if(usuarios.isEmpty()){
 				validator.add(new I18nMessage("usuario", "credenciais.nao.conferem"));
@@ -160,8 +161,31 @@ public class RepositorioMetodos implements Repositorio {
 			}
 		} catch (Exception e) {
 			throw new DaoException("Erro na autenticação do usuario ...");
+		}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean verificaUsuarioCadastrado(Usuario usuario) {
+		boolean usuarioEncontrado = true;
+		entityManager = JpaUtil.getEntityAtual();
+		try {
+			Query query = entityManager.createQuery("select u from Usuario u where u.matricula=:matricula").
+					setParameter("matricula", usuario.getMatricula());
+			List<Usuario> usuarios = query.getResultList();
+			if(!usuarios.isEmpty()){
+				for (Usuario usuario2 : usuarios) {
+					if(usuario2.getId().equals(usuario.getId())){	// Verifica se é alteração dos dados do usuário, se for permite a alteração.
+						usuarioEncontrado = false;
+						break;
+					}
+				}
+			}else{
+				usuarioEncontrado = false;
+			}
+		} catch (Exception e) {
+			throw new DaoException("erro na pesquisa de usuario existente");
 		}
-		
+		return usuarioEncontrado;
 	}
 	
 }
