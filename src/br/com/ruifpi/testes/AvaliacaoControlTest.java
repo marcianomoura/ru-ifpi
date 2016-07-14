@@ -1,6 +1,5 @@
 package br.com.ruifpi.testes;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,31 +8,35 @@ import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.controllers.AvaliacaoController;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.AvaliacaoRefeicao;
+import br.com.ruifpi.models.TipoPrato;
+import br.com.ruifpi.models.Usuario;
 import junit.framework.TestCase;
 
 public class AvaliacaoControlTest extends TestCase{
 	
 	private MockValidator validator;
 	private MockResult result;
-	private AvaliacaoController avaliacaoCardapioCOntroller;
+	private AvaliacaoController avaliacaoCardapioController;
 	private DaoImplementacao daoimplementacao;
 	private List<AvaliacaoRefeicao> avaliacoes;
 	private AvaliacaoRefeicao avaliacaoCardapio1;
 	private AvaliacaoRefeicao avaliacaoCardapio2;
-	private SimpleDateFormat formatDate;
+	private TipoPrato tipoPrato;
+	private RepositorioMetodos repositorioMetodos;
 	
 	@Before
 	public void setUp() {
 		daoimplementacao = new DaoImplementacao();
 		result = new MockResult();
-		formatDate = new SimpleDateFormat("dd/MM/yyyy");
 		avaliacaoCardapio1 = new AvaliacaoRefeicao();
 		avaliacaoCardapio2 = new AvaliacaoRefeicao();
+		tipoPrato = new TipoPrato();
 		validator = new MockValidator();
-		avaliacaoCardapioCOntroller = new AvaliacaoController(result,validator,daoimplementacao);
+		avaliacaoCardapioController = new AvaliacaoController(result,validator,daoimplementacao, repositorioMetodos);
 		avaliacoes = new ArrayList<AvaliacaoRefeicao>();
 	}
 	
@@ -44,7 +47,7 @@ public class AvaliacaoControlTest extends TestCase{
 		avaliacaoCardapio2.setNotaAvaliativa(6);
 		avaliacoes.add(avaliacaoCardapio1);
 		avaliacoes.add(avaliacaoCardapio2);
-		double resultado = this.avaliacaoCardapioCOntroller.calculaMediaAvaliacao(avaliacoes);
+		double resultado = this.avaliacaoCardapioController.calculaMediaAvaliacao(avaliacoes);
 		assertEquals(valorEsperado, resultado);		
 	}
 		
@@ -54,7 +57,7 @@ public class AvaliacaoControlTest extends TestCase{
 		avaliacaoCardapio2.setNotaAvaliativa(-4);
 		avaliacoes.add(avaliacaoCardapio1);
 		avaliacoes.add(avaliacaoCardapio2);
-		double resultado = this.avaliacaoCardapioCOntroller.calculaMediaAvaliacao(avaliacoes);
+		double resultado = this.avaliacaoCardapioController.calculaMediaAvaliacao(avaliacoes);
 		assertEquals(0, resultado, 0);
 	}
 	
@@ -64,66 +67,64 @@ public class AvaliacaoControlTest extends TestCase{
 		avaliacaoCardapio2.setNotaAvaliativa(6);
 		avaliacoes.add(avaliacaoCardapio1);
 		avaliacoes.add(avaliacaoCardapio2);
-		double resultado = this.avaliacaoCardapioCOntroller.calculaMediaAvaliacao(avaliacoes);
+		double resultado = this.avaliacaoCardapioController.calculaMediaAvaliacao(avaliacoes);
 		assertEquals(6, resultado, 0);
 	}
-	
-	
+		
 	@Test
-	public void testaNotaAvalicaoMenorZero() {
-		AvaliacaoRefeicao avaliacaoCardapio1 = new AvaliacaoRefeicao();
-		avaliacaoCardapio1.setNotaAvaliativa(-6);	
-	//	assertFalse(this.avaliacaoCardapioCOntroller.validaNotaAvaliativa(avaliacaoCardapio1));
+	public void testaErroListagemAvaliacoesDataInvalida() {
+		avaliacaoCardapioController.listaAvaliacoesCardapioByData(null);
+		assertTrue(result.included().containsKey("erro"));
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testaPesquisaAvaliacoesByIdPratoDIaNull() {
+		List<AvaliacaoRefeicao> avaliacoes = new ArrayList<>();
+		try {
+			avaliacoes = repositorioMetodos.buscaAvaliacaoDeUmCardapio(null);
+			fail();
+		} catch (Exception e) {
+			assertTrue(avaliacoes.isEmpty());
+		}	
 	}
 	
 	@Test
 	public void testaNotaAvalicaoIgualZero() {
 		this.avaliacaoCardapio1 = new AvaliacaoRefeicao();
 		this.avaliacaoCardapio1.setNotaAvaliativa(0);	
-//		assertFalse(this.avaliacaoCardapioCOntroller.validaNotaAvaliativa(avaliacaoCardapio1));
-	}
-/*	
-	@Test
-	public void testaCardapioDoDiaPublicado() throws ParseException {
-		PratoDia cardapioEsperado = new PratoDia();
-		cardapioEsperado.setId(10L);
-		cardapioEsperado.setTotalCaloria(803);
-		String data = "16/11/2015";
-		Date dataFormatada = formatDate.parse(data);
-		PratoDia resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
-		assertEquals(cardapioEsperado.getId(), resultado.getId());
-		assertEquals(cardapioEsperado.getTotalCaloria(), resultado.getTotalCaloria(), 0);
-		
+		assertFalse(this.avaliacaoCardapioController.verificaNotaAvaliativa(avaliacaoCardapio1));
 	}
 	
 	@Test
-	public void testaEnvioMensagemCardapioPublicado() throws ParseException {
-		PratoDia cardapioEsperado = new PratoDia();
-		cardapioEsperado.setId(10L);
-		cardapioEsperado.setTotalCaloria(803);
-		String data = "16/11/2015";
-		Date dataFormatada = formatDate.parse(data);
-		this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
-		assertTrue(result.included().containsKey("cardapioDia"));
+	public void testaNotaAvaliativaMaiorDez() {
+		this.avaliacaoCardapio1 = new AvaliacaoRefeicao();
+		this.avaliacaoCardapio1.setNotaAvaliativa(11);	
+		assertFalse(this.avaliacaoCardapioController.verificaNotaAvaliativa(avaliacaoCardapio1));
 	}
 	
 	@Test
-	public void testaCardapioDoDiaNaoPublicado() throws ParseException {
-		PratoDia valorEsperadoCardapio = null;
-		String data = "01/01/1500";
-		Date dataFormatada = formatDate.parse(data);
-		PratoDia resultado =  this.avaliacaoCardapioCOntroller.mostraCardapioDia(dataFormatada);
-		assertEquals(valorEsperadoCardapio, resultado);
-	}
-	
-	@Test(expected=Exception.class)
-	public void testaParametroDataCardapioDiaNull() throws ParseException {
-		Date data =  null;
-		this.avaliacaoCardapioCOntroller.mostraCardapioDia(data);
+	public void testaAvaliacaoTipoPratoNull() {
+		this.tipoPrato.setId(null);
+		boolean valoresperado = avaliacaoCardapioController.validaHorarioAvaliacao(tipoPrato);
+		avaliacaoCardapioController.validaHorarioAvaliacao(tipoPrato);
 		assertTrue(result.included().containsKey("erro"));
+		assertFalse(valoresperado);	
 	}
-
-*/
+	
+	@Test(expected = NullPointerException.class)
+	public void testaVerificaAvaliacaoSubmetidaUsuarioIdNUll() {
+		this.avaliacaoCardapio1.setUsuario(new Usuario());
+		boolean resultado = true;
+		try {
+			resultado = avaliacaoCardapioController.verificaAvaliacaoJaSubmetida(avaliacaoCardapio1);
+			assertFalse(resultado);
+			assertEquals(false, resultado);
+			fail();
+		} catch (Exception e) {	
+			
+		}	
+	}	
+	
 	
 }
 
