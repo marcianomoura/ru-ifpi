@@ -18,18 +18,16 @@ public class UsuarioImportacao {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	private String matricula;
-	private boolean matriculaValida = false;
 	
 	public UsuarioImportacao() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioImportacao(Long id, Date dataNascimento, String matricula, boolean matriculaValida) {
+	public UsuarioImportacao(Long id, Date dataNascimento, String matricula) {
 		super();
 		this.id = id;
 		this.dataNascimento = dataNascimento;
 		this.matricula = matricula;
-		this.matriculaValida = matriculaValida;
 	}
 
 	public Long getId() {
@@ -56,18 +54,9 @@ public class UsuarioImportacao {
 		this.matricula = matricula;
 	}
 
-	public boolean isMatriculaValida() {
-		return matriculaValida;
-	}
-
-	public void setMatriculaValida(boolean matriculaValida) {
-		this.matriculaValida = matriculaValida;
-	}
-
 	@Override
 	public String toString() {
-		return "UsuarioImportacao [id=" + id + ", dataNascimento=" + dataNascimento + ", matricula=" + matricula
-				+ ", matriculaValida=" + matriculaValida + "]";
+		return "UsuarioImportacao [id=" + id + ", dataNascimento=" + dataNascimento + ", matricula=" + matricula + "]";
 	}
-	
+
 }
