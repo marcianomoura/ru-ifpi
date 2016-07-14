@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Result;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.ClasseNutricional;
+import br.com.ruifpi.util.ControleAcesso;
 
 @Controller
 public class ClassesNutricionaisController {
@@ -16,6 +17,7 @@ public class ClassesNutricionaisController {
 	@Inject private Result result;
 	
 	
+	@ControleAcesso
 	@SuppressWarnings("unchecked")
 	public void listClassesNutricionais() {
 		List<ClasseNutricional> classeNutricionals =  daoImplementacao.find(ClasseNutricional.class);

@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Sobremesa;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class SobremesaController {
@@ -24,14 +25,14 @@ public class SobremesaController {
 	@Inject
 	private ClassesNutricionaisController classesNutricionaisController;
 	
-	
+	@AcessoAdministrativo
 	@Path("/sobremesa")
 	public void formSobremesa() {
 		listSobremesas();
 		classesNutricionaisController.listClassesNutricionais();
 	}
 	
-	
+	@AcessoAdministrativo
 	@Path("/sobremesa/alteracao")
 	public void alteraSobremesa(Long id) {
 		try {
@@ -44,7 +45,7 @@ public class SobremesaController {
 		}
 	}
 	
-	
+	@AcessoAdministrativo
 	public boolean validaDadosSobremesa(Sobremesa sobremesa) {
 		if (sobremesa.getDescricao().length() < 6) {
 			validator.add(new I18nMessage("Descricao da sobrmesa", "descricao.sobremesa.pequena"));
@@ -62,7 +63,7 @@ public class SobremesaController {
 		return true;
 	}
 	
-	
+	@AcessoAdministrativo
 	@Path("/sobremesa/save")
 	public void saveSobremesa(Sobremesa sobremesa) {
 		if(!validaDadosSobremesa(sobremesa)){
@@ -79,7 +80,7 @@ public class SobremesaController {
 		}
 	}
 	
-	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public void listSobremesas() {
 		List<Sobremesa> sobremesas = dao.find(Sobremesa.class);

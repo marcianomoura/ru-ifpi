@@ -20,6 +20,7 @@ import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.models.UsuarioImportacao;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 import jxl.Sheet;
 import jxl.Workbook;
 
@@ -35,11 +36,13 @@ public class UsuarioImportacaoController {
 	private List<UsuarioImportacao> listUsuarioImportadoBanco = new ArrayList<>();
 	private List<UsuarioImportacao> listInvalidados = new ArrayList<>();
 	
+	@AcessoAdministrativo
 	@Path("/importacao")
 	public void formUsuarioImportacao() {
 		
 	}
 	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public void removeUsuarioImportacaoNaoEncontradoXLS() throws Exception {
 		listUsuarioImportadoBanco = dao.find(UsuarioImportacao.class);		
@@ -58,6 +61,7 @@ public class UsuarioImportacaoController {
 		}
 	}
 	
+	@AcessoAdministrativo
 	public void invalidaMatriculaUsuarioSistema() throws Exception {
 		List<Usuario> usuarios = new ArrayList<>();
 		usuarios = repositorio.buscaUsuariosAtivos();
@@ -72,6 +76,7 @@ public class UsuarioImportacaoController {
 		}
 	}
 	
+	@AcessoAdministrativo
 	public void insereNovosUsuarioImportacao() throws Exception {
 		for (UsuarioImportacao usuarioXLS : usuariosArquivoXls) {
 			boolean encontrada = false;
@@ -81,14 +86,13 @@ public class UsuarioImportacaoController {
 					break;
 				}
 			}
-			if(encontrada == false){
-				usuarioXLS.setMatriculaValida(true);
+			if(encontrada == false){	// Significa que é novato
 				dao.save(usuarioXLS);
 			}
 		}
 	}
 	
-	
+	@AcessoAdministrativo
 	@Post
 	@Path("/lerxls")
 	public void lerArquivoXls(UploadedFile arquivo) {

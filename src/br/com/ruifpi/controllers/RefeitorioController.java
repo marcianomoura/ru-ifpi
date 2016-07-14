@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Refeitorio;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class RefeitorioController {
@@ -30,6 +31,7 @@ public class RefeitorioController {
 		listRefeitorio();
 	}
 	
+	@AcessoAdministrativo
 	@Path("/refeitorio/alteracao")
 	public void alteraRefeitorio(Long id) {
 		try {
@@ -42,6 +44,7 @@ public class RefeitorioController {
 		}
 	}
 	
+	@AcessoAdministrativo
 	public boolean validaDadosRefeitorio(Refeitorio refeitorio) {
 		if(refeitorio.getNome().length() < 6){
 			validator.add(new I18nMessage("Nome do Refeitório", "nome.refeitorio.pequeno"));
@@ -53,7 +56,8 @@ public class RefeitorioController {
 		}
 		return true;
 	}
-
+	
+	@AcessoAdministrativo
 	@Path("/refeitorio/save")
 	public void saveRefeitorio(Refeitorio refeitorio) {
 		if(!validaDadosRefeitorio(refeitorio)){
@@ -69,7 +73,8 @@ public class RefeitorioController {
 			}
 		}
 	}
-
+	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public void listRefeitorio() {
 		List<Refeitorio> refeitorios = dao.find(Refeitorio.class);

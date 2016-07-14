@@ -79,6 +79,7 @@ public class CampusController {
 		}
 	}
 	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public void listCampus() {
 		List<Campus> campus = dao.find(Campus.class);

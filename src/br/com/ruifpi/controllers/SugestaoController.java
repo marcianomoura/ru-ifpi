@@ -16,7 +16,8 @@ import br.com.ruifpi.models.ItemSugestaoPratoPronto;
 import br.com.ruifpi.models.PratoPronto;
 import br.com.ruifpi.models.Sobremesa;
 import br.com.ruifpi.models.SugestaoPrato;
-import br.com.ruifpi.util.ControleAcesso.AcessoUsuario;
+import br.com.ruifpi.util.ControleAcesso;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class SugestaoController {
@@ -36,7 +37,7 @@ public class SugestaoController {
 	private static List<ItemSugestaoPratoPronto> listItemSugestaoPratos = new ArrayList<>();
 	
 	
-	
+	@AcessoAdministrativo
 	@Path("/sugestao")
 	public void formSugestao() {
 		pratoProntoController.listPratosProntos();
@@ -44,12 +45,13 @@ public class SugestaoController {
 		result.include("listItemSugestaoPrato", listItemSugestaoPratos);
 	}
 	
-	@AcessoUsuario
+	@ControleAcesso
 	@Path("/sugestoes")		
 	public void listSugestaoCardapio() {
 		listCardapiosAbertosParaVotacao();
 	}
 	
+	@AcessoAdministrativo
 	@Path("/sugestao/add")
 	public void addItemSugestaoPrato(ItemSugestaoPratoPronto itemSugestaoPratoPronto) {
 			
@@ -68,12 +70,14 @@ public class SugestaoController {
 		
 	}
 	
+	@AcessoAdministrativo
 	@Path("/sugestao/clear")
 	public void limpaDadosOperacao() {
 		listItemSugestaoPratos.clear();
 		result.redirectTo(this).formSugestao();
 	}
 	
+	@AcessoAdministrativo
 	@Path("/sugestao/remocao")
 	public void remocaoItemSugestaoPrato(Long id) {
 		for (ItemSugestaoPratoPronto itemSugestaoPratoPronto : listItemSugestaoPratos) {
@@ -85,12 +89,14 @@ public class SugestaoController {
 		result.redirectTo(this).formSugestao();
 	}
 	
+	@AcessoAdministrativo
 	public void insereIdSugestaoPrato(SugestaoPrato sugestaoPrato) {
 		for (ItemSugestaoPratoPronto itemSugestaoPratoPronto : listItemSugestaoPratos) {
 			itemSugestaoPratoPronto.setSugestaoPrato(sugestaoPrato);
 		}
 	}
 	
+	@AcessoAdministrativo
 	public boolean validaDadosSugestaoPrato(SugestaoPrato sugestaoPrato) {
 		if(listItemSugestaoPratos.size() < 3){
 			validator.add(new I18nMessage("Lista de Pratos", "lista.pratossugeridos.invalida"));
@@ -108,6 +114,7 @@ public class SugestaoController {
 		return true;
 	}
 	
+	@AcessoAdministrativo
 	@Path("/sugestao/save")
 	public void saveSugestaoPrato(SugestaoPrato sugestaoPrato) {
 		if(!validaDadosSugestaoPrato(sugestaoPrato)){
@@ -128,6 +135,7 @@ public class SugestaoController {
 	
 	}
 	
+	@ControleAcesso
 	@SuppressWarnings("unchecked")
 	public void listCardapiosAbertosParaVotacao() {
 		sugestaoPratosUtil = dao.find(SugestaoPrato.class);
@@ -137,11 +145,14 @@ public class SugestaoController {
 				listSugestoesValidas.add(sugestaoPrato);
 			}
 		}
+		if(listSugestoesValidas.isEmpty()){
+			result.include("sucesso", "Ainda não foram publicados os cardapios para votação. Aguarde a Administração do refeitório");
+		}
 		result.include("listSugestaoPratos", listSugestoesValidas);
 		sugestaoPratosUtil.clear();
-		
 	}
 	
+	@ControleAcesso
 	@Path("/sugestao/itens")
 	public void detalhesPratosVotacao(Long id) {
 		List<ItemSugestaoPratoPronto> itemSugestaoPratoProntos = new ArrayList<>();

@@ -23,6 +23,18 @@ public class ItemController {
 	@Inject private ClassesNutricionaisController nutricionaisController;
 			private List<Item> itemsGeral = new ArrayList<>();
 	
+	
+	public ItemController() {
+		this(null, null, null);
+	}		
+	
+	@Inject
+	public ItemController(Validator validator, Result result, DaoImplementacao dao){
+		this.daoImplementacao = dao;
+		this.result = result;
+		this.validator = validator;
+	}
+			
 	@AcessoAdministrativo
 	@Path("/item")
 	public void formItem() {
@@ -78,6 +90,12 @@ public class ItemController {
 	
 	@AcessoAdministrativo
 	public Item validaDados(Item item) {
+		
+		if(item == null){
+			validator.add(new I18nMessage("item", "item.nulo"));
+			return null;
+		}
+		
 		if(item.getDescricao().length() < 5){
 			validator.add(new I18nMessage("descricao", "item.descricao.invalido"));
 			return null;
@@ -95,17 +113,23 @@ public class ItemController {
 			validator.add(new I18nMessage("maleficios", "item.maleficios.invalido"));
 			return null;
 		}
-		if(item.getClasseNutricional().getId() == null){
-			validator.add(new I18nMessage("classeNutricional", "item.classeNutricional.invalido"));
+		try {
+			if(item.getClasseNutricional().getId() == null){
+				validator.add(new I18nMessage("classeNutricional", "item.classeNutricional.invalido"));
+				return null;
+			}
+		} catch (Exception e) {
 			return null;
 		}
+		
 		return item;
 	}
 	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public void listaItensAlimentares() {
 		itemsGeral = daoImplementacao.find(Item.class);
-		new Item().ordenaItemPorClasseNutricional(itemsGeral);
+		new Item().ordenaItemPorNome(itemsGeral);
 		if(itemsGeral.isEmpty()){
 			result.include("erro", "Não há itens ainda cadastrado.");
 		}

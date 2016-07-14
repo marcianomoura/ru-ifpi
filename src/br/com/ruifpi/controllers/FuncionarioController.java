@@ -14,7 +14,6 @@ import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.components.FuncionarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Funcionario;
-import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 import br.com.ruifpi.util.CriptografaSenhaUtil;
 
@@ -28,7 +27,7 @@ public class FuncionarioController {
 	@Inject private RepositorioMetodos repositorio;
 	@Inject private FuncionarioSession funcionarioSession;
 	
-	@ControleAcesso
+	@AcessoAdministrativo
 	@Path("/funcionario")
 	public void formFuncionario() {
 		result.include("funcionarios", listaFuncionarios());
@@ -42,7 +41,7 @@ public class FuncionarioController {
 		}else{
 			try {
 				funcionario.setMatriculado(true);
-				funcionario.setSenha(CriptografaSenhaUtil.criptografaSenha(funcionario));
+				funcionario.setSenha(CriptografaSenhaUtil.criptografaSenha(funcionario.getSenha()));
 				daoImplementacao.save(funcionario);
 				result.include("sucesso", "Dados inserido com sucesso.");
 				result.redirectTo(this).formFuncionario();
@@ -53,7 +52,7 @@ public class FuncionarioController {
 		}
 	}
 	
-	@ControleAcesso
+	@AcessoAdministrativo
 	public boolean verificaTentativaAlteracao(Funcionario funcionario) {
 		if(funcionario.getId().equals(funcionarioSession.getFuncionario().getId())){
 			return true;
@@ -62,7 +61,7 @@ public class FuncionarioController {
 		}
 	}
 	
-	@ControleAcesso
+	@AcessoAdministrativo
 	@Get("/funcionario/alteracao")
 	public void alteracaoDados(Long id) {
 		try {
@@ -98,13 +97,13 @@ public class FuncionarioController {
 		}
 	}
 	
-	@ControleAcesso
+	@AcessoAdministrativo
 	public List<Funcionario> listaFuncionarios() {
 		return repositorio.buscaFuncionariosAtivos();
 	}
 	
 
-	@ControleAcesso
+	@AcessoAdministrativo
 	public Funcionario validaDadosFuncionario(Funcionario funcionario) {
 		
 		if(funcionario.getNome().length() < 6){

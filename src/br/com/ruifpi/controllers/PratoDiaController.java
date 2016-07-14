@@ -21,15 +21,14 @@ import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.PratoPronto;
 import br.com.ruifpi.models.Sobremesa;
 import br.com.ruifpi.models.TipoPrato;
+import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class PratoDiaController {
 
-	@Inject
+	
 	private DaoImplementacao dao;
-	@Inject
 	private Result result;
-	@Inject
 	private Validator validator;
 	@Inject
 	private SobremesaController sobremesaController;
@@ -42,25 +41,40 @@ public class PratoDiaController {
 	@Inject
 	private RepositorioMetodos metodosUtil;
 	
+	public PratoDiaController() {
+		this(null, null, null);
+	}
+	
+	@Inject
+	public PratoDiaController(Validator validator, DaoImplementacao dao, Result result) {
+		this.validator = validator;
+		this.dao = dao;
+		this.result = result;
+	}
+	
+	@AcessoAdministrativo
 	@Path("/pratodia")
 	public void formPratoDia() {
 		sobremesaController.listSobremesas();
 		pratoProntoController.listPratosPronto();
 	}
 	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
-	public List<PratoDia> listarPratosPublicados() {
+	public List<PratoDia> listarTodosPratosPublicados() {
 		List<PratoDia> pratosPublicados = dao.find(PratoDia.class);
 		Collections.reverse(pratosPublicados);
 		result.include("pratosPublicados", pratosPublicados);
 		return pratosPublicados;
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratos/list")
 	public void listCardapiosPublicados() {
-		listarPratosPublicados();
+		listarTodosPratosPublicados();
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratodia/montar")
 	public void montaCardapioDia(PratoDia pratoDia) {
 		try {
@@ -71,7 +85,7 @@ public class PratoDiaController {
 			pratoDia.setSobremesa(sobremesa);
 			pratoDia.setTipoPrato(tipoPrato);
 			pratoDia.setPratoPronto(pratoPronto);
-			pratoDia.setTotalCaloria(calculaTotalCaloria(pratoDia));
+			pratoDia.setTotalCaloria(calculaTotalCaloria());
 			result.include("pratoDia", pratoDia);
 			result.include("listItemPratoPronto", listItensPratoPronto);
 			result.redirectTo(this).formPratoDia();
@@ -82,7 +96,8 @@ public class PratoDiaController {
 		}
 	}
 	
-	public double calculaTotalCaloria(PratoDia pratoDia) {
+	@AcessoAdministrativo
+	public double calculaTotalCaloria() {
 		double soma = 0.0d;
 		for (ItemPratoPronto itemPratoPronto : listItensPratoPronto) {
 			soma += itemPratoPronto.getTotalCaloria();
@@ -90,6 +105,7 @@ public class PratoDiaController {
 		return soma;
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratodia/alteracao")
 	public void alteraCardapioDia(Long id) {
 		try {
@@ -108,6 +124,7 @@ public class PratoDiaController {
 		
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratodia/itens")
 	public void listItensPratoDia(Long id) {
 		try {
@@ -120,22 +137,31 @@ public class PratoDiaController {
 		
 	}
 	
+	@AcessoAdministrativo
 	public boolean validaDadosPratoDia(PratoDia pratoDia) {
-		if(pratoDia.getPratoPronto().getId() == null){
-			validator.add(new I18nMessage("Itens do Cardapio", "prato.nao.informado"));
-			return false;
-		}
-		if(pratoDia.getTipoPrato().getId() == null){
-			validator.add(new I18nMessage("Tipo de Cardápio", "tipocardapio.nao.informado"));
-			return false;
-		}
-		if(pratoDia.getSobremesa().getId() == null){
-			validator.add(new I18nMessage("Sobremesa", "sobremesa.nao.informada"));
-			return false;
-		}
-		return true;
+		boolean validacao = true;
+		try {
+			if(pratoDia.getPratoPronto().getId() == null){
+				validator.add(new I18nMessage("Itens do Cardapio", "prato.nao.informado"));
+				validacao =  false;
+			}
+			if(pratoDia.getTipoPrato().getId() == null){
+				validator.add(new I18nMessage("Tipo de Cardápio", "tipocardapio.nao.informado"));
+				validacao =  false;
+			}
+			if(pratoDia.getSobremesa().getId() == null){
+				validator.add(new I18nMessage("Sobremesa", "sobremesa.nao.informada"));
+				validacao =  false;
+			}
+			return validacao;
+		} catch (Exception e) {
+			validacao = false;
+			result.include("erro", "Erro na Validação");
+			return validacao;
+		} 
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratodia/save")
 	public void savePratoDia(PratoDia pratoDia) {
 		if(!validaDadosPratoDia(pratoDia)){
@@ -153,8 +179,10 @@ public class PratoDiaController {
 		}				
 	}
 	
-	public void pratoDiaPublicado() {
-		try {
+	@AcessoAdministrativo
+	public List<PratoDia> pratoDiaPublicado() {
+		List<PratoDia> listPratosDoDia = new ArrayList<>();
+		try {			
 			PratoPronto janta = new PratoPronto();
 			PratoPronto almoco = new PratoPronto();
 			PratoDia pratoDiaAlmoco = new PratoDia();
@@ -175,7 +203,8 @@ public class PratoDiaController {
 						pratoDiaAlmoco = pratoDiaBanco;
 					}
 				}
-				
+				listPratosDoDia.add(pratoDiaAlmoco);
+				listPratosDoDia.add(pratoDiaJanta);
 				result.include("pratoDiaAlmoco", pratoDiaAlmoco);
 				result.include("pratoDiaJanta", pratoDiaJanta);
 				result.include("almoco", almoco);
@@ -185,32 +214,7 @@ public class PratoDiaController {
 		} catch (Exception e) {
 			result.include("erro", "Há um erro impedindo a listagem do cardápio.");
 		}
-		
+		return listPratosDoDia;
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	public PratoDia mostraCardapioDia(Date dataHoje) {
-//		PratoDia cardapioEncontrado = null;
-//		try {
-//			formatadorData.applyPattern("yyyy-MM-dd");
-//			String dataFormatada = formatadorData.format(dataHoje);
-//			java.sql.Date dataFormatoSql = new java.sql.Date(formatadorData.parse(dataFormatada).getTime());
-//			List<PratoDia> pratoDias = dao.find(PratoDia.class);
-//			for (PratoDia pratoDia : pratoDias) {
-//				if(pratoDia.getDataCardapio().equals(dataFormatoSql)){
-//					cardapioEncontrado = pratoDia;
-//					break;
-//				}
-//			}
-//			if(cardapioEncontrado == null){
-//				result.include("erro", "Ainda não existe cardapio publicado hoje.");
-//			}else{
-//				result.include("cardapioDia", cardapioEncontrado);
-//			}
-//			return cardapioEncontrado;
-//		} catch (Exception e) {
-//			result.include("erro", "Ocorreu um erro na pesquisa do cardapio de Hoje. Tente novamente mais tarde.");
-//			return cardapioEncontrado;
-//		}				
-//	}
 }

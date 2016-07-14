@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -16,12 +18,14 @@ import br.com.ruifpi.models.Item;
 import br.com.ruifpi.models.ItemPratoPronto;
 import br.com.ruifpi.models.PratoDia;
 import br.com.ruifpi.models.PratoPronto;
+import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoAdministrativo;
 
 @Controller
 public class PratoProntoController {
 
 	private DaoImplementacao dao;
+	@Inject
 	private Validator validator;
 	private Result result;
 	@Inject
@@ -44,23 +48,27 @@ public class PratoProntoController {
 		this.result = result;
 	}
 
+	@AcessoAdministrativo
 	@Path("/pratopronto")
 	public void formPratoPronto() {
 		itemController.listaItensAlimentares();
 		result.include("listItemPratoPronto", listItemPratoProntos);
 		result.include("totalCaloria", totalCaloria);
 	}
-
+	
+	@AcessoAdministrativo
 	@Path("/pratosprontos")
 	public void listPratosProntos() {
 		listPratosPronto();
 	}
 	
+	@ControleAcesso
 	@Path("/cardapiosemanal")
 	public void cardapioSemanal() {
 		
 	}
-
+	
+	@AcessoAdministrativo
 	@SuppressWarnings("unchecked")
 	public List<PratoPronto> listPratosPronto() {
 		List<PratoPronto> pratoProntos = dao.find(PratoPronto.class);
@@ -68,7 +76,8 @@ public class PratoProntoController {
 		result.include("listPratoProntos", pratoProntos);
 		return pratoProntos;
 	}
-
+	
+	@AcessoAdministrativo
 	@Path("/pratopronto/addItem")
 	public void addItemPratoPronto(Item item) {
 		ItemPratoPronto itemPratoPronto = new ItemPratoPronto();
@@ -79,36 +88,53 @@ public class PratoProntoController {
 			listItemPratoProntos.add(itemPratoPronto);
 			totalCaloria += itemBanco.getValorCalorico(); 
 			result.redirectTo(this).formPratoPronto();
-
 		} catch (Exception e) {
 			result.include("erro", "Ocorreu um erro ao adicionar o item. Verifique e tente novamente.");
 			result.redirectTo(this).formPratoPronto();
 		}
 	}
-
+	
+	@AcessoAdministrativo
 	@Path("/pratopronto/remocao")
 	public void removeItemPratoPronto(Long id) {
-		for (ItemPratoPronto itemPratoPronto : listItemPratoProntos) {
-			if (itemPratoPronto.getItem().getId().equals(id)) {
-				listItemPratoProntos.remove(itemPratoPronto);
-				totalCaloria -=itemPratoPronto.getItem().getValorCalorico();	//	Atualizo o total de Calorias do Prato ...
-				break;
+		try {
+			for (ItemPratoPronto itemPratoPronto : listItemPratoProntos) {
+				if (itemPratoPronto.getItem().getId().equals(id)) {
+					listItemPratoProntos.remove(itemPratoPronto);
+					totalCaloria -=itemPratoPronto.getItem().getValorCalorico();	//	Atualizo o total de Calorias do Prato ...
+					break;
+				}
 			}
+			result.redirectTo(this).formPratoPronto();
+		} catch (Exception e) {
+			result.include("erro", "Erro ao tentar remover oitem da lista.");
+			result.redirectTo(this).formPratoPronto();
 		}
-		result.redirectTo(this).formPratoPronto();
 	}
 	
+	@AcessoAdministrativo
 	@Path("/pratopronto/alteracao")
-	public void alteracaoPratoPronto(Long id) {
-		pratoProntoAlteracao = (PratoPronto) dao.findById(PratoPronto.class, id);
-		for (ItemPratoPronto itemPratoPronto : pratoProntoAlteracao.getItemPratoProntos()) {
-			listItemPratoProntos.add(itemPratoPronto);
-			listAuxiliar.add(itemPratoPronto);
-			totalCaloria += itemPratoPronto.getTotalCaloria();
-		}
-		result.redirectTo(this).formPratoPronto();
+	public void alteracaoPratoPronto(Long id)  {
+		if(id == null){
+			validator.add(new I18nMessage("Id", "id.invalido.item"));
+			validator.onErrorRedirectTo(this).formPratoPronto();
+		}else{
+			try {
+				pratoProntoAlteracao = (PratoPronto) dao.findById(PratoPronto.class, id);
+				for (ItemPratoPronto itemPratoPronto : pratoProntoAlteracao.getItemPratoProntos()) {
+					listItemPratoProntos.add(itemPratoPronto);
+					listAuxiliar.add(itemPratoPronto);
+					totalCaloria += itemPratoPronto.getTotalCaloria();
+				}
+				result.redirectTo(this).formPratoPronto();
+			} catch (Exception e) {
+				result.include("erro", "Ocorreu um erro ao tentar alterar o prato.");
+				result.redirectTo(this).formPratoPronto();
+			}
+		}		
 	}
 	
+	@AcessoAdministrativo
 	public void atualizaItensAposAlteracao() {
 		try {
 			for (ItemPratoPronto itemPratoPronto : listAuxiliar) {
@@ -119,6 +145,7 @@ public class PratoProntoController {
 		}	
 	}
 
+	@AcessoAdministrativo
 	@Path("/pratopronto/clear")
 	public void clearPratoPronto() {
 		totalCaloria = 0.0;
@@ -126,13 +153,15 @@ public class PratoProntoController {
 		result.include("sucesso", "Operação cancelada com sucesso.");
 		result.redirectTo(this).formPratoPronto();
 	}
-
+	
+	@AcessoAdministrativo
 	public void insereIdPrato(PratoPronto pratoPronto) {
 		for (ItemPratoPronto itemPratoPronto : listItemPratoProntos) {
 			itemPratoPronto.setPratoPronto(pratoPronto);
 		}
 	}
-
+	
+	@AcessoAdministrativo
 	@Path("/pratopronto/save")
 	public void save(PratoPronto pratoPronto) {
 		if (!validaDadosPrato(pratoPronto)) {
@@ -168,7 +197,6 @@ public class PratoProntoController {
 
 	@AcessoAdministrativo
 	public boolean validaDadosPrato(PratoPronto pratoPronto) {
-
 		if (pratoPronto.getTituloPrato().length() < 5) {
 			validator.add(new I18nMessage("Titulo do Prato", "prato.titulo.pequeno"));
 			return false;
@@ -180,6 +208,7 @@ public class PratoProntoController {
 		return true;
 	}
 	
+	@ControleAcesso
 	@Path("/pratopronto/itens")
 	public void detalhesItensPrato(Long id) {
 		try {
@@ -191,11 +220,12 @@ public class PratoProntoController {
 		}	
 	}
 	
+	@ControleAcesso
 	@Path("/prato/listpratosemanal")
 	public void buscaCardapiosSemana(Date dataInicioSemana, Date dataFinalSemana) {
 		SimpleDateFormat formatador = new SimpleDateFormat();
-		formatador.applyPattern("yyy-MM-dd");
 		try {
+			formatador.applyPattern("yyyy-MM-dd");
 			java.sql.Date dataInicioSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataInicioSemana)).getTime());
 			java.sql.Date dataFinalSqlConvertida = new java.sql.Date(formatador.parse(formatador.format(dataFinalSemana)).getTime());
 			List<PratoDia> listPratosSemana = repositorioMetodos.buscaCardapioPeriodoSelecionado(dataInicioSqlConvertida, dataFinalSqlConvertida);

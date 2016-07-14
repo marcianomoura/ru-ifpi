@@ -12,6 +12,7 @@ import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Votacao;
+import br.com.ruifpi.util.ControleAcesso;
 import br.com.ruifpi.util.ControleAcesso.AcessoUsuario;
 
 @Controller
@@ -26,6 +27,16 @@ public class VotacaoController {
 	private UsuarioSession usuarioSession;
 	@Inject
 	private RepositorioMetodos repositorioMetodos;
+	
+	public VotacaoController() {
+		this(null);
+	}
+	
+	@Inject
+	public VotacaoController(Result result){
+		this.result = result;
+		
+	}
 	
 	@AcessoUsuario
 	@Path("/votacao/contabiliza")
@@ -46,17 +57,23 @@ public class VotacaoController {
 		}
 	}
 
-	public boolean validaDadosVotacao(Long id) {
+	@ControleAcesso
+	public boolean validaDadosVotacao(Long id){
 		boolean votoEncontrado = false;
-		List<Votacao> votacoes = repositorioMetodos.pesquisaVotacaoById(id);		// Votos referentes ao sugestao de cardápio fornecido pelo ID.
-		System.out.println("Quantidades de Votos da lista de Votação" + votacoes.size());
-		for (Votacao voto : votacoes) {
-			if(voto.getUsuario().getId().equals(usuarioSession.getUsuario().getId())){
-				votoEncontrado = true;
-				break;
+		try {
+			List<Votacao> votacoes = repositorioMetodos.pesquisaVotacaoById(id);		// Votos referentes ao sugestao de cardápio fornecido pelo ID.
+			for (Votacao voto : votacoes) {
+				if(voto.getUsuario().getId().equals(usuarioSession.getUsuario().getId())){
+					votoEncontrado = true;
+					break;
+				}
 			}
+			return votoEncontrado;
+		} catch (Exception e) {
+			result.include("erro", "Erro na pesquisa ao banco...");
+			return votoEncontrado;
 		}
-		return votoEncontrado;
+		
 	}
 	
 	@Path("/votacao/resultado")

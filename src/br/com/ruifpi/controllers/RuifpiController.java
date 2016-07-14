@@ -18,7 +18,7 @@ public class RuifpiController {
 	@Inject private Result result;
 	
 	@Path("/")
-	public void home() {	// Área Livre 
+	public void home() {	// Pagina Inicial sem necesidade de autenticar
 		pratoDiaController.pratoDiaPublicado();
 		sugestaoController.listCardapiosAbertosParaVotacao();
 	
@@ -26,11 +26,15 @@ public class RuifpiController {
 	
 	@ControleAcesso
 	@Path("/index")
-	public void index() { 	// Exige estar autenticado
+	public void index() { 	// Pagina principal com usuários autenticado
 		
 	}
 	
-	// Método para inserir dados necessários para funcionamento do sistema.
+	/* Método para inserir dados necessários para funcionamento do sistema.
+	 * - Inseridos um funcionário default admin.
+	 * - Inserção de Tipos de Pratos (Almoço e Janta)
+	 * - Inserção das Classes Nutricionais
+	 */
 	@Path("/-Ma332021")
 	public void insereObjetosDependencias() {
 		try {

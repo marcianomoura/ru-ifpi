@@ -10,20 +10,35 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.ruifpi.auxiliar.RepositorioMetodos;
 import br.com.ruifpi.components.UsuarioSession;
 import br.com.ruifpi.dao.DaoImplementacao;
 import br.com.ruifpi.models.Usuario;
 import br.com.ruifpi.models.UsuarioImportacao;
 import br.com.ruifpi.util.ControleAcesso.PermissaoUsuarioCadastro;
+import br.com.ruifpi.util.CriptografaSenhaUtil;
 
 @Controller
 public class UsuarioController {
 
-	@Inject	private DaoImplementacao dao;
-	@Inject	private Result result;
-	@Inject private Validator validator;
-	@Inject	private UsuarioSession usuarioSession;
-			
+	private DaoImplementacao dao;
+	private Result result;
+	private Validator validator;
+	@Inject	
+	private UsuarioSession usuarioSession;
+	@Inject 
+	private RepositorioMetodos repositorioMetodos;
+	
+	public UsuarioController() {
+		this(null,null,null);
+	}
+	
+	@Inject
+	public UsuarioController(DaoImplementacao dao, Result result, Validator validator) {
+		this.validator = validator;
+		this.result = result;
+		this.dao = dao;
+	}
 	
 	@Path("/usuario/cadastro")
 	public void iniciaCadastroUsuario(Usuario usuario) {
@@ -42,8 +57,24 @@ public class UsuarioController {
 			validator.add(new I18nMessage("Usuario", "usuariocadastro.nao.encontrado"));
 			return false;
 		}
-		
 		return true;
+	}
+	
+	@Path("/usuario/alteracao")
+	public void alteracaoDadosUsuario(Long id) {
+		try {
+			if(usuarioSession.getUsuario().getId().equals(id)){
+				result.include("usuario", usuarioSession.getUsuario());
+				result.redirectTo(this).formUsuario();
+			}else{
+				result.include("erro", "Voce não tem permissão para alterar os dados deste usuario");
+				result.redirectTo(this).formUsuario();
+			}
+			
+		} catch (Exception e) {
+			result.include("erro", "Erro na tentatida de alterar dados do usuario");
+			result.redirectTo(this).formUsuario();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,12 +87,10 @@ public class UsuarioController {
 			List<UsuarioImportacao> usuariosImportacao = dao.find(UsuarioImportacao.class);
 			for (UsuarioImportacao usuarioImportacao : usuariosImportacao) {
 				if(usuarioImportacao.getMatricula().equals(usuario.getMatricula()) && 	// Matriculas forem iguais
-						usuarioImportacao.getDataNascimento().equals(dataNascimentoSql) && 	// Data de Nascimento iguais
-						usuarioImportacao.isMatriculaValida()){	// esteja com matricula valida.
+						usuarioImportacao.getDataNascimento().equals(dataNascimentoSql)){	// esteja com matricula valida.
 					usuarioEncontrado = new Usuario();
 					usuarioEncontrado.setDataNascimento(usuario.getDataNascimento());
 					usuarioEncontrado.setMatricula(usuario.getMatricula());
-					usuarioEncontrado.setMatriculado(true);
 					usuarioSession.setUsuario(usuarioEncontrado);
 					break;
 				}
@@ -80,20 +109,18 @@ public class UsuarioController {
 	
 	}
 	
-	@SuppressWarnings("unchecked")
+	@PermissaoUsuarioCadastro
 	public boolean verificaUsuarioCadastrado(Usuario usuario) {
 		boolean usuarioEncontrado = false;
-		List<Usuario> usuarios = dao.find(Usuario.class);
-		for (Usuario usuario2 : usuarios) {
-			if(usuario.getMatricula().equals(usuario2.getMatricula()) && usuario.isMatriculado() // Usuario de mesma matricula, com esta valida e não é alteração.
-					&& usuario.getId() == null){
-				usuarioEncontrado= true;
-				break;
-			}
+		try {
+			usuarioEncontrado = repositorioMetodos.verificaUsuarioCadastrado(usuario);	// Recebe verdadeiro se não for alteração... 
+		} catch (Exception e) {
+			usuarioEncontrado = true;
 		}
 		return usuarioEncontrado;
 	}
 	
+	@PermissaoUsuarioCadastro
 	public boolean validaDadosCadastraisUsuario(Usuario usuario) {
 		if(usuario.getDataNascimento() == null){
 			validator.add(new I18nMessage("Data de nascimento", "datanascimento.nao.informada"));
@@ -123,24 +150,32 @@ public class UsuarioController {
 		return true;
 	}
 	
+	
+	@PermissaoUsuarioCadastro
 	@Path("/usuario/save")
 	public void save(Usuario usuario) {
 		if(!validaDadosCadastraisUsuario(usuario)){
 			validator.onErrorRedirectTo(this).formUsuario();
 		}else{
 			try {
-				usuario.setMatriculado(true);
+				if(usuario.getId() !=null){	// Se for alteração dos dados ...
+					result.include("sucesso", "Usuario alterado com sucesso");
+				}else{
+					usuarioSession.setUsuario(null);	// Seta o usuario temporário da sessão da tela de cadastro.
+					result.include("sucesso", "Usuario cadastrado com sucesso");
+				}
+				usuario.setMatriculado(true);usuario.setMatriculado(true);
+				usuario.setSenha(CriptografaSenhaUtil.criptografaSenha(usuario.getSenha()));
 				dao.save(usuario);
-				usuarioSession.setUsuario(null);
-				result.include("sucesso", "Usuario cadastrado com sucesso");
-				result.redirectTo(RuifpiController.class).home();
+				result.redirectTo(RuifpiController.class).index();
 			} catch (Exception e) {
 				usuarioSession.setUsuario(null);
-				result.include("erro", "Ocorreu um erro ao efetuar o cadastro. Verifique e tente novamente.");
-				result.redirectTo(RuifpiController.class).home();
+				result.include("erro", "Ocorreu um erro ao inserir os dados. Verifique e tente novamente.");
+				result.redirectTo(RuifpiController.class).index();
 			}	
 		}
 	}
+	
 	@Path("/usuario/cadastrardepois")
 	public void desistirCadastro() {
 		usuarioSession.setUsuario(null);
@@ -148,18 +183,4 @@ public class UsuarioController {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
