@@ -3,6 +3,7 @@ package br.com.ruifpi.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class UsuarioImportacaoController {
 			abaPlanilha = planilha.getSheet(0);	// primeira Aba da planilha ...
 			int quantLinhas = abaPlanilha.getRows(); // quantidades de linha da planilha...
 			
-			for (int i = 0; i < quantLinhas; i++) {
+			for (int i = 1; i < quantLinhas; i++) {
 				usuarioImportacao = new UsuarioImportacao();
 				String matricula = abaPlanilha.getCell(0, i).getContents();
 				String dataNascimento = abaPlanilha.getCell(1, i).getContents();
@@ -126,13 +127,23 @@ public class UsuarioImportacaoController {
 			usuariosArquivoXls.clear();
 			listInvalidados.clear();
 			listUsuarioImportadoBanco.clear();
-			result.include("sucesso", "Sucesso na Importação");
+			result.include("sucesso", "As matriculas foram atualizadas com sucesso.");
+			result.redirectTo(this).formUsuarioImportacao();
+		} catch (ParseException e) {
+			usuariosArquivoXls.clear();
+			listInvalidados.clear();
+			listUsuarioImportadoBanco.clear();
+			result.include("erro", "Erro na conversão de datas. Talvez exista alguma data errada no arquivo (xls). Verifique e tente novamente.");
 			result.redirectTo(this).formUsuarioImportacao();
 		} catch (Exception e) {
-			result.include("erro", "Erro ao ler o arquivo xls.");
-			e.printStackTrace();
-			result.redirectTo(RuifpiController.class).home();
-		} 
+			usuariosArquivoXls.clear();
+			listInvalidados.clear();
+			listUsuarioImportadoBanco.clear();
+			result.include("erro", "Ocorreu um erro no processo de atualização de matriculas. Verifique se o arquivo "
+					+ ".xls está com os dados preenchidos corretamente.");
+			result.redirectTo(this).formUsuarioImportacao();
+			
+		}
 		
 	}
 }

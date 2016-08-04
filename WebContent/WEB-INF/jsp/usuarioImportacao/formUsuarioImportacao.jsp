@@ -10,25 +10,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Importação de Usuário</title>
 
-<c:import url="/base.jsp"></c:import>
 
 </head>
 <body>
-<div class="mensagens" style="margin-bottom: 20px; margin-top: 20px;">
-	<c:import url="/mensagens.jsp"></c:import>
+
+<div class="" style="margin-bottom: 20px; margin-top: 80px;">
+	<c:import url="/header.jsp"></c:import>
 </div>
 
 <form action='<c:url value="/lerxls"></c:url>' method="post" enctype="multipart/form-data">
 	<div class="col-md-12">
-		<div class="panel panel-primary">
-			<div class="panel-heading">Cadastro de Usuários</div>			
+		<div class="panel panel-default">
+			<div class="panel-heading">Atualização de Matrículas</div>			
 			<div class="panel-body">
-				<div class="row">
-					<div class="form-group col-md-6">
-						<input class="" name="arquivo" type="file" required  >
-					</div>
-					<div class="col-md-3">
-						<button class="btn btn-primary" type="submit">Atualizar Matriculas</button>
+				<label class="small"> Carregue o arquivo (.xls) com a matrícula e data de nascimento dos alunos com matrículas válidas.</label>
+				<br><br>
+				<div class="jumbotron">
+					<div class="row">					
+						<div class="form-group col-md-6">
+							<input class="form-control" name="arquivo" type="file" required  >
+						</div>
+						<div class="col-md-3">
+							<button class="btn btn-primary" type="submit">Atualizar Matriculas</button>
+						</div>
 					</div>
 				</div>
 			</div>

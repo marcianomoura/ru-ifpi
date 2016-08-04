@@ -99,7 +99,7 @@
 	                <li><a href='<c:url value="/sobremesa" />'> Sobremesas </a></li>
 	                
 	                <li class="dropdown">
-	                	<a data-toggle="dropdown"  href="#"> Alimentos </a>
+	                	<a data-toggle="dropdown"  href="#"> Itens </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/item"></c:url>'>
 				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Alimentos</a></li>
@@ -128,6 +128,9 @@
 	                		
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/usuario"/>'>
 			 					<span class="glyphicon glyphicon-plus"></span> Cadastrar Aluno</a>
+			 				</li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/importacao"/>'>
+			 					<span class="glyphicon glyphicon-refresh"></span> Atualizar Matriculas</a>
 			 				</li>
 	                		<li class="divider"></li>
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/campus"/>'>
