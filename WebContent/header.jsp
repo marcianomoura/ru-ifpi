@@ -31,13 +31,13 @@
 	                	<a href='<c:url value="/index"/>'><span class="glyphicon glyphicon-home"></span></a>
 	                </li>
 	                                               
-	                <li><a href='<c:url value="/avaliacao"/>'> Avaliar Cardápio </a></li>
+	                <li><a href='<c:url value="/avaliacao"/>'> Avaliar Prato do Dia </a></li>
 	                
-	                <li><a href='<c:url value="/sugestoes"/>'>Votar em um Cardápio</a></li>
+	                <li><a href='<c:url value="/sugestoes"/>'>Votar em um Prato</a></li>
 	                
-	                <li><a href='<c:url value="/cardapiosemanal"/>'>Cardápio Semanal</a></li>
-	                <li class="dropdown">
-	                	<a data-toggle="dropdown"  href="#">Bem vindo(a) <b><span class="glyphicon glyphicon-user"></span> ${usuarioSessao.usuario.primeiroNome}</b> </a>
+	                <li><a href='<c:url value="/cardapiosemanal"/>'>Próximos Pratos</a></li>
+	                <li class="">
+	                	<a data-toggle="dropdown"  href="#"><b><span class="glyphicon glyphicon-user"></span> ${usuarioSessao.usuario.primeiroNome}</b> </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/usuario/alteracao?id=${usuarioSessao.usuario.id}"/>'>
 				 				<span class="glyphicon glyphicon-edit"></span> Alterar meus dados</a>
@@ -75,54 +75,54 @@
 	                	<a href='<c:url value="/index" />'><span class="glyphicon glyphicon-home"></span></a>
 	                </li>
 	                               
-	                 <li class="dropdown">
+	                 <li class="">
 	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratodia"></c:url>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar cardápio do dia</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar prato do dia</a>
 				 			</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/sugestao"/>'>
-			 					<span class="glyphicon glyphicon-plus"></span> Cadastrar cardapio para votação </a>
+			 					<span class="glyphicon glyphicon-plus"></span> Cadastrar prato para votação </a>
 			 				</li>
 			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratos/list"></c:url>'>
-			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Cardápios </a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Pratos </a>
 			 				</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/avaliacoes" />'>
-			 					<span class="glyphicon glyphicon-list-alt"></span> Analisar Avaliações de cardápios</a>
+			 					<span class="glyphicon glyphicon-list-alt"></span> Analisar Avaliações de pratos</a>
 			 				</li>
 	                	</ul>
 	                </li>
 	                
 	                <li><a href='<c:url value="/sobremesa" />'> Sobremesas </a></li>
 	                
-	                <li class="dropdown">
+	                <li class="">
 	                	<a data-toggle="dropdown"  href="#"> Itens </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/item"></c:url>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Alimentos</a></li>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Itens </a></li>
 				 			<li class="divider"></li>
 				 			<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/items"></c:url>'>
-				 				<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Alimentos</a></li>
+				 				<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Itens</a></li>
 	                	</ul>
 	                </li>
 	                
-	                <li class="dropdown">
+	                <li class="">
 	                	<a data-toggle="dropdown"  href="#"> Catálogo de Pratos  </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratopronto"/>'>
-				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Pratos para Catálogo</a>
+				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar Pratos Pronto</a>
 				 			</li>
 				 			<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratosprontos"/>'>
-			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Pratos do Catálogo</a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Pratos Prontos</a>
 			 				</li>
 	                	</ul>
 	                </li>
 	                
-	                <li class="dropdown">
+	                <li class="">
 	                	<a data-toggle="dropdown"  href="#"> Institucional </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		
@@ -145,13 +145,21 @@
 			 					<span class="glyphicon glyphicon-edit"></span> Gerenciar de Refeitórios</a>
 			 				</li>	
 	                	</ul>
-	                </li>   
-	                
-	                <li><a href='<c:url value="/funcionario" />'> Funcionários </a></li>
-	                
-	                <li><a href='<c:url value="/logout/funcionario"></c:url>'> Sair :
-	                <span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.nome}</a>
 	                </li>
+	                
+	                <li class="">
+	                	<a data-toggle="dropdown"  href="#"><b><span class="glyphicon glyphicon-user"></span> ${funcionarioSessao.funcionario.nome}</b> </a>
+	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                		<li role="presentation"><a role="menuitem" tabindex="-1" 
+	                			href='<c:url value="/funcionario/alteracao?id=${funcionarioSessao.funcionario.id}"/>'>
+				 				<span class="glyphicon glyphicon-edit"></span> Alterar meus dados</a>
+				 			</li>
+				 			<li class="divider"></li>
+			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/logout/funcionario"/>'>
+			 					<span class="glyphicon glyphicon-off"></span> Sair</a>
+			 				</li>
+	                	</ul>
+	                </li>   
 	            </ul>
 	        </div>
 	    </div>

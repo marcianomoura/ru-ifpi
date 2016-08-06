@@ -18,10 +18,10 @@
 </div>
 
 <div class="col-md-12">
-	<div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
+	<div class="panel panel-default">
 		<div class="panel-heading">Cardápios Publicados</div>
-		<div class="panel-body">
-			<table class="table table-responsive">
+		<div class="panel-body" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
+			<table class="table table-responsive table-condensed">
 				<thead>
 					<tr class="small">
 				  		<th >Data do Cardápio</th>
@@ -43,8 +43,8 @@
 					  		<td>${pratoDia.sobremesa.descricao}</td>
 					  		<td>${pratoDia.totalCaloria}</td>
 					  		<td>
-					  			<a target="_blank" href='<c:url value="/pratodia/itens?id=${pratoDia.pratoPronto.id}"></c:url>' >
-					  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> detalhes
+					  			<a class="btn btn-info btn-sm" href='<c:url value="/pratodia/itens?id=${pratoDia.pratoPronto.id}"></c:url>' >
+					  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ver Itens
 					  			</a>
 					  		</td>
 					  		<td> 

@@ -36,13 +36,14 @@
 				  		<td>${pratoPronto.id}</td>
 				  		<td>${pratoPronto.tituloPrato}</td>
 				  		<td>
-				  			<a target="_blank" href='<c:url value="/pratopronto/itens?id=${pratoPronto.id}"></c:url>' >
-				  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> detalhes
+				  			<a class="btn btn-info btn-sm" href='<c:url value="/pratopronto/itens?id=${pratoPronto.id}"></c:url>' >
+				  				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Ver Itens
 				  			</a>
 				  		</td>
 				  		<td> 
 							<a  class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Alterar este prato" 
-								href='<c:url value="/pratopronto/alteracao?id=${pratoPronto.id}"></c:url>'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								href='<c:url value="/pratopronto/alteracao?id=${pratoPronto.id}"></c:url>'>
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Alterar
 							</a>
 						</td>		  		
 				  	</tr>

@@ -10,20 +10,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Detalhes do Prato</title>
-
-<c:import url="/base.jsp"></c:import>
 </head>
 <body>
 
-
-<div style="margin-top: 15px;  margin-bottom: 10px; margin-left: 14px;" >
-	<button class="btn btn-danger btn-sm" onclick="window.close()"> Fechar esta Pagina</button>	
+<div style="margin-top: 60px;">
+	<c:import url="/header.jsp"></c:import>
 </div>
 
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">Componentes do Prato do Dia</div>
 		<div class="panel-body">
+			
+			<div style="margin-top: 15px;  margin-bottom: 10px;" >
+				<a class="btn btn-default" href='<c:url value="/pratos/list" />'>
+				<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
+			</div>
+			
 			<table class="table table-responsive table table-hover">
 				<thead>
 					<tr class="active">

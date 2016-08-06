@@ -31,7 +31,7 @@
 
 <div class="col-md-12">
 	<form action='<c:url value="/usuario/save"></c:url>' method="post">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">Cadastro de Usuários</div>			
 			<div class="panel-body">
 				<input name="usuario.id" value="${usuario.id}" type="hidden" >

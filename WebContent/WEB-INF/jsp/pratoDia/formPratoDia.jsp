@@ -60,7 +60,7 @@
 						</div>
 						
 						<div class="form-group col-md-3">
-							<label class="small">Data do Cardápio</label>
+							<label class="small">Data</label>
 							<input id="dataCardapio" name="pratoDia.dataCardapio" 
 							value="<fmt:formatDate value="${pratoDia.dataCardapio}" pattern="dd/MM/yyyy"/>"class="form-control" required >
 						</div>
@@ -76,17 +76,11 @@
 
 			<c:if test="${pratoDia != null }">
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<div class="row">
-							<div class="col-md-4">
-								<label class="small">PRATO</label>
-							    <div class="thumbnail">
-							      <img class="img-responsive" src="img/almoco.jpg" width="100%">
-							    </div>
-							</div>
 							
-							<div class="col-md-8">
-									<label class="small">${pratoDia.pratoPronto.tituloPrato}</label>
+								<div class="col-md-6">
+									<label class="small" style="font-size: 14px;">${pratoDia.pratoPronto.tituloPrato}</label>
 									<table class="table table-responsive">
 										<thead>
 											<tr class="small">
@@ -105,19 +99,21 @@
 									</table>
 									<label class="small">TOTAL DE CALORIAS DO PRATO : ${pratoDia.totalCaloria}</label>								
 								</div>
+								
+								<div class="col-md-4">
+									<label class="small">SOBREMESA</label>
+									<ul class="list-group">
+									  <li class="list-group-item"><label class="small">Descrição : </label> ${pratoDia.sobremesa.descricao}</li>
+									  <li class="list-group-item"><label class="small">Vitaminas : </label> ${pratoDia.sobremesa.vitaminas}</li>
+									  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${pratoDia.sobremesa.beneficios}</li>
+									  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${pratoDia.sobremesa.maleficios}</li>
+									  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDia.sobremesa.classeNutricional.descricao}</li>
+									</ul>
+								</div>
 							
 						</div>
 					</div>
-					<div class="col-md-4">
-						<label class="small">SOBREMESA</label>
-						<ul class="list-group">
-						  <li class="list-group-item"><label class="small">Descrição : </label> ${pratoDia.sobremesa.descricao}</li>
-						  <li class="list-group-item"><label class="small">Vitaminas : </label> ${pratoDia.sobremesa.vitaminas}</li>
-						  <li class="list-group-item"><label class="small">Beneficios à saúde : </label> ${pratoDia.sobremesa.beneficios}</li>
-						  <li class="list-group-item"><label class="small">Contra Indicações :</label> ${pratoDia.sobremesa.maleficios}</li>
-						  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDia.sobremesa.classeNutricional.descricao}</li>
-						</ul>
-					</div>
+					
 				</div>	
 				<hr>	
 				<form class="form-horizontal" action='<c:url value="/pratodia/save"></c:url>' method="post" >

@@ -41,8 +41,10 @@
 					    </div>
 					  		    
 					    
-					   	<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
-					    <button type="reset" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>					
+					   	<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Cadastrar</button>
+					    <a class="btn btn-warning" href='<c:url value="/instituicao"></c:url>'>
+						    	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Desistir
+						    </a>					
 					</form>	
 				
 				</div>

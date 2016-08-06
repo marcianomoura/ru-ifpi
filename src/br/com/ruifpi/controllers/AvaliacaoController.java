@@ -59,7 +59,7 @@ public class AvaliacaoController {
 	@Path("/avaliacao")
 	public void formAvaliacao() {
 		pratoDiaController.pratoDiaPublicado();
-		listAvaliacoesCardapioDia();
+	//	listAvaliacoesCardapioDia();
 	}
 	
 	@ControleAcesso

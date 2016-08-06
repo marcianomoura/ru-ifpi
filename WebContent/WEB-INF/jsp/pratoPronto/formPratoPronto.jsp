@@ -35,7 +35,7 @@
 					
 					<div class="form-group col-md-2">
 						<br>
-						<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+						<button  type="submit"	class="btn btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar</button>
 					</div>
 					
 					<div class="form-group col-md-3">
@@ -85,9 +85,9 @@
 					</div>
 					
 					<div class="form-group col-md-12">
-						<button  type="submit"	class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
-						<a data-toggle="tooltip" data-placement="top" title="Cancelar operação" class="btn btn-danger btn-lg" 
-						href="pratopronto/clear" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						<button  type="submit"	class="btn btn-primary"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Cadastrar</button>
+						<a data-toggle="tooltip" data-placement="top" title="Cancelar operação" class="btn btn-danger" 
+						href="pratopronto/clear" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Desistir
 						</a>
 					</div>
 				</fieldset>

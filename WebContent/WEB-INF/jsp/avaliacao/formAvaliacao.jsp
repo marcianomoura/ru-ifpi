@@ -20,31 +20,34 @@
      <div class="">
          <div class="row">
              <div class="col-lg-12 text-center">
-                 <h3>Avaliação do Cardápio de Hoje</h3>
+                 <h3>Avaliação do Prato de Hoje</h3>
                  <hr class="star-primary">
              </div>
          </div>
+         
          <div class="col-md-12">
              <div class="panel panel-default" >
 				<div class="panel-heading"></div>																	
 					<div class="panel-body">
 			  		<ul class="nav nav-tabs" role="tablist">
-			    		<li role="presentation" class="active"><a href="#almoco" aria-controls="home" role="tab" data-toggle="tab">Almoço 
-			    			<span class="badge"><fmt:formatNumber value="${mediaAlmoco}" maxFractionDigits="2"/></span></a>
+			    		<li role="presentation" class="active"><a href="#almoco" aria-controls="home" role="tab" data-toggle="tab">Almoço</a>
 			    		</li>
-			    		<li role="presentation"><a href="#jantar" aria-controls="profile" role="tab" data-toggle="tab">Jantar
-			    			<span class="badge"> <fmt:formatNumber value="${mediaJanta}" maxFractionDigits="2"/></span></a>
+			    		<li role="presentation"><a href="#jantar" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a>
 			    		</li>
 			  		</ul>
 						<div class="tab-content">
 						  	<div role="tabpanel" class="tab-pane active" id="almoco">
 							    <div class="col-md-3">
 							    	<br>
-									<label class="">${pratoDiaAlmoco.pratoPronto.tituloPrato} </label><br>
-									<label class="small">Total de Calorias : <kbd>${pratoDiaAlmoco.totalCaloria} Kcal</kbd></label><br><br>
+									<label class="">${pratoDiaAlmoco.pratoPronto.tituloPrato} </label>
+									
 								    <div class="thumbnail">
 								      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 								    </div>
+								    
+								    <label class="small">Total de Calorias (Kcal) : 
+								    	<fmt:formatNumber maxFractionDigits="2" value="${pratoDiaAlmoco.totalCaloria}" />
+								    </label>
 								</div>
 							    
 							    <br>
@@ -58,7 +61,7 @@
 									  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaAlmoco.sobremesa.classeNutricional.descricao}</li>
 									</ul>
 								</div>
-								<br>
+								
 								<div class="col-md-6">
 									<label class="small">Itens do Cardápio</label>
 									<table class="table table-responsive">
@@ -96,23 +99,32 @@
 										<div class="panel-heading"><label class="small"> Faça sua avaliação</label></div>
 										<div class="panel-body">
 											<c:if test="${pratoDiaAlmoco !=null}">
-												
 												<form action='<c:url  value="/avaliacao/cardapio" />'>
-													<input type="hidden" name="tipoPrato.id" value="${pratoDiaAlmoco.tipoPrato.id }">
-													<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
-													<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
-													<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaAlmoco.id}">
-													<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
-														<option></option>
-														<option value="10">Excelente</option>
-														<option value="9">Muito Bom</option>
-														<option value="8">Bom</option>
-														<option value="6">Regular</option>
-														<option value="4">Ruim</option>
-														<option value="2">Muito Ruim</option>
-													</select>
-													<br>
-													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar esta Refeição</button>
+													<div class="row">
+														<div class="col-md-6">
+															<input type="hidden" name="tipoPrato.id" value="${pratoDiaAlmoco.tipoPrato.id }">
+															<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
+															<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
+															<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaAlmoco.id}">
+															<div class="form-group">
+																<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
+																	<option></option>
+																	<option value="10">Excelente</option>
+																	<option value="9">Muito Bom</option>
+																	<option value="8">Bom</option>
+																	<option value="6">Regular</option>
+																	<option value="4">Ruim</option>
+																	<option value="2">Muito Ruim</option>
+																</select>
+															</div>
+															
+														</div>
+														<div class="col-md-6">
+															
+														<button type="submit" class="btn btn-primary">Avaliar Refeição</button>
+																
+														</div>
+													</div>
 												</form>
 			
 											</c:if>								
@@ -127,10 +139,15 @@
 						    	<div class="col-md-3">
 							    	<br>
 									<label class="">${pratoDiaJanta.pratoPronto.tituloPrato} </label><br>
-									<label class="small">Total de Calorias : <kbd>${pratoDiaJanta.totalCaloria} Kcal</kbd></label><br><br>
+									
 								    <div class="thumbnail">
 								      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 								    </div>
+								    
+								     <label class="small">Total de Calorias (Kcal) : 
+								    	<fmt:formatNumber maxFractionDigits="2" value="${pratoDiaJanta.totalCaloria}" />
+								    </label>
+								    
 								</div>
 							    
 							    <br>
@@ -144,7 +161,7 @@
 									  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaJanta.sobremesa.classeNutricional.descricao}</li>
 									</ul>
 								</div>
-								<br>
+								
 						    	<div class="col-md-6">
 									<label class="small">Itens do Cardápio</label>
 									<table class="table table-responsive">
@@ -183,23 +200,34 @@
 										<div class="panel-body">
 											<c:if test="${pratoDiaJanta !=null}">
 												<form action='<c:url  value="/avaliacao/cardapio" />'>
-													<input type="hidden" name="tipoPrato.id" value="${pratoDiaJanta.tipoPrato.id }">
-													<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
-													<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
-													<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaJanta.id}">
-													<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
-														<option></option>
-														<option value="10">Excelente</option>
-														<option value="9">Muito Bom</option>
-														<option value="8">Bom</option>
-														<option value="6">Regular</option>
-														<option value="4">Ruim</option>
-														<option value="2">Muito Ruim</option>
-													</select>
-													<br>
-													<button type="submit" class="btn btn-success btn-sm btn-block">Avaliar esta refeição</button>
+													<div class="row">
+														<div class="col-md-6">
+															<input type="hidden" name="tipoPrato.id" value="${pratoDiaJanta.tipoPrato.id }">
+															<input type="hidden" name="avaliacaoRefeicao.id" value="${avaliacaoRefeicao.id }">
+															<input type="hidden" name="avaliacaoRefeicao.usuario.id" value="${usuarioSessao.usuario.id}">
+															<input type="hidden" name="avaliacaoRefeicao.pratoDia.id" value="${pratoDiaJanta.id}">
+															<div class="form-group">
+																<select class="form-control" name="avaliacaoRefeicao.notaAvaliativa" required>
+																	<option></option>
+																	<option value="10">Excelente</option>
+																	<option value="9">Muito Bom</option>
+																	<option value="8">Bom</option>
+																	<option value="6">Regular</option>
+																	<option value="4">Ruim</option>
+																	<option value="2">Muito Ruim</option>
+																</select>
+															</div>
+														</div>
+															
+														<div class="col-md-6">
+															<button type="submit" class="btn btn-primary">Avaliar Refeição</button>
+														</div>		
+													
+													</div>
 												</form>
-			
+												
+												
+											
 											</c:if>								
 											
 										</div>
@@ -211,58 +239,58 @@
 				</div>
 			</div>
 			
-			<div class="panel panel-primary">
-				<div class="panel-heading">Avaliação de Outros Usuarios</div>
-				<div class="panel-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; ">
-					<ul class="nav nav-tabs" role="tablist">
-			    		<li role="presentation" class="active"><a href="#almocoAvaliacao" aria-controls="home" role="tab" data-toggle="tab">Almoço</a></li>
-			    		<li role="presentation"><a href="#jantarAvaliacao" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a></li>
-			  		</ul>
-			  		<div class="tab-content">
-					  	<div role="tabpanel" class="tab-pane active" id="almocoAvaliacao">
-						    <table class="table table-responsive table-condensed">
-								<thead>
-									<tr>
-										<td>Nome</td>
-										<td>Matricula</td>
-										<td>Nota</td>								
-									</tr>
-								</thead>
-								<c:forEach items="${listAvaliacaoAlmoco}" var="avaliacao">
-									<tbody>								
-										<tr>
-											<td>${avaliacao.usuario.primeiroNome}</td>
-											<td>${avaliacao.usuario.matricula}</td>
-											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
-										</tr>
-									</tbody>
-								</c:forEach>
-							</table>
-				  		</div>
+<!-- 			<div class="panel panel-primary"> -->
+<!-- 				<div class="panel-heading">Avaliação de Outros Usuarios</div> -->
+<!-- 				<div class="panel-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden; "> -->
+<!-- 					<ul class="nav nav-tabs" role="tablist"> -->
+<!-- 			    		<li role="presentation" class="active"><a href="#almocoAvaliacao" aria-controls="home" role="tab" data-toggle="tab">Almoço</a></li> -->
+<!-- 			    		<li role="presentation"><a href="#jantarAvaliacao" aria-controls="profile" role="tab" data-toggle="tab">Jantar</a></li> -->
+<!-- 			  		</ul> -->
+<!-- 			  		<div class="tab-content"> -->
+<!-- 					  	<div role="tabpanel" class="tab-pane active" id="almocoAvaliacao"> -->
+<!-- 						    <table class="table table-responsive table-condensed"> -->
+<!-- 								<thead> -->
+<!-- 									<tr> -->
+<!-- 										<td>Nome</td> -->
+<!-- 										<td>Matricula</td> -->
+<!-- 										<td>Nota</td>								 -->
+<!-- 									</tr> -->
+<!-- 								</thead> -->
+<%-- 								<c:forEach items="${listAvaliacaoAlmoco}" var="avaliacao"> --%>
+<!-- 									<tbody>								 -->
+<!-- 										<tr> -->
+<%-- 											<td>${avaliacao.usuario.primeiroNome}</td> --%>
+<%-- 											<td>${avaliacao.usuario.matricula}</td> --%>
+<%-- 											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td> --%>
+<!-- 										</tr> -->
+<!-- 									</tbody> -->
+<%-- 								</c:forEach> --%>
+<!-- 							</table> -->
+<!-- 				  		</div> -->
 				  		
-				  		<div role="tabpanel" class="tab-pane" id="jantarAvaliacao">
-					    	<table class="table table-responsive table-condensed">
-								<thead>
-									<tr>
-										<td>Nome</td>
-										<td>Matricula</td>
-										<td>Nota</td>								
-									</tr>
-								</thead>
-								<c:forEach items="${listAvaliacaoJanta}" var="avaliacao">
-									<tbody>								
-										<tr>
-											<td>${avaliacao.usuario.primeiroNome}</td>
-											<td>${avaliacao.usuario.matricula}</td>
-											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td>
-										</tr>
-									</tbody>
-								</c:forEach>
-							</table>
-					    </div>
-					</div>
-				</div>
-			</div>		 
+<!-- 				  		<div role="tabpanel" class="tab-pane" id="jantarAvaliacao"> -->
+<!-- 					    	<table class="table table-responsive table-condensed"> -->
+<!-- 								<thead> -->
+<!-- 									<tr> -->
+<!-- 										<td>Nome</td> -->
+<!-- 										<td>Matricula</td> -->
+<!-- 										<td>Nota</td>								 -->
+<!-- 									</tr> -->
+<!-- 								</thead> -->
+<%-- 								<c:forEach items="${listAvaliacaoJanta}" var="avaliacao"> --%>
+<!-- 									<tbody>								 -->
+<!-- 										<tr> -->
+<%-- 											<td>${avaliacao.usuario.primeiroNome}</td> --%>
+<%-- 											<td>${avaliacao.usuario.matricula}</td> --%>
+<%-- 											<td><span class="badge">${avaliacao.notaAvaliativa}</span></td> --%>
+<!-- 										</tr> -->
+<!-- 									</tbody> -->
+<%-- 								</c:forEach> --%>
+<!-- 							</table> -->
+<!-- 					    </div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div>		  -->
     	</div>
 	</div>
 </body>

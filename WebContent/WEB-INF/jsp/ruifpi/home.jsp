@@ -24,21 +24,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Ru-IFPI</a>
+            <a class="navbar-brand" href="#">RU-IFPI</a>
         </div>
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="page-scroll">
-                    <a href="#cardapio">Cardápio</a>
+                    <a href="#cardapio">Prato do Dia</a>
                 </li>
                 
-<!--                 <li class="page-scroll"> -->
-<!--                     <a href="#avaliacao">Avaliações</a> -->
-<!--                 </li> -->
-                
                 <li class="page-scroll">
-                    <a href="#sugestao">Sugestões de cardápio</a>
+                    <a href="#sugestao">Escolha de Prato</a>
                 </li>
                 
                 <li class="page-scroll">
@@ -66,13 +62,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h3>Cardapio do dia</h3>
+                    <h3>Prato do dia</h3>
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">                
                     <div class="panel panel-default">
-						<div class="panel-heading"></div>
+						<div class="panel-heading"><h4></h4></div>
 						<div class="panel-body">
 							
 					  		<ul class="nav nav-tabs" role="tablist">
@@ -85,11 +81,14 @@
 								  	<div role="tabpanel" class="tab-pane active" id="almoco">
 									    <div class="col-md-3">
 									    	<br>
-											<label class="">${pratoDiaAlmoco.pratoPronto.tituloPrato} </label><br>
-											<label class="small">Total de Calorias : <kbd>${pratoDiaAlmoco.totalCaloria} Kcal</kbd></label><br><br>
+											<label class="" style="font-family: sans-serif;">${pratoDiaAlmoco.pratoPronto.tituloPrato} </label><br>
+											
 										    <div class="thumbnail">
 										      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 										    </div>
+										    
+										    <label class="small">Total de Calorias (Kcal) : 
+										    <fmt:formatNumber maxFractionDigits="2" value="${pratoDiaAlmoco.totalCaloria}" /></label>
 										</div>
 									    
 									    <br>
@@ -110,8 +109,8 @@
 												<thead>
 													<tr class="small">
 														<th>Item</th>
-														<th>Beneficios</th>
-														<th>Contra Indicado</th>
+														<th>Beneficios a saude</th>
+														<th>Contra Indicação</th>
 														<th>Calorias</th>
 													</tr>
 												</thead>
@@ -123,11 +122,17 @@
 																<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
 													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-													  				aria-hidden="true"></span> info
+													  				aria-hidden="true"></span> Faz bem
 													  			</a>
 															</td>
 															
-															<td>${itemPrato.item.maleficios}</td>
+															<td>
+																<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
+													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-plus" 
+													  				aria-hidden="true"></span> Faz mal
+													  			</a>
+															</td>
 															
 															<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
 														</tr>
@@ -140,10 +145,13 @@
 								    	<div class="col-md-3">
 									    	<br>
 											<label class="">${pratoDiaJanta.pratoPronto.tituloPrato} </label><br>
-											<label class="small">Total de Calorias : <kbd>${pratoDiaJanta.totalCaloria} Kcal</kbd></label><br><br>
+											
 										    <div class="thumbnail">
 										      <img class="img-responsive" src="img/almoco.jpg" width="100%">
 										    </div>
+										    
+										    <label class="small">Total de Calorias (Kcal) : 
+										    <fmt:formatNumber maxFractionDigits="2" value="${pratoDiaJanta.totalCaloria}" /></label>
 										</div>
 									    
 									    <br>
@@ -164,8 +172,8 @@
 												<thead>
 													<tr class="small">
 														<th>Item</th>
-														<th>Beneficios</th>
-														<th>Contra Indicado</th>
+														<th>Beneficios á saúde</th>
+														<th>Contra Indicação</th>
 														<th>Calorias</th>
 													</tr>
 												</thead>
@@ -177,11 +185,16 @@
 																<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
 													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-													  				aria-hidden="true"></span> info
+													  				aria-hidden="true"></span> Faz Bem
 													  			</a>
 															</td>
-															
-															<td>${itemPrato.item.maleficios}</td>
+															<td>
+																<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
+													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-plus" 
+													  				aria-hidden="true"></span> Faz mal
+													  			</a>
+															</td>
 															
 															<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
 														</tr>
@@ -204,7 +217,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h3>Escolha o cardápio do ifpi</h3>
+                    <h3>Escolha o Prato do Dia</h3>
                     <hr class="star-primary">
                 </div>
             </div>
@@ -212,7 +225,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                 	
-					<div class="panel-heading"></div>
+					<div class="panel-heading"><h4></h4></div>
 					<div class="panel-body">
 						<div class="col-md-6">
 						    <div class="thumbnail">
@@ -297,7 +310,7 @@
 						  <input type="password" class="form-control" name="usuario.senha" value="${usuario.senha}"
 						  placeholder="Senha" required=""/>     		  
 						 
-						  <button class="btn btn-lg btn-primary btn-block" type="Submit">Autenticar</button>	
+						  <button class="btn btn-primary" type="Submit">Autenticar</button>	
 					</fieldset>
 				</form>
 
@@ -315,7 +328,7 @@
 							<input type="password" class="form-control" name="funcionario.senha" value="${funcionario.senha}"
 						  		placeholder="Password" required=""/>     		  
 						 
-						  	<button class="btn btn-lg btn-primary btn-block" type="Submit">Autenticar</button>	
+						  	<button class="btn btn-primary" type="Submit">Autenticar</button>	
 						</fieldset>
 					</form>
 		      </div>
@@ -333,7 +346,7 @@
 							value="<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy"/>"
 						  		placeholder="Data de nascimento" required=""/>     		  
 						 	<br>
-						  	<button class="btn btn-lg btn-primary btn-block" type="Submit">Iniciar Cadastro</button>	
+						  	<button class="btn btn-primary" type="Submit">Iniciar Cadastro</button>	
 						</fieldset>
 					</form>
 		      </div>

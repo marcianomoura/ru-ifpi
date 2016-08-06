@@ -50,16 +50,16 @@
 					    	</select>		    
 					    
 					    <label class="small">* Login</label>
-<%-- 					    	<small style="color: red">${errors.from('login')}</small> --%>
 					      <input required class="form-control" type="text" name="funcionario.login" value="${funcionario.login}" placeholder="Informe seu login de acesso ao sistema">
 					    
 					    
 					    <label class="small">Senha</label>
-<%-- 					    <small style="color: red">${errors.from('senha')}</small> --%>
 					      <input required class="form-control" type="password" name="funcionario.senha" placeholder="Informe sua senha de acesso">
 					   	
-					   	<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
-					    <button type="reset" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>					
+					   	<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Cadastrar</button>
+					    <a class="btn btn-warning" href='<c:url value="/funcionario"></c:url>'>
+					    	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Desistir
+					    </a>					
 					</form>
 				</div>
 			

@@ -1,3 +1,5 @@
+
+/* Tabelas */
 @media (max-width: 456px) {
 	
 .table-responsive {
@@ -20,11 +22,10 @@
   }
   
 .table-responsive thead {
-   float: left;
+   display: block;
  }
  
  .table-responsive tbody {
-   width: auto;
    position: relative;
    overflow-x: auto;
    -webkit-overflow-scrolling: touch;
@@ -32,11 +33,19 @@
  }
 
 .table-responsive tbody tr {
-    display: inline-block;
+    display: block;
   }
  
 }
-   
+ 
+/*  Botoes */
+ @media (max-width: 456px) {
+	.btn{
+		width: 100%;
+	}
+
+}
+
 .custom_well{
     min-height: 20px;
     padding: 12px;
@@ -58,6 +67,13 @@
   white-space: nowrap;
 }
 
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #333;
+  background-color: rgb(210,210,210); 				
+}
+
+
 /* Botao de retorno ao topo da pagina */
 .back-to-top {
     cursor: pointer;
@@ -65,6 +81,7 @@
     bottom: 20px;
     right: 20px;
     display:none;
+    max-width: 50px;
 }
 
 .content-wrapper{
@@ -168,6 +185,7 @@ input[type="password"] {
 }
 
 .alert {
+  color: #ffffff;	
   padding: 9px;
   margin-bottom: 11px;
   border: 0px solid transparent;
@@ -177,8 +195,54 @@ input[type="password"] {
   width: 98%;
 }
 
+.alert-success {
+    background-color: #669ae1;
+}
+
+.alert-danger {	
+    background-color: #bb4442;
+}
+
+.panel-default > .panel-heading {
+    color: #f5f5f5;
+    background-color: #33404c;
+    border-color: #ddd;
+}
+
 .dropdown:hover .dropdown-menu {
     display: block;  !important;
  }
-    
+ 
+ .navbar-default {
+    background-color: #eee;
+    border-color: #e7e7e7;
+}
+
+
+.btn-primary {
+    color: #fff;
+    background-color: #15334c;
+    border-color: #15334c;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #597e8c;
+    border-color: #597e8c;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color:#fecf71;
+    border-color: #fecf71;
+} 
+
+.btn-danger {
+    color: #fff;
+    background-color:#ff4f4f;
+    border-color: #ff4f4f;
+}   
+
+
+  
 
