@@ -1,6 +1,6 @@
 
-/* Tabelas */
-@media (max-width: 456px) {
+/* Persoanalização das Tabelas */
+@media (max-width: 555px) {
 	
 .table-responsive {
     display: block;
@@ -18,7 +18,7 @@
   
 .table-responsive td,
   .table-responsive th {
-    height: 35px;
+    height: auto;
   }
   
 .table-responsive thead {
@@ -38,12 +38,11 @@
  
 }
  
-/*  Botoes */
+/* Personalização dos Botoes */
  @media (max-width: 456px) {
 	.btn{
 		width: 100%;
 	}
-
 }
 
 .custom_well{
@@ -102,6 +101,7 @@ section h2 {
     font-size: 3em;
 }
 
+/* Modal de Autenticação */
 hr.star-light, hr.star-primary {
     margin: 25px auto 30px;
     padding: 0;
@@ -179,6 +179,7 @@ input[type="password"] {
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
 
+/* Personalização de Mensagens */
 .mensagens{ 
 	margin-bottom: 11px;
 	margin-top: 0px;
@@ -218,7 +219,7 @@ input[type="password"] {
     border-color: #e7e7e7;
 }
 
-
+/* Personalização dos botões */
 .btn-primary {
     color: #fff;
     background-color: #15334c;
