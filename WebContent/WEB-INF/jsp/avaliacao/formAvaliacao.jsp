@@ -63,7 +63,7 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label class="small">Itens do Cardápio</label>
+									<label class="small">Itens do Prato</label>
 									<table class="table table-responsive">
 										<thead>
 											<tr class="small">
@@ -78,14 +78,22 @@
 												<tr>
 													<td>${itemPrato.item.descricao}</td>
 													<td>
-														<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+														<a class="btn btn-success btn-sm" data-trigger="hover" data-container="body"   
 											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-											  				aria-hidden="true"></span> info
+											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-thumbs-up" 
+											  				aria-hidden="true"></span> Faz bem
 											  			</a>
 													</td>
 													
-													<td>${itemPrato.item.maleficios}</td>
+													<td>
+														<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
+											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+											  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-thumbs-down" 
+											  				aria-hidden="true"></span> Faz mal
+											  			</a>
+													</td>
+													
+													<td></td>
 													
 													<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
 												</tr>
@@ -163,7 +171,7 @@
 								</div>
 								
 						    	<div class="col-md-6">
-									<label class="small">Itens do Cardápio</label>
+									<label class="small">Itens do Prato</label>
 									<table class="table table-responsive">
 										<thead>
 											<tr class="small">
@@ -178,14 +186,22 @@
 												<tr>
 													<td>${itemPrato.item.descricao}</td>
 													<td>
-														<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+														<a class="btn btn-success btn-sm" data-trigger="hover" data-container="body"   
 											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-											  				aria-hidden="true"></span> info
+											  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-thumbs-up" 
+											  				aria-hidden="true"></span> Faz bem
 											  			</a>
 													</td>
 													
-													<td>${itemPrato.item.maleficios}</td>
+													<td>
+														<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
+											  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
+											  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-thumbs-down" 
+											  				aria-hidden="true"></span> Faz mal
+											  			</a>
+													</td>
+													
+													<td></td>
 													
 													<td><span class="badge">${itemPrato.item.valorCalorico} Kcal</span></td>											
 												</tr>

@@ -76,7 +76,7 @@
 	                </li>
 	                               
 	                 <li class="">
-	                	<a data-toggle="dropdown"  href="#"> Cardapio </a>
+	                	<a data-toggle="dropdown"  href="#"> Pratos </a>
 	                	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 	                		<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratodia"></c:url>'>
 				 				<span class="glyphicon glyphicon-plus"></span> Cadastrar prato do dia</a>
@@ -87,7 +87,7 @@
 			 				</li>
 			 				<li class="divider"></li>
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/pratos/list"></c:url>'>
-			 					<span class="glyphicon glyphicon-edit"></span> Gerenciamento de Pratos </a>
+			 					<span class="glyphicon glyphicon-edit"></span> Gerenciar Pratos Publicados </a>
 			 				</li>
 			 				
 			 				<li role="presentation"><a role="menuitem" tabindex="-1" href='<c:url value="/avaliacoes" />'>

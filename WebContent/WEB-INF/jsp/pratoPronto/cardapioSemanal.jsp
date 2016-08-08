@@ -17,7 +17,7 @@
 
 <div class="col-md-12">
 	<div class="panel panel-default">
-		<div class="panel panel-heading">Cardápios da Semana</div>	
+		<div class="panel panel-heading">Cardápio da Semana</div>	
 			<div class="panel-body">
 				<form  method="get" action='<c:url value="/prato/listpratosemanal"></c:url>'  >
 				
@@ -38,7 +38,7 @@
 				
 					<div class="col-md-2">
 						<br>
-						<button type="submit" class="btn btn-primary"> Pesquisar Cardápios</button>
+						<button type="submit" class="btn btn-primary"> Pesquisar Pratos</button>
 					</div>
 				</form>
 			</div>
@@ -63,9 +63,9 @@
 				  		<td>${prato.pratoPronto.tituloPrato}</td>
 				  		<td>${prato.sobremesa.descricao}</td>
 				  		<td>${prato.totalCaloria}</td>
-				  		<td>
-				  			<a target="blank" href='<c:url value="/pratopronto/itens?id=${prato.pratoPronto.id}"></c:url>' >
-				  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> detalhes
+						<td>
+				  			<a class="btn btn-info btn-sm" href='<c:url value="/pratopronto/itens?id=${prato.pratoPronto.id}"></c:url>' >
+				  				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Ver Itens
 				  			</a>
 				  		</td>
 				  	</tr>

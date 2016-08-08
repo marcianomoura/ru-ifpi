@@ -17,7 +17,7 @@
 </div>
 
 <div class="col-md-12">
-<div class="panel panel-default" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden; ">
+<div class="panel panel-default">
 	<div class="panel-heading">Catálogo de Pratos prontos</div>
 	<div class="panel-body">
 		<table class="table table-responsive">

@@ -28,13 +28,7 @@
 				<kbd><fmt:formatNumber value="${totalVotos}" maxFractionDigits="2"/> Votos</kbd>		    	
 		</div>
 		<div class="panel-body">
-			<div class="col-md-4">
-			    <div class="thumbnail">
-			      <img class="img-responsive" src='<c:url value="/img/almoco.jpg"></c:url>' width="100%" alt="">
-			    </div>
-			</div>
-			
-			<div class="col-md-8">
+			<div class="col-md-12">
 				<table class="table table-responsive">
 					<thead>
 						<tr class="small">

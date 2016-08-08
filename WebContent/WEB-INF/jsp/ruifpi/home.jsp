@@ -102,9 +102,9 @@
 											  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaAlmoco.sobremesa.classeNutricional.descricao}</li>
 											</ul>
 										</div>
-										<br>
+										
 										<div class="col-md-6">
-											<label class="small">Itens do Cardápio</label>
+											<label class="small">Itens do Prato</label>
 											<table class="table table-responsive">
 												<thead>
 													<tr class="small">
@@ -119,9 +119,9 @@
 														<tr>
 															<td>${itemPrato.item.descricao}</td>
 															<td>
-																<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+																<a class="btn btn-success btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
+													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-thumbs-up" 
 													  				aria-hidden="true"></span> Faz bem
 													  			</a>
 															</td>
@@ -129,7 +129,7 @@
 															<td>
 																<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-plus" 
+													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-thumbs-down" 
 													  				aria-hidden="true"></span> Faz mal
 													  			</a>
 															</td>
@@ -165,9 +165,9 @@
 											  <li class="list-group-item"><label class="small">Classificação :</label> ${pratoDiaJanta.sobremesa.classeNutricional.descricao}</li>
 											</ul>
 										</div>
-										<br>
+										
 								    	<div class="col-md-6">
-											<label class="small">Itens do Cardápio</label>
+											<label class="small">Itens do Prato</label>
 											<table class="table table-responsive">
 												<thead>
 													<tr class="small">
@@ -182,16 +182,16 @@
 														<tr>
 															<td>${itemPrato.item.descricao}</td>
 															<td>
-																<a class="btn btn-info btn-sm" data-trigger="hover" data-container="body"   
+																<a class="btn btn-success btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-plus" 
-													  				aria-hidden="true"></span> Faz Bem
+													  				data-content="${itemPrato.item.beneficios}"><span class="glyphicon glyphicon-thumbs-up" 
+													  				aria-hidden="true"></span> Faz bem
 													  			</a>
 															</td>
 															<td>
 																<a class="btn btn-danger btn-sm" data-trigger="hover" data-container="body"   
 													  				title="Beneficios a saúde" data-toggle="popover" data-placement="top" 
-													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-plus" 
+													  				data-content="${itemPrato.item.maleficios}"><span class="glyphicon glyphicon-thumbs-down" 
 													  				aria-hidden="true"></span> Faz mal
 													  			</a>
 															</td>
@@ -222,7 +222,7 @@
                 </div>
             </div>
             
-            <div class="col-md-12">
+            <div class="row">
                 <div class="panel panel-default">
                 	
 					<div class="panel-heading"><h4></h4></div>

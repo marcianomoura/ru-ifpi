@@ -24,11 +24,20 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Componentes do Prato</div>
 		<div class="panel-body">
-			<div style="margin-top: 15px;  margin-bottom: 10px;" >
-				<a class="btn btn-default" href='<c:url value="/pratosprontos" />'>
-				<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
-			</div>
-						
+			<c:if test="${usuarioSessao.usuario == null}">
+				<div style="margin-top: 15px;  margin-bottom: 10px;" >
+					<a class="btn btn-default" href='<c:url value="/pratosprontos" />'>
+					<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
+				</div>
+			</c:if>
+			
+			<c:if test="${funcionarioSessao.funcionario == null}">
+				<div style="margin-top: 15px;  margin-bottom: 10px;" >
+					<a class="btn btn-default" href='<c:url value="/cardapiosemanal" />'>
+					<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Voltar</a>
+				</div>
+			</c:if>
+		
 			<table class="table table-responsive table table-hover">
 				<thead>
 					<tr class="active">
@@ -40,10 +49,10 @@
 				<c:forEach var="itemPratoPronto" items="${listItensPratoPronto}">
 					<tbody>
 						<tr>
-						<td>${itemPratoPronto.item.descricao}</td>
-						<td>${itemPratoPronto.item.valorCalorico}</td>
-						<td>${itemPratoPronto.item.classeNutricional.descricao}</td>
-					</tr>
+							<td>${itemPratoPronto.item.descricao}</td>
+							<td>${itemPratoPronto.item.valorCalorico}</td>
+							<td>${itemPratoPronto.item.classeNutricional.descricao}</td>
+						</tr>
 					</tbody>
 					
 				</c:forEach>
