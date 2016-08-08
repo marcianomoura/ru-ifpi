@@ -54,9 +54,5 @@ public class UsuarioImportacao {
 		this.matricula = matricula;
 	}
 
-	@Override
-	public String toString() {
-		return "UsuarioImportacao [id=" + id + ", dataNascimento=" + dataNascimento + ", matricula=" + matricula + "]";
-	}
 
 }

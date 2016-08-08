@@ -49,9 +49,4 @@ public class Instituicao {
 		this.endereco = endereco;
 	}
 
-	@Override
-	public String toString() {
-		return "Instituicao [id=" + id + ", nome=" + nome + ", endereco=" + endereco + "]";
-	}
-
 }

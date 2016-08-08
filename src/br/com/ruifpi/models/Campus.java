@@ -52,9 +52,4 @@ public class Campus {
 		this.instituicao = instituicao;
 	}
 
-	@Override
-	public String toString() {
-		return "Campus [id=" + id + ", nomeCampus=" + nomeCampus + ", instituicao=" + instituicao + "]";
-	}
-
 }

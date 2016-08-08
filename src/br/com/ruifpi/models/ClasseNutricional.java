@@ -41,11 +41,6 @@ public class ClasseNutricional implements Comparable<ClasseNutricional> {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	@Override
-	public String toString() {
-		return "ClasseNutricional [id=" + id + ", descricao=" + descricao + "]";
-	}
 	
 	
 	@Override

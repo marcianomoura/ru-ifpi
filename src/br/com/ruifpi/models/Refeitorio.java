@@ -52,9 +52,4 @@ public class Refeitorio {
 		this.campus = campus;
 	}
 
-	@Override
-	public String toString() {
-		return "Refeitorio [id=" + id + ", nome=" + nome + ", campus=" + campus + "]";
-	}
-
 }

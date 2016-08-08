@@ -87,12 +87,6 @@ public class Sobremesa implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "Sobremesa [id=" + id + ", descricao=" + descricao + ", vitaminas=" + vitaminas + ", maleficios="
-				+ maleficios + ", beneficios=" + beneficios + ", classeNutricional=" + classeNutricional + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

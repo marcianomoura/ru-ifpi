@@ -88,13 +88,6 @@ public class Funcionario{
 	public void setFuncao(String funcao) {
 		this.funcao = funcao;
 	}
-	@Override
-	public String toString() {
-		return "Funcionario [id=" + id + ", nome=" + nome + ", matricula="
-				+ matricula + ", login=" + login + ", senha=" + senha
-				+ ", funcao=" + funcao + "]";
-	}
-	
 	
 
 }

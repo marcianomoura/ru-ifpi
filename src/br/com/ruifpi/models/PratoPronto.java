@@ -16,9 +16,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class PratoPronto implements Serializable, Comparable<PratoPronto> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -65,10 +65,5 @@ public class AvaliacaoRefeicao {
 		this.notaAvaliativa = notaAvaliativa;
 	}
 
-	@Override
-	public String toString() {
-		return "AvaliacaoRefeicao [id=" + id + ", pratoDia=" + pratoDia + ", usuario=" + usuario + ", notaAvaliativa="
-				+ notaAvaliativa + "]";
-	}
 
 }
