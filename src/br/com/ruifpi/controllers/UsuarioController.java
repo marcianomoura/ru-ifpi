@@ -161,10 +161,25 @@ public class UsuarioController {
 				if(usuario.getId() !=null){	// Se for alteração dos dados ...
 					result.include("sucesso", "Usuario alterado com sucesso");
 				}else{
-					usuarioSession.setUsuario(null);	// Seta o usuario temporário da sessão da tela de cadastro.
+					/*
+					 * Situação em que o usuário efetua seu próprio cadastro. Significa que já está na tabela UsuarioImportacao e nao precisa
+					 * ser cadastrado novamente. 
+					 */
+					if(usuarioSession.getUsuario() != null){
+						usuarioSession.setUsuario(null);	// Tira o usuario temporário da sessão e identifica que não é um funcionário cadastrando o usuario.
+					}else{
+						/* 	Situação em que o funcionário do refeitório efetua o cadastro do usuario.
+						 	Há necessidade de salvar na tabela importação, se nao será excluído na proxima leitura do arquivo (.xlx). 
+						 */
+						UsuarioImportacao usuarioImportacao = new UsuarioImportacao();
+						usuarioImportacao.setMatricula(usuario.getMatricula());
+						usuarioImportacao.setDataNascimento(usuario.getDataNascimento());
+						dao.save(usuarioImportacao);
+					}
+					
 					result.include("sucesso", "Usuario cadastrado com sucesso");
 				}
-				usuario.setMatriculado(true);usuario.setMatriculado(true);
+				usuario.setMatriculado(true);
 				usuario.setSenha(CriptografaSenhaUtil.criptografaSenha(usuario.getSenha()));
 				dao.save(usuario);
 				result.redirectTo(RuifpiController.class).index();

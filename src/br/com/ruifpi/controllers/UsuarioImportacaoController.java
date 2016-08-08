@@ -1,8 +1,7 @@
 package br.com.ruifpi.controllers;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,11 +9,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.io.IOUtils;
-
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import br.com.ruifpi.auxiliar.RepositorioMetodos;
@@ -94,22 +90,16 @@ public class UsuarioImportacaoController {
 	}
 	
 	@AcessoAdministrativo
-	@Post
 	@Path("/lerxls")
 	public void lerArquivoXls(UploadedFile arquivo) {
-		File file;
 		Workbook planilha ;
 		Sheet abaPlanilha;	
-		UsuarioImportacao usuarioImportacao ;
+		UsuarioImportacao usuarioImportacao;
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-			file = new File(arquivo.getFileName());
-			InputStream inputStream = arquivo.getFile();
-			file.createNewFile();
-			IOUtils.copy(inputStream, new FileOutputStream(file));
-			planilha = Workbook.getWorkbook(file); 
-			abaPlanilha = planilha.getSheet(0);	// primeira Aba da planilha ...
-			int quantLinhas = abaPlanilha.getRows(); // quantidades de linha da planilha...
+			planilha = Workbook.getWorkbook(arquivo.getFile()); 
+			abaPlanilha = planilha.getSheet(0);			// primeira Aba da planilha ...
+			int quantLinhas = abaPlanilha.getRows(); 	// quantidades de linha da planilha...
 			
 			for (int i = 1; i < quantLinhas; i++) {
 				usuarioImportacao = new UsuarioImportacao();
@@ -121,29 +111,28 @@ public class UsuarioImportacaoController {
 				usuariosArquivoXls.add(usuarioImportacao);	// Pegando dados do arquivo .xls
 			}
 			
-			removeUsuarioImportacaoNaoEncontradoXLS();	// Remover matriculas não encontradas
-			insereNovosUsuarioImportacao();	// Inserir novas matriculas encontradas
-			invalidaMatriculaUsuarioSistema();	// invalidar Acesso.
-			usuariosArquivoXls.clear();
-			listInvalidados.clear();
-			listUsuarioImportadoBanco.clear();
+			removeUsuarioImportacaoNaoEncontradoXLS();	// Remover matriculas não encontradas no arquivo .xls
+			insereNovosUsuarioImportacao();				// Inserir novas matriculas encontradas
+			invalidaMatriculaUsuarioSistema();			// invalidar Acesso.
+			limpaListasUtilizadas();
 			result.include("sucesso", "As matriculas foram atualizadas com sucesso.");
 			result.redirectTo(this).formUsuarioImportacao();
 		} catch (ParseException e) {
-			usuariosArquivoXls.clear();
-			listInvalidados.clear();
-			listUsuarioImportadoBanco.clear();
+			limpaListasUtilizadas();
 			result.include("erro", "Erro na conversão de datas. Talvez exista alguma data errada no arquivo (xls). Verifique e tente novamente.");
 			result.redirectTo(this).formUsuarioImportacao();
 		} catch (Exception e) {
-			usuariosArquivoXls.clear();
-			listInvalidados.clear();
-			listUsuarioImportadoBanco.clear();
+			limpaListasUtilizadas();
 			result.include("erro", "Ocorreu um erro no processo de atualização de matriculas. Verifique se o arquivo "
 					+ ".xls está com os dados preenchidos corretamente.");
 			result.redirectTo(this).formUsuarioImportacao();
-			
 		}
 		
+	}
+	
+	public void limpaListasUtilizadas() {
+		usuariosArquivoXls.clear();
+		listInvalidados.clear();
+		listUsuarioImportadoBanco.clear();
 	}
 }
